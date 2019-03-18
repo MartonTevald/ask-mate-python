@@ -7,7 +7,7 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/list')
 def list():
-    questions = data_handler.get_all_details('/questions.csv')
+    questions = data_handler.get_all_details('question.csv')
     return render_template('list.html', questions=questions)
 
 
