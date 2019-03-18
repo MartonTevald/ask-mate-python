@@ -10,7 +10,7 @@ def get_csv_data(filename):
         return data
 
 
-def add_user_story_to_file(filename, DATA_HEADER):
+def write_to_file(filename, DATA_HEADER):
     with open(filename, 'a', newline='') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=DATA_HEADER)
         for row in writer:
