@@ -11,6 +11,16 @@ def list():
     return render_template('list.html', questions=questions)
 
 
+@app.route('/new-question')
+def add_new_question():
+    pass
+
+
+@app.route('/answers/<id>')
+def list_answers(id=None):
+    pass
+
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
