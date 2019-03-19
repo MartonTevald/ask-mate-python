@@ -17,13 +17,13 @@
     </tr>
 {% for question in questions %}
     <tr>
-        <td>{{ question.id }}</td>
-        <td>{{ question.submission_time }}</td>
-        <td>{{ question.view_number }}</td>
-        <td>{{ question.vote_number }}</td>
-        <td><a href="/answers/{{ question.id }}">{{ question.title }}</a></td>
-        <td>{{ question.message }}</td>
-        <td><img src="{{ question.image }}" alt="image"></td>
+        <td>{{ question['id'] }}</td>
+        <td>{{ question['submission_time'] }}</td>
+        <td>{{ question['view_number'] }}</td>
+        <td>{{ question['vote_number'] }}</td>
+        <td><a href="/answers/{{ question['id'] }}">{{ question['title'] }}</a></td>
+        <td>{{ question['message'] }}</td>
+        <td>{{ question['image'] }}</td>
     </tr>
     {% endfor %}
 
