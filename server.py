@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, redirect
+from flask import Flask, render_template, request, redirect, url_for
 import data_handler
 
 app = Flask(__name__)
@@ -11,23 +11,20 @@ def list():
     return render_template('list.html', questions=questions)
 
 
-@app.route('/new_question', methods=['GET', 'POST'])
+@app.route('/new_question', methods=['POST'])
 def add_question():
-    question = {'id': request.form.get('id'),
-                'submission_time': request.form.get('submission_time'),
-                'view_number': request.form.get('view_number'),
-                'vote_number': request.form.get('vote_number'),
-                'title': request.form.get('title'),
-                'message': request.form.get('message'),
-                'image': request.form.get('image'),
-                }
-    data_handler.write_to_file('question.csv', question)
+    question_details = {'id': request.form.get('id'),
+                        'submission_time': request.form.get('submission_time'),
+                        'view_number': request.form.get('view_number'),
+                        'vote_number': request.form.get('vote_number'),
+                        'title': request.form.get('title'),
+                        'message': request.form.get('message'),
+                        'image': request.form.get('image'),
+                        }
+    data_handler.write_to_file('question.csv', question_details)
     labels = ['New Question', 'Post', 'Return']
-
-    return render_template('new_question.html',
-                           question=question,
-                           form_url=url_for('add_question'),
-                           labels=labels)
+    # max_id = int(data_handler.get_id('question.csv'))
+    return render_template('new_question.html', question=question_details, labels=labels)
 
 
 @app.route('/answers/<id>')

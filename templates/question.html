@@ -23,8 +23,10 @@
         <textarea name="message" id="message" cols="80" rows="8" required>{{ question['message'] }}</textarea>
     </p>
     <p>
-        <button type="submit">{{ labels[1] }}</button><br>
+        <a href="{{ url_for('route_list') }}">
+        <button type="submit">{{ labels[1]}}</button><br>
         <button  type="submit">{{ labels[2] }}</button>
+        </a>
     </p>
 
 </form>

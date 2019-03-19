@@ -5,9 +5,7 @@
     <title>Ask-Mate</title>
 </head>
 <body>
-<form>
-<h1>Tidder</h1>
-    <table>
+<table>
     <tr>
         <th>Id</th>
         <th>Submission time</th>
@@ -19,19 +17,21 @@
     </tr>
 {% for question in questions %}
     <tr>
-        <td>{{ question['id'] }}</td>
-        <td>{{ question['submission_time'] }}</td>
-        <td>{{ question['view_number'] }}</td>
-        <td>{{ question['vote_number'] }}</td>
-        <td><a href="/answers/{{ question['id'] }}">{{ question['title'] }}</a></td>
-        <td>{{ question['message'] }}</td>
-        <td>{{ question['image'] }}</td>
+        <td>{{ question.id }}</td>
+        <td>{{ question.submission_time }}</td>
+        <td>{{ question.view_number }}</td>
+        <td>{{ question.vote_number }}</td>
+        <td><a href="/answers/{{ question.id }}">{{ question.title }}</a></td>
+        <td>{{ question.message }}</td>
+        <td><img src="{{ question.image }}" alt="image"></td>
     </tr>
     {% endfor %}
 
 </table>
-    <a href="add_question"><button type="submit">New Question</button>
-    </a>
-</form>
+
+    <form action="/new_question" method="post">
+        <button type="submit">New Question</button>
+    </form>
+
 </body>
 </html>
