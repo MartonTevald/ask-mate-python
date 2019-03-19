@@ -2,9 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>| Ask new question |</title>
 </head>
 <body>
+<h1>{{ page_title }}</h1>
+
+<form action="{{ form_url }}"
+      method="post">
+    <input type="hidden" name="id" value="{{ question['id'] }}">
+    <p>
+        <label for="title">Question title:</label><br>
+        <input type="text" name="title" id="title" required minlength="3"
+               value="{{ question['title'] }}">
+    </p>
+    <p>
+        <label for="message">Question in details:</label><br>
+        <textarea name="message" id="message" cols="80" rows="8" required>{{ question['message'] }}</textarea>
+    </p>
+    <p>
+        <button type="submit">{{ button_title }}</button><br>
+
+
+        <button  type="submit">{{ button_choice }}</button>
+    </p>
+
+</form>
+
 
 </body>
 </html>
