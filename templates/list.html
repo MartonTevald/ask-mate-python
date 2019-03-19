@@ -5,7 +5,9 @@
     <title>Ask-Mate</title>
 </head>
 <body>
-<table>
+<form>
+<h1>Tidder</h1>
+    <table>
     <tr>
         <th>Id</th>
         <th>Submission time</th>
@@ -28,10 +30,8 @@
     {% endfor %}
 
 </table>
-
-    <form action="/new_question" method="post">
-        <button type="submit">New Question</button>
-    </form>
-
+    <a href="add_question"><button type="submit">New Question</button>
+    </a>
+</form>
 </body>
 </html>

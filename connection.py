@@ -11,8 +11,9 @@ def get_csv_data(filename):
 
 
 def write_to_file(filename, DATA_HEADER, dictionary):
-    with open(filename, 'a', newline='') as csvfile:
+    with open(filename, 'ab', newline='') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=DATA_HEADER)
+        writer.writeheader()
         writer.writerow(dictionary)
 
 
