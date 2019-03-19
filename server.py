@@ -12,9 +12,19 @@ def list():
     return render_template('list.html', questions=questions)
 
 
-@app.route('/new-question')
-def add_new_question():
-    pass
+@app.route('/new_question', methods=['POST'])
+def add_question():
+    question_details = {'id': request.form.get('id'),
+                        'submission_time': request.form.get('submission_time'),
+                        'view_number': request.form.get('view_number'),
+                        'vote_number': request.form.get('vote_number'),
+                        'title': request.form.get('title'),
+                        'message': request.form.get('message'),
+                        'image': request.form.get('image'),
+                        }
+    data_handler.write_to_file('question.csv', question_details)
+    labels = ['New Question', 'Post', 'Return']
+    return render_template('new_question.html', question=question_details, labels=labels)
 
 
 @app.route('/answers/<id>')
