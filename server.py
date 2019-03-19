@@ -23,7 +23,8 @@ def add_question():
                         }
     data_handler.write_to_file('question.csv', question_details)
     labels = ['New Question', 'Post', 'Return']
-    return render_template('new_question.html', question=question_details, labels=labels)
+    max_id = int(data_handler.get_id('question.csv'))
+    return render_template('new_question.html', question=question_details, labels=labels, max_id=max_id)
 
 
 @app.route('/answers/<id>')

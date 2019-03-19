@@ -9,8 +9,8 @@
 
 <form action="{{ form_url }}"
       method="post">
-    <input type="hidden" name="id" value="{{ question['id'] }}">
-    <input type="hidden" name="submission_time" value="{{ question['id'] }}">
+    <input type="hidden" name="id" value="{{ max_id + 1 }}">
+    <input type="hidden" name="submission_time" value="0">
     <input type="hidden" name="view_number" value="0">
     <input type="hidden" name="vote_number" value="0">
     <p>
