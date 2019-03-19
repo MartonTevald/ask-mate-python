@@ -6,7 +6,7 @@ def get_csv_data(filename):
         reader = csv.DictReader(csvfile)
         data = []
         for row in reader:
-            data.append(row)
+            data.append(dict(row))
         return data
 
 
