@@ -1,20 +1,27 @@
 import csv
-import os
-
-DATA_FILE_PATH = os.getenv('DATA_FILE_PATH') if 'DATA_FILE_PATH' in os.environ else 'question.csv'
-question_header = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
 
 
 def get_csv_data(filename):
     with open(filename) as csvfile:
-        data = []
         reader = csv.DictReader(csvfile)
+        data = []
         for row in reader:
             data.append(row)
         return data
 
 
-def write_to_file(filename, dictionary):
+def write_to_file(filename, DATA_HEADER, dictionary):
     with open(filename, 'a', newline='') as csvfile:
-        writer = csv.DictWriter(csvfile, fieldnames=question_header)
+        writer = csv.DictWriter(csvfile, fieldnames=DATA_HEADER)
         writer.writerow(dictionary)
+
+
+'''
+def write_to_file(filename, DATA_HEADER):
+    data = get_csv_data(filename)
+    with open(filename, 'w', newline='') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=DATA_HEADER)
+        for row in data:
+            writer.writerow(row)
+# ez még nincs kész
+'''
