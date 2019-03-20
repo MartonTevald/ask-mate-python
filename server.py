@@ -36,31 +36,31 @@ def add_question():
         return redirect('/')
 
 
-# @app.route('/question/<question_id>', methods=['GET', 'POST'])
-# def update_question(question_id):
-#     if request.method == 'POST':
-#         if request.form.get('id') != question_id:
-#             raise ValueError('The received id is not valid!')
-#         question = {'id': question_id,
-#                     'submission_time': request.form.get('submission_time'),
-#                     'view_number': request.form.get('view_number'),
-#                     'vote_number': request.form.get('vote_number'),
-#                     'title': request.form.get('title'),
-#                     'message': request.form.get('message'),
-#                     'image': request.form.get('image'),
-#                     }
-#         data_handler.update_question(question)
-#         return redirect('/')
-#
-#     question = data_handler.get_user_question(question_id)
-#
-#     return render_template('add-question.html.html',
-#                            question=question,
-#                            form_url=url_for('update_question', question_id=question_id),
-#                            page_title='Update Question',
-#                            button_title='Update',
-#                            button_page='Delete '
-#                            )
+@app.route('/question/<question_id>', methods=['GET', 'POST'])
+def update_question(question_id):
+    if request.method == 'POST':
+        if request.form.get('id') != question_id:
+            raise ValueError('The received id is not valid!')
+        question = {'id': question_id,
+                    'submission_time': request.form.get('submission_time'),
+                    'view_number': request.form.get('view_number'),
+                    'vote_number': request.form.get('vote_number'),
+                    'title': request.form.get('title'),
+                    'message': request.form.get('message'),
+                    'image': request.form.get('image'),
+                    }
+        data_handler.edit_question_row(question)
+        return redirect('/')
+
+    question = data_handler.get_user_question('question.csv',question,)
+
+    return render_template('add-question.html.html',
+                           question=question,
+                           form_url=url_for('update_question', question_id=question_id),
+                           page_title='Update Question',
+                           button_title='Update',
+                           button_page='Delete '
+                           )
 
 
 @app.route('/question/<id>', methods=['GET', 'POST'])
