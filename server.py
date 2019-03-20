@@ -36,25 +36,25 @@ def add_question():
         return redirect('/')
 
 
-@app.route('/question/<question_id>', methods=['GET', 'POST'])
+@app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
 def update_question(question_id):
     if request.method == 'POST':
         if request.form.get('id') != question_id:
             raise ValueError('The received id is not valid!')
         question = {'id': question_id,
-                    'submission_time': request.form.get('submission_time'),
+                    'submission_time': data_handler.date_time(),
                     'view_number': request.form.get('view_number'),
                     'vote_number': request.form.get('vote_number'),
                     'title': request.form.get('title'),
                     'message': request.form.get('message'),
                     'image': request.form.get('image'),
                     }
-        data_handler.edit_question_row(question)
+        data_handler.edit_question_row('question.csv',question,question_id)
         return redirect('/')
 
-    question = data_handler.get_user_question('question.csv',question,)
+    question = data_handler.get_all_details('question.csv')
 
-    return render_template('add-question.html.html',
+    return render_template('add-question.html',
                            question=question,
                            form_url=url_for('update_question', question_id=question_id),
                            page_title='Update Question',
