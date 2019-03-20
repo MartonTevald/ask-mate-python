@@ -56,3 +56,11 @@ def edit_question_row(filename, dictionary, id):
 
 def edit_answer_row(filename, dictionary, id):
     return connection.update_in_answer_file(filename, answer_header, dictionary, id)
+
+
+def del_question_row(filename, id):
+    return connection.delete_in_question_file(filename, id)
+
+
+def del_answer_row(filename, id):
+    return connection.update_in_answer_file(filename, id)

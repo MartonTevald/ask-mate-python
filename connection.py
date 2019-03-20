@@ -36,3 +36,23 @@ def update_in_answer_file(filename, DATA_HEADER, dictionary, id):
                 writer.writerow(dictionary)
             else:
                 csv.writer(csvfile).writerow(elem)
+
+
+def delete_in_question_file(filename, id):
+    data = get_csv_data(filename)
+    with open(filename, 'w', newline='') as csvfile:
+        for elem in data:
+            if elem[0] == str(id):
+                continue
+            else:
+                csv.writer(csvfile).writerow(elem)
+
+
+def delete_in_answer_file(filename, id):
+    data = get_csv_data(filename)
+    with open(filename, 'w', newline='') as csvfile:
+        for elem in data:
+            if elem[3] == str(id):
+                continue
+            else:
+                csv.writer(csvfile).writerow(elem)
