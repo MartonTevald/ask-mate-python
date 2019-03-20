@@ -46,7 +46,7 @@
 
 <form action="/question/{{ question_row.id }}" method="post">
    <p><label for="user_answer">Your Answer::</label><br>
-       <textarea id="user_answer" name="answer_message" rows="8" cols="30"></textarea></p>
+       <textarea id="user_answer" name="answer_message" rows="8" cols="30" minlength="10"></textarea></p>
  <button type="submit">Answer</button>
 
 </form>

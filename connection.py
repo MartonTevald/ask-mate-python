@@ -15,3 +15,13 @@ def write_to_file(filename, DATA_HEADER, dictionary):
         writer = csv.DictWriter(csvfile, fieldnames=DATA_HEADER)
         writer.writerow(dictionary)
 
+
+def update_in_file(filename, DATA_HEADER, dictionary, id):
+    data = get_csv_data(filename)
+    with open(filename, 'w', newline='') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=DATA_HEADER)
+        for elem in data:
+            if elem[0] == str(id):
+                writer.writerow(dictionary)
+            else:
+                csv.writer(csvfile).writerow(elem)

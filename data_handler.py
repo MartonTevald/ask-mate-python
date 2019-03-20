@@ -48,3 +48,11 @@ def get_answers_for_id(filename, id):
         if id == row['question_id']:
             answer.append(row)
     return answer
+
+
+def edit_question_row(filename, dictionary, id):
+    return connection.update_in_file(filename, question_header, dictionary, id)
+
+
+def edit_answer_row(filename, dictionary, id):
+    return connection.update_in_file(filename, answer_header, dictionary, id)
