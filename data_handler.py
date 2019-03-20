@@ -61,8 +61,8 @@ def edit_answer_row(filename, dictionary, id):
 
 
 def del_question_row(filename, id):
-    return connection.delete_in_question_file(filename, id)
+    return connection.delete_in_question_file(filename, question_header, id)
 
 
 def del_answer_row(filename, id):
-    return connection.update_in_answer_file(filename, id)
+    return connection.update_in_answer_file(filename, answer_header, id)
