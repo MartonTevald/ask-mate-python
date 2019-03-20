@@ -7,7 +7,7 @@ answer_header = ['id','submission_time','vote_number','question_id','message','i
 
 
 def get_all_details(filename):
-    return connection.get_csv_data(filename)
+   return connection.get_csv_data(filename)
 
 
 def write_to_file(filename, dictionary):
@@ -32,7 +32,8 @@ def date_time():
 
 
 def convert_unix_to_time(submission_time):
-    return datetime.utcfromtimestamp(submission_time).strftime('%Y-%m-%d|%H:%M')
+    return datetime.fromtimestamp(submission_time)
+    # return datetime.utcfromtimestamp(submission_time).strftime('%Y-%m-%d|%H:%M')
 
 
 def get_question_for_id(filename, id):

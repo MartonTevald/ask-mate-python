@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>This was really hard to make</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='format_question_html.css') }}">
 </head>
 <body bgcolor="#f0ffff">
     <h1>{{ question_row.title }}</h1>
-    <p>{{ question_row.message }}</p>
-
-
-
+    <h2>{{ question_row.message }}</h2>
+    <br>
 <table>
     <tr>
         <td>id</td>
@@ -33,7 +31,6 @@
                 <a href="/question/{{ question_row.id }}/edit">
     <h3 align="left"><button  type="submit">Edit</button></h3>
         </a>
-
         </td>
     </tr>
 </table>
@@ -43,11 +40,16 @@
 <table>
     {% for answer in answer_row %}
         <tr>
-            <td>Message:{{ answer.message }}</td>
-            <td>This was submitted at:{{ answer.submission_time }}</td>
-            <td>Vote:{{ answer.cote_number }}</td>
-            <td>This is an image! Don't fuckin' click on it!!!{{ answer.image }}</td>
+            <td>Comment<br>{{ answer.message }}</td>
+        <tr>
+            <td>Submitted:{{ answer.submission_time }}</td>
+            <td>Vote{{ answer.cote_number }}</td>
         </tr>
+        <tr>
+{#            <td>{{ answer.image }}</td>#}
+        </tr>
+            <br>
+
     {% endfor %}
 </table>
 
