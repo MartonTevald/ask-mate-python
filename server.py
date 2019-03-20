@@ -69,7 +69,7 @@ def list_answers(id=None):
     answer_row = data_handler.get_answers_for_id('answer.csv', id)
     if request.method == 'POST':
         answers = {'id': data_handler.get_id('answer.csv'),
-                   'submission_time': 0,
+                   'submission_time': data_handler.date_time(),
                    'vote_number': 0,
                    'question_id': id,
                    'message': request.form['answer_message'],
