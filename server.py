@@ -36,36 +36,38 @@ def add_question():
         return redirect('/')
 
 
-@app.route('/question/<question_id>', methods=['GET', 'POST'])
-def update_question(question_id):
-    if request.method == 'POST':
-        if request.form.get('id') != question_id:
-            raise ValueError('The received id is not valid!')
-        question = {'id': question_id,
-                    'submission_time': request.form.get('submission_time'),
-                    'view_number': request.form.get('view_number'),
-                    'vote_number': request.form.get('vote_number'),
-                    'title': request.form.get('title'),
-                    'message': request.form.get('message'),
-                    'image': request.form.get('image'),
-                    }
-        data_handler.update_question(question)
-        return redirect('/')
+# @app.route('/question/<question_id>', methods=['GET', 'POST'])
+# def update_question(question_id):
+#     if request.method == 'POST':
+#         if request.form.get('id') != question_id:
+#             raise ValueError('The received id is not valid!')
+#         question = {'id': question_id,
+#                     'submission_time': request.form.get('submission_time'),
+#                     'view_number': request.form.get('view_number'),
+#                     'vote_number': request.form.get('vote_number'),
+#                     'title': request.form.get('title'),
+#                     'message': request.form.get('message'),
+#                     'image': request.form.get('image'),
+#                     }
+#         data_handler.update_question(question)
+#         return redirect('/')
+#
+#     question = data_handler.get_user_question(question_id)
+#
+#     return render_template('add-question.html.html',
+#                            question=question,
+#                            form_url=url_for('update_question', question_id=question_id),
+#                            page_title='Update Question',
+#                            button_title='Update',
+#                            button_page='Delete '
+#                            )
 
-    question = data_handler.get_user_question(question_id)
 
-    return render_template('add-question.html.html',
-                           question=question,
-                           form_url=url_for('update_question', question_id=question_id),
-                           page_title='Update Question',
-                           button_title='Update',
-                           button_page='Delete '
-                           )
-
-
-@app.route('/answers/<id>')
+@app.route('/question/<id>')
 def list_answers(id=None):
-    pass
+    question_row = data_handler.get_question_for_id('question.csv', id)
+    answer_row = data_handler.get_answers_for_id('answer.csv', id)
+    return render_template('/question.html', question_row=question_row, answer_row=answer_row, id = id)
 
 
 if __name__ == '__main__':

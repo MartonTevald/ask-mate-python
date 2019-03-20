@@ -28,3 +28,19 @@ def date_time():
 
 def convert_unix_to_time(submission_time):
     return datetime.utcfromtimestamp(submission_time).strftime('%Y-%m-%d|%H:%M')
+
+
+def get_question_for_id(filename, id):
+    data = connection.get_csv_data(filename)
+    for row in data:
+        if id == row['id']:
+            return row
+
+
+def get_answers_for_id(filename, id):
+    data = connection.get_csv_data(filename)
+    answer = []
+    for row in data:
+        if id == row['question_id']:
+            answer.append(row)
+    return answer
