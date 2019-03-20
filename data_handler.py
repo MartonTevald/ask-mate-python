@@ -3,6 +3,7 @@ import time
 from datetime import datetime
 
 question_header = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
+answer_header = ['id','submission_time','vote_number','question_id','message','image']
 
 
 def get_all_details(filename):
@@ -12,6 +13,9 @@ def get_all_details(filename):
 def write_to_file(filename, dictionary):
     return connection.write_to_file(filename, question_header, dictionary)
 
+
+def write_to_answer_file(filename, dictionary):
+    return connection.write_to_file(filename, answer_header, dictionary)
 
 def get_id(filename):
     existing_data = get_all_details(filename)
