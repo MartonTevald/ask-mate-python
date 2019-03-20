@@ -22,7 +22,7 @@ def update_in_question_file(filename, DATA_HEADER, dictionary, id):
         writer = csv.DictWriter(csvfile, fieldnames=DATA_HEADER)
         writer.writeheader()
         for elem in data:
-            if elem['id'] == str(id):
+            if elem['id'] == id:
                 writer.writerow(dictionary)
             else:
                 writer.writerow(elem)
@@ -34,7 +34,7 @@ def update_in_answer_file(filename, DATA_HEADER, dictionary, id):
         writer = csv.DictWriter(csvfile, fieldnames=DATA_HEADER)
         writer.writeheader()
         for elem in data:
-            if elem['question_id'] == str(id):
+            if elem['question_id'] == id:
                 writer.writerow(dictionary)
             else:
                 writer.writerow(elem)

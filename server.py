@@ -39,8 +39,8 @@ def add_question():
 @app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
 def update_question(question_id):
     if request.method == 'POST':
-        if request.form.get('id') != question_id:
-            raise ValueError('The received id is not valid!')
+        # if request.form.get('id') != question_id:
+        #     raise ValueError('The received id is not valid!')
         question = {'id': question_id,
                     'submission_time': data_handler.date_time(),
                     'view_number': request.form.get('view_number'),
