@@ -51,8 +51,8 @@ def get_answers_for_id(filename, id):
 
 
 def edit_question_row(filename, dictionary, id):
-    return connection.update_in_file(filename, question_header, dictionary, id)
+    return connection.update_in_question_file(filename, question_header, dictionary, id)
 
 
 def edit_answer_row(filename, dictionary, id):
-    return connection.update_in_file(filename, answer_header, dictionary, id)
+    return connection.update_in_answer_file(filename, answer_header, dictionary, id)
