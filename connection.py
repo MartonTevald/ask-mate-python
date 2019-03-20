@@ -20,29 +20,31 @@ def update_in_question_file(filename, DATA_HEADER, dictionary, id):
     data = get_csv_data(filename)
     with open(filename, 'w', newline='') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=DATA_HEADER)
+        writer.writeheader()
         for elem in data:
-            if elem[0] == str(id):
+            if elem['id'] == str(id):
                 writer.writerow(dictionary)
             else:
-                csv.writer(csvfile).writerow(elem)
+                writer.writerow(elem)
 
 
 def update_in_answer_file(filename, DATA_HEADER, dictionary, id):
     data = get_csv_data(filename)
     with open(filename, 'w', newline='') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=DATA_HEADER)
+        writer.writeheader()
         for elem in data:
-            if elem[3] == str(id):
+            if elem['question_id'] == str(id):
                 writer.writerow(dictionary)
             else:
-                csv.writer(csvfile).writerow(elem)
+                writer.writerow(elem)
 
-
+# these need fixing:
 def delete_in_question_file(filename, id):
-    data = get_csv_data(filename)
+    data = get_csv_data(filename) # was originally getting a nested list, but now we have dicts
     with open(filename, 'w', newline='') as csvfile:
         for elem in data:
-            if elem[0] == str(id):
+            if elem['id'] == str(id):
                 continue
             else:
                 csv.writer(csvfile).writerow(elem)
@@ -52,7 +54,7 @@ def delete_in_answer_file(filename, id):
     data = get_csv_data(filename)
     with open(filename, 'w', newline='') as csvfile:
         for elem in data:
-            if elem[3] == str(id):
+            if elem['question_id'] == str(id):
                 continue
             else:
                 csv.writer(csvfile).writerow(elem)
