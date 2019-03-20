@@ -17,6 +17,7 @@ def write_to_file(filename, dictionary):
 def write_to_answer_file(filename, dictionary):
     return connection.write_to_file(filename, answer_header, dictionary)
 
+
 def get_id(filename):
     existing_data = get_all_details(filename)
     if len(existing_data) == 0:
