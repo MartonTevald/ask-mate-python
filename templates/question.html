@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>This was really hard to make</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
 </head>
-<body>
+<body bgcolor="#f0ffff">
     <h1>{{ question_row.title }}</h1>
     <p>{{ question_row.message }}</p>
 
@@ -26,6 +27,14 @@
     <tr>
         <td>image</td>
         <td>{{ question_row.image }}</td>
+    </tr>
+    <tr>
+        <td>
+                <a href="/question/{{ question_row.id }}/edit">
+    <h3 align="left"><button  type="submit">Edit</button></h3>
+        </a>
+
+        </td>
     </tr>
 </table>
 
