@@ -36,7 +36,7 @@ def add_question():
         return redirect('/')
 
 
-@app.route('/question/<question_id>', methods=['GET', 'POST'])
+@app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
 def update_question(question_id):
     if request.method == 'POST':
         if request.form.get('id') != question_id:
