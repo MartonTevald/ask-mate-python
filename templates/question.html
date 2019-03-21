@@ -35,7 +35,9 @@
     </tr>
 </table>
 
-
+<form action="/question/{{ question_row.id }}" method="delete">
+    <button type="submit">Delete Question</button>
+</form>
 
 <table>
     {% for answer in answer_row %}
