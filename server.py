@@ -52,7 +52,7 @@ def update_question(question_id):
         data_handler.edit_question_row('question.csv', question, question_id)
         return redirect('/')
 
-    question = data_handler.get_question_for_id('question.csv',question_id)
+    question = data_handler.get_question_for_id('question.csv', question_id)
 
     return render_template('add-question.html',
                            question=question,
@@ -80,10 +80,8 @@ def list_answers(id=None):
     return render_template('/question.html', question_row=question_row, answer_row=answer_row, id=id)
 
 
-@app.route('/question/<question_id>/delete', methods=['GET','POST'])
+@app.route('/question/<question_id>/delete', methods=['GET', 'POST'])
 def delete_rows(question_id):
-    pass
-    # data_handler.del_question_row('question.csv',question_id)
     data_handler.del_question_row('question.csv', question_id)
     data_handler.del_answer_row('answer.csv', question_id)
     return redirect('/')
