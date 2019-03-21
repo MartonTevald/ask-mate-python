@@ -1,7 +1,7 @@
 import connection
 import time
 from datetime import datetime
-
+from operator import itemgetter
 
 question_header = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
 answer_header = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
@@ -68,5 +68,15 @@ def del_answer_row(filename, id):
     return connection.delete_in_answer_file(filename, answer_header, id)
 
 
+
 def answer_delete_by_id(filename,id):
     return connection.delete_in_answer_by_id(filename,answer_header,id)
+
+def sort(filename, sort_by, reverse=False):
+    data = connection.get_csv_data(filename)
+    if reverse == False:
+        sorted_data = sorted(data, key=itemgetter(sort_by))
+    elif reverse == True:
+        sorted_data = sorted(data, key=itemgetter(int(sort_by)), reverse=True)
+    return sorted_data
+

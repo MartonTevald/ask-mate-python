@@ -93,6 +93,14 @@ def delete_answer(answer_id):
     return redirect('/')
 
 
+@app.route('/sort/<sort_by>')
+def sort_questions(sort_by):
+    sorted_data = data_handler.sort('question.csv', sort_by, False)
+    for row in sorted_data:
+        print(row)
+    return render_template('/sortedlist.html', sorted_data=sorted_data)
+
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
