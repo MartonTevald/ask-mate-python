@@ -4,6 +4,7 @@ table {
   text-align: center;
   width: 70%;
   align-items: center;
+  border-bottom-color: darkred;
 }
 
 th, td {

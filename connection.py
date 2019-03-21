@@ -46,7 +46,7 @@ def delete_in_question_file(filename, DATA_HEADER, id):
         writer = csv.DictWriter(csvfile, fieldnames=DATA_HEADER)
         writer.writeheader()
         for elem in data:
-            if elem.get('question_id') == id:
+            if elem.get('id') == id:
                 continue
             writer.writerow(elem)
 

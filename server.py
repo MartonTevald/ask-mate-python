@@ -27,7 +27,7 @@ def add_question():
 
     if request.method == 'POST':
         question = {'id': data_handler.get_id('question.csv'),
-                    'submission_time': data_handler.date_time(),
+                    'submission_time': int(data_handler.date_time()),
                     'view_number': request.form.get('view_number'),
                     'vote_number': request.form.get('vote_number'),
                     'title': request.form.get('title'),
@@ -98,12 +98,12 @@ def delete_answer(answer_id):
     return redirect('/')
 
 
-@app.route('/sort/<sort_by>')
+@app.route('/<sort_by>')
 def sort_questions(sort_by):
-    sorted_data = data_handler.sort('question.csv', sort_by, reverse=False)
+    sorted_data = data_handler.sort_ascending('question.csv', sort_by)
     for elem in sorted_data:
         elem['submission_time'] = data_handler.convert_unix_to_time(int(elem.get('submission_time')))
-    return render_template('/sortedlist.html', sorted_data=sorted_data)
+    return render_template('/list.html', questions=sorted_data)
 
 
 if __name__ == '__main__':

@@ -10,6 +10,7 @@ answer_header = ['id', 'submission_time', 'vote_number', 'question_id', 'message
 def get_all_details(filename):
     return connection.get_csv_data(filename)
 
+
 def write_to_file(filename, dictionary):
     return connection.write_to_file(filename, question_header, dictionary)
 
@@ -66,16 +67,18 @@ def del_answer_row(filename, id):
     return connection.delete_in_answer_file(filename, answer_header, id)
 
 
-
-def answer_delete_by_id(filename,id):
-    return connection.delete_in_answer_by_id(filename,answer_header,id)
-
+def answer_delete_by_id(filename, id):
+    return connection.delete_in_answer_by_id(filename, answer_header, id)
 
 
-def sort(filename, sort_by, reverse=False):
+def sort_ascending(filename, sort_by):
     data = connection.get_csv_data(filename)
-    if reverse == False:
-        sorted_data = sorted(data, key=itemgetter(sort_by))
-    elif reverse == True:
-        sorted_data = sorted(data, key=itemgetter(int(sort_by)), reverse=True)
-    return sorted_data
+    for values in data:
+        values['id'] = int(values['id'])
+        values['view_number'] = int(values['view_number'])
+        values['vote_number'] = int(values['vote_number'])
+    if sort_by == 'title':
+        return sorted(data, key=lambda k: k['title'])
+    if sort_by == sort_by:
+        return sorted(data, key=lambda k: k[sort_by], reverse=True)
+
