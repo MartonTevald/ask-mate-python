@@ -87,6 +87,12 @@ def delete_rows(question_id):
     return redirect('/')
 
 
+@app.route('/answer/<answer_id>/delete', methods=['GET', 'POST'])
+def delete_answer(answer_id):
+    data_handler.answer_delete_by_id('answer.csv', answer_id)
+    return redirect('/')
+
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',

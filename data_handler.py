@@ -8,7 +8,8 @@ answer_header = ['id', 'submission_time', 'vote_number', 'question_id', 'message
 
 
 def get_all_details(filename):
-    return connection.get_csv_data(filename)
+    return  connection.get_csv_data(filename)
+
 
 
 def write_to_file(filename, dictionary):
@@ -65,3 +66,7 @@ def del_question_row(filename, id):
 
 def del_answer_row(filename, id):
     return connection.delete_in_answer_file(filename, answer_header, id)
+
+
+def answer_delete_by_id(filename,id):
+    return connection.delete_in_answer_by_id(filename,answer_header,id)

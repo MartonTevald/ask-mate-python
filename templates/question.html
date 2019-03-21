@@ -51,14 +51,15 @@
 <table>
     {% for answer in answer_row %}
         <tr>
-            <td>Comment<br>{{ answer.message }}</td>
+            <td>Comment <a href='/answer/{{ answer.id }}/delete' method="post">
+        <button type="submit">Delete</button>
+        </a><br>{{ answer.message }} </td>
         <tr>
             <td>Submitted:{{ answer.submission_time }}</td>
             <td>Vote{{ answer.cote_number }}</td>
+
         </tr>
-        <tr>
-            {#            <td>{{ answer.image }}</td>#}
-        </tr>
+
         <br>
 
     {% endfor %}

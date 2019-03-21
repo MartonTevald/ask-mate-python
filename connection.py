@@ -60,3 +60,15 @@ def delete_in_answer_file(filename, DATA_HEADER, id):
             if elem.get('question_id') == id:
                 continue
             writer.writerow(elem)
+
+
+def delete_in_answer_by_id(filename, DATA_HEADER, id):
+    data = get_csv_data(filename)
+    with open(filename, 'w', newline='') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=DATA_HEADER)
+        writer.writeheader()
+        for elem in data:
+            if elem.get('id') == id:
+                continue
+            writer.writerow(elem)
+
