@@ -6,10 +6,10 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='format_question_html.css') }}">
 </head>
 <body bgcolor="#f0ffff">
-<h1>{{ question_row.title }}</h1>
-<h2>{{ question_row.message }}</h2>
+<h1 align="center">{{ question_row.title }}</h1>
+<h2 align="center">{{ question_row.message }}</h2>
 <br>
-<table>
+<table align="right">
     <tr>
         <td>id</td>
         <td>{{ question_row.id }}</td>
@@ -48,15 +48,17 @@
 <img border="0" alt="vote-up" src="data:static/vote_up.png" width="100" height="100">
     <img border="0" alt="vote-down" src="data:static/vote_down.png" width="100" height="100">
 </p>
-<table>
+<table align="center">
     {% for answer in answer_row %}
         <tr>
+
             <td>Comment <a href='/answer/{{ answer.id }}/delete' method="post">
-        <button type="submit">Delete</button>
+        <button  type="submit">Delete</button><br>
         </a><br>{{ answer.message }} </td>
         <tr>
+
             <td>Submitted:{{ answer.submission_time }}</td>
-            <td>Vote{{ answer.cote_number }}</td>
+            <td>Vote{{ answer.cote_number }}</td><br>
 
         </tr>
 
@@ -67,8 +69,8 @@
 
 
 <form action="/question/{{ question_row.id }}" method="post">
-    <p><label for="user_answer">Your Answer::</label><br>
-        <textarea id="user_answer" name="answer_message" rows="8" cols="30" minlength="10"></textarea></p>
+    <p align="center" ><label for="user_answer">Your Answer::</label><br>
+        <textarea id="user_answer" name="answer_message" rows="15" cols="60" minlength="10"></textarea></p>
     <button type="submit">Answer</button>
 
 </form>
