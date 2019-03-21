@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='format_question_html.css') }}">
 </head>
 <body bgcolor="#f0ffff">
-<h1 align="center">{{ question_row.title }}</h1>
+<h1 align="center">{{ question_row.title }}</h1><br>
 <h2 align="center">{{ question_row.message }}</h2>
 <br>
 <table align="right">
@@ -57,7 +57,7 @@
         </a><br>{{ answer.message }} </td>
         <tr>
 
-            <td>Submitted:{{ answer.submission_time }}</td>
+            <td>{{ answer.submission_time }}</td>
             <td>Vote{{ answer.cote_number }}</td><br>
 
         </tr>

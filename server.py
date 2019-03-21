@@ -100,9 +100,9 @@ def delete_answer(answer_id):
 
 @app.route('/sort/<sort_by>')
 def sort_questions(sort_by):
-    sorted_data = data_handler.sort('question.csv', sort_by, False)
-    for row in sorted_data:
-        print(row)
+    sorted_data = data_handler.sort('question.csv', sort_by, reverse=False)
+    for elem in sorted_data:
+        elem['submission_time'] = data_handler.convert_unix_to_time(int(elem.get('submission_time')))
     return render_template('/sortedlist.html', sorted_data=sorted_data)
 
 
