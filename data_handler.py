@@ -42,15 +42,6 @@ def get_question_for_id(filename, id):
             return row
 
 
-def get_answers_for_id(filename, id):
-    data = connection.get_csv_data(filename)
-    answer = []
-    for row in data:
-        if id == row['question_id']:
-            answer.append(row)
-    return answer
-
-
 def edit_question_row(filename, dictionary, id):
     return connection.update_in_question_file(filename, question_header, dictionary, id)
 
@@ -59,10 +50,9 @@ def edit_answer_row(filename, dictionary, id):
     return connection.update_in_answer_file(filename, answer_header, dictionary, id)
 
 
-def del_question_row(filename, id):
-    return connection.delete_in_question_file(filename, question_header, id)
+def del_question_row(id):
+    return connection.delete_in_question_file(question_header, id)
 
 
 def del_answer_row(filename, id):
     return connection.update_in_answer_file(filename, answer_header, id)
-

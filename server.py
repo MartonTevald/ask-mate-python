@@ -80,13 +80,13 @@ def list_answers(id=None):
     return render_template('/question.html', question_row=question_row, answer_row=answer_row, id=id)
 
 
-@app.route('/question/<question_id>/delete', methods=['GET','POST'])
-def delete_rows(question_id):
-    pass
-    # data_handler.del_question_row('question.csv',question_id)
-    data_handler.del_question_row('question.csv', question_id)
-    data_handler.del_answer_row('answer.csv', question_id)
-    return redirect('/')
+# @app.route('/question/<question_id>/delete', methods=['GET','POST'])
+# def delete_rows(question_id):
+#     pass
+#     # data_handler.del_question_row('question.csv',question_id)
+#     data_handler.del_question_row(question_id)
+#     # data_handler.del_answer_row('answer.csv', question_id)
+#     return redirect('/')
 
 
 if __name__ == '__main__':

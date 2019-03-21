@@ -6,9 +6,9 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='format_question_html.css') }}">
 </head>
 <body bgcolor="#f0ffff">
-    <h1>{{ question_row.title }}</h1>
-    <h2>{{ question_row.message }}</h2>
-    <br>
+<h1>{{ question_row.title }}</h1>
+<h2>{{ question_row.message }}</h2>
+<br>
 <table>
     <tr>
         <td>id</td>
@@ -28,21 +28,26 @@
     </tr>
     <tr>
         <td>
-                <a href="/question/{{ question_row.id }}/edit">
-        <h3><button  type="submit">Edit</button></h3>
-        </a>
+            <a href="/question/{{ question_row.id }}/edit">
+                <h3>
+                    <button type="submit">Edit</button>
+                </h3>
+            </a>
         </td>
         <td>
             <a href="/question/{{ question_row.id }}/delete">
-        <h3><button type="submit">Delete</button></h3>
+                <h3>
+                    <button type="submit">Delete</button>
+                </h3>
 
             </a>
         </td>
     </tr>
 </table>
-
-    <img src="vote_up.png" s alt="vote_up" tyle="width:auto;">
-
+<p>
+<img border="0" alt="vote-up" src="data:static/vote_up.png" width="100" height="100">
+    <img border="0" alt="vote-down" src="data:static/vote_down.png" width="100" height="100">
+</p>
 <table>
     {% for answer in answer_row %}
         <tr>
@@ -52,23 +57,20 @@
             <td>Vote{{ answer.cote_number }}</td>
         </tr>
         <tr>
-{#            <td>{{ answer.image }}</td>#}
+            {#            <td>{{ answer.image }}</td>#}
         </tr>
-            <br>
+        <br>
 
     {% endfor %}
 </table>
 
 
-
 <form action="/question/{{ question_row.id }}" method="post">
-   <p><label for="user_answer">Your Answer::</label><br>
-       <textarea id="user_answer" name="answer_message" rows="8" cols="30" minlength="10"></textarea></p>
- <button type="submit">Answer</button>
+    <p><label for="user_answer">Your Answer::</label><br>
+        <textarea id="user_answer" name="answer_message" rows="8" cols="30" minlength="10"></textarea></p>
+    <button type="submit">Answer</button>
 
 </form>
-
-
 
 
 </body>
