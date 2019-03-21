@@ -52,18 +52,18 @@ def update_question(question_id):
         data_handler.edit_question_row('question.csv', question, question_id)
         return redirect('/')
 
-    question = data_handler.get_all_details('question.csv')
+    question = data_handler.get_question_for_id('question.csv',question_id)
 
     return render_template('add-question.html',
                            question=question,
                            form_url=url_for('update_question', question_id=question_id),
                            page_title='Update Question',
                            button_title='Update',
-                           button_page='Delete '
+                           button_page='Return '
                            )
 
 
-@app.route('/question/<id>', methods=['GET', 'POST', 'DELETE'])
+@app.route('/question/<id>', methods=['GET', 'POST'])
 def list_answers(id=None):
     question_row = data_handler.get_question_for_id('question.csv', id)
     answer_row = data_handler.get_answers_for_id('answer.csv', id)
@@ -77,11 +77,16 @@ def list_answers(id=None):
                    }
         data_handler.write_to_answer_file('answer.csv', answers)
         return redirect(url_for('list_answers', id=id))
-    elif request.method == 'DELETE':
-        data_handler.del_question_row('question.csv', id)
-        data_handler.del_answer_row('answer.csv', id)
-        return redirect('/')
     return render_template('/question.html', question_row=question_row, answer_row=answer_row, id=id)
+
+
+@app.route('/question/<question_id>/delete', methods=['GET','POST'])
+def delete_rows(question_id):
+    pass
+    # data_handler.del_question_row('question.csv',question_id)
+    data_handler.del_question_row('question.csv', question_id)
+    data_handler.del_answer_row('answer.csv', question_id)
+    return redirect('/')
 
 
 if __name__ == '__main__':
