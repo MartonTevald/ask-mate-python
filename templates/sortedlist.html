@@ -18,14 +18,14 @@
         <th>Image</th>
 
     </tr>
-    {% for question in questions %}
+    {% for row in sorted_data%}
         <tr>
-            <td>{{ question.id }}</td>
-            <td>{{ question.submission_time }}</td>
-            <td>{{ question.view_number }}</td>
-            <td>{{ question.vote_number }}</td>
-            <td><a href="/question/{{ question['id'] }} ">{{ question.title }}</a></td>
-            <td>{{ question.message }}</td>
+            <td>{{ row.id }}</td>
+            <td>{{ row.submission_time }}</td>
+            <td>{{ row.view_number }}</td>
+            <td>{{ row.vote_number }}</td>
+            <td><a href="/question/{{ row['id'] }} ">{{ row.title }}</a></td>
+            <td>{{ row.message }}</td>
             <td><img src="question.image"</td>
 
         </tr>
