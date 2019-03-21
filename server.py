@@ -82,8 +82,6 @@ def list_answers(id=None):
 
 @app.route('/question/<question_id>/delete', methods=['GET', 'POST'])
 def delete_rows(question_id):
-    pass
-    # data_handler.del_question_row('question.csv',question_id)
     data_handler.del_question_row('question.csv', question_id)
     data_handler.del_answer_row('answer.csv', question_id)
     return redirect('/')
