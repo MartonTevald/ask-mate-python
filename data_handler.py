@@ -10,7 +10,6 @@ answer_header = ['id', 'submission_time', 'vote_number', 'question_id', 'message
 def get_all_details(filename):
     return connection.get_csv_data(filename)
 
-
 def write_to_file(filename, dictionary):
     return connection.write_to_file(filename, question_header, dictionary)
 
@@ -31,8 +30,8 @@ def date_time():
 
 
 def convert_unix_to_time(submission_time):
-    return datetime.fromtimestamp(submission_time)
-    # return datetime.utcfromtimestamp(submission_time).strftime('%Y-%m-%d|%H:%M')
+    # return datetime.fromtimestamp(submission_time)
+    return datetime.utcfromtimestamp(submission_time).strftime('%Y-%m-%d|%H:%M')
 
 
 def get_question_for_id(filename, id):
@@ -67,8 +66,10 @@ def del_answer_row(filename, id):
     return connection.delete_in_answer_file(filename, answer_header, id)
 
 
-def answer_delete_by_id(filename, id):
-    return connection.delete_in_answer_by_id(filename, answer_header, id)
+
+def answer_delete_by_id(filename,id):
+    return connection.delete_in_answer_by_id(filename,answer_header,id)
+
 
 
 def sort(filename, sort_by, reverse=False):

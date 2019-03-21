@@ -8,6 +8,8 @@ app = Flask(__name__)
 @app.route('/list')
 def list():
     questions = data_handler.get_all_details('question.csv')
+    for elem in questions:
+        elem['submission_time'] = data_handler.convert_unix_to_time(int(elem.get('submission_time')))
     return render_template('list.html', questions=questions)
 
 
@@ -77,6 +79,9 @@ def list_answers(id=None):
                    }
         data_handler.write_to_answer_file('answer.csv', answers)
         return redirect(url_for('list_answers', id=id))
+    question_row['submission_time'] = data_handler.convert_unix_to_time(int(question_row.get('submission_time')))
+    for elem in answer_row:
+        elem['submission_time'] = data_handler.convert_unix_to_time(int(elem.get('submission_time')))
     return render_template('/question.html', question_row=question_row, answer_row=answer_row, id=id)
 
 
