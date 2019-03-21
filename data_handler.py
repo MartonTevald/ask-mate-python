@@ -64,10 +64,5 @@ def del_question_row(filename, id):
 
 
 def del_answer_row(filename, id):
-    return connection.update_in_answer_file(filename, id)
+    return connection.update_in_answer_file(filename, answer_header, id)
 
-
-#
-# def get_question_to_update:(filename,id):
-#     questions = get_all_details('question.csv')
-#
