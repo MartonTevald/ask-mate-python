@@ -1,13 +1,14 @@
 import connection
 import time
 from datetime import datetime
+import csv
 
 question_header = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
-answer_header = ['id','submission_time','vote_number','question_id','message','image']
+answer_header = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
 
 
 def get_all_details(filename):
-   return connection.get_csv_data(filename)
+    return connection.get_csv_data(filename)
 
 
 def write_to_file(filename, dictionary):
@@ -26,8 +27,6 @@ def get_id(filename):
 
 
 def date_time():
-    # unix_time = int(time.time())
-    # return datetime.utcfromtimestamp(unix_time).strftime('%Y-%m-%d|%H:%M')
     return int(time.time())
 
 
@@ -61,8 +60,14 @@ def edit_answer_row(filename, dictionary, id):
 
 
 def del_question_row(filename, id):
-    return connection.delete_in_question_file(filename, id)
+    return connection.delete_in_question_file(filename, question_header, id)
 
 
 def del_answer_row(filename, id):
     return connection.update_in_answer_file(filename, id)
+
+
+#
+# def get_question_to_update:(filename,id):
+#     questions = get_all_details('question.csv')
+#
