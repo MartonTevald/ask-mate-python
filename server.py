@@ -130,21 +130,20 @@ def question_vote_down(question_id):
 
 @app.route('/answer/<answer_id>/vote-up', methods=['POST', 'GET'])
 def question_answer_up(answer_id):
-    # answer = data_handler.get_answers_for_id('answer.csv', answer_id)
-    # answer['vote_number'] = int(answer['vote_number'])
-    # answer['vote_number'] = answer['vote_number'] + 1
-    # data_handler.edit_question_row('answer.csv', answer, answer_id)
+    answer = data_handler.get_answers_for_vote('answer.csv', answer_id)
+    answer['vote_number'] = int(answer['vote_number'])
+    answer['vote_number'] = answer['vote_number'] + 1
+    data_handler.edit_answer_row('answer.csv', answer, answer_id)
     return redirect('/')
 
 
 @app.route('/answer/<answer_id>/vote-down', methods=['POST', 'GET'])
 def question_answer_down(answer_id):
-    # answer = data_handler.get_answers_for_id('answer.csv', answer_id)
-    # answer['vote_number'] = int(answer['vote_number'])
-    # answer['vote_number'] = answer['vote_number'] - 1
-    # data_handler.edit_question_row('answer.csv', answer, answer_id)
+    answer = data_handler.get_answers_for_vote('answer.csv', answer_id)
+    answer['vote_number'] = int(answer['vote_number'])
+    answer['vote_number'] = answer['vote_number'] - 1
+    data_handler.edit_answer_row('answer.csv', answer, answer_id)
     return redirect('/')
-
 
 if __name__ == '__main__':
     app.run(

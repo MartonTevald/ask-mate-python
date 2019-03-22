@@ -41,6 +41,12 @@ def get_question_for_id(filename, id):
         if id == row['id']:
             return row
 
+def get_answers_for_vote(filename, id):
+    data = connection.get_csv_data(filename)
+    for row in data:
+        if id == row['question_id']:
+            return row
+
 
 def get_answers_for_id(filename, id):
     data = connection.get_csv_data(filename)
