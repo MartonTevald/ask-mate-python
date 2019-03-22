@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 import data_handler
+import os
 
 app = Flask(__name__)
 
@@ -79,6 +80,9 @@ def list_answers(id=None):
                    }
         data_handler.write_to_answer_file('answer.csv', answers)
         return redirect(url_for('list_answers', id=id))
+    question_row['view_number'] = int(question_row['view_number'])
+    question_row['view_number'] = question_row['view_number'] + 1
+    data_handler.edit_question_row('question.csv', question_row, id)
     question_row['submission_time'] = data_handler.convert_unix_to_time(int(question_row.get('submission_time')))
     for elem in answer_row:
         elem['submission_time'] = data_handler.convert_unix_to_time(int(elem.get('submission_time')))
@@ -104,6 +108,42 @@ def sort_questions(sort_by):
     for elem in sorted_data:
         elem['submission_time'] = data_handler.convert_unix_to_time(int(elem.get('submission_time')))
     return render_template('/list.html', questions=sorted_data)
+
+
+@app.route('/question/<question_id>/vote-up', methods=['POST', 'GET'])
+def question_vote_up(question_id):
+    question = data_handler.get_question_for_id('question.csv', question_id)
+    question['vote_number'] = int(question['vote_number'])
+    question['vote_number'] = question['vote_number'] + 1
+    data_handler.edit_question_row('question.csv', question, question_id)
+    return redirect('/')
+
+
+@app.route('/question/<question_id>/vote-down', methods=['POST', 'GET'])
+def question_vote_down(question_id):
+    question = data_handler.get_question_for_id('question.csv', question_id)
+    question['vote_number'] = int(question['vote_number'])
+    question['vote_number'] = question['vote_number'] - 1
+    data_handler.edit_question_row('question.csv', question, question_id)
+    return redirect('/')
+
+
+@app.route('/answer/<answer_id>/vote-up', methods=['POST', 'GET'])
+def question_answer_up(answer_id):
+    # answer = data_handler.get_answers_for_id('answer.csv', answer_id)
+    # answer['vote_number'] = int(answer['vote_number'])
+    # answer['vote_number'] = answer['vote_number'] + 1
+    # data_handler.edit_question_row('answer.csv', answer, answer_id)
+    return redirect('/')
+
+
+@app.route('/answer/<answer_id>/vote-down', methods=['POST', 'GET'])
+def question_answer_down(answer_id):
+    # answer = data_handler.get_answers_for_id('answer.csv', answer_id)
+    # answer['vote_number'] = int(answer['vote_number'])
+    # answer['vote_number'] = answer['vote_number'] - 1
+    # data_handler.edit_question_row('answer.csv', answer, answer_id)
+    return redirect('/')
 
 
 if __name__ == '__main__':

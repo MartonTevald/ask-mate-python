@@ -82,3 +82,12 @@ def sort_ascending(filename, sort_by):
     if sort_by == sort_by:
         return sorted(data, key=lambda k: k[sort_by], reverse=True)
 
+
+
+
+
+def vote_up_(filename):
+    # data = open(filename)
+    # for elem in data:
+    #     elem['vote_number'] = elem['vote_number'] + str(1)
+    pass

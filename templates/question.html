@@ -43,10 +43,15 @@
         </td>
     </tr>
 </table>
-<p>
-    <img border="0" alt="vote-up" src="data:static/vote_up.png" width="100" height="100">
-    <img border="0" alt="vote-down" src="data:static/vote_down.png" width="100" height="100">
-</p>
+<form action="/question/{{ question_row.id }}/vote-up" method="post">
+<label for="question_up_vote"></label>
+    <button id="question_up_vote" type="submit">Vote-up</button></form>
+<form action="/question/{{ question_row.id }}/vote-down" method="post">
+<label for="question_up_down"></label>
+    <button id="question_up_down" type="submit">Vote-down</button></form>
+
+<h3><a href="/">Home</a></h3>
+
 <table align="center">
     {% for answer in answer_row %}
         <tr>
@@ -56,9 +61,17 @@
                 <br>
             </a><br>{{ answer.message }} </td>
         <tr>
-
+            <td>{{ answer.vote_number }}</td>
             <td>{{ answer.submission_time }}</td>
-            <td>Vote{{ answer.cote_number }}</td>
+            <td>{{ answer.cote_number }}<br>
+            <form action="/answer/{{ answer.id }}/vote-up" method="post">
+            <label for="vote_up"></label>
+            <button id="vote_up" type="submit">Vote-up</button></form>
+
+
+            <form action="/answer/{{ answer.id }}/vote-down" method="post">
+            <label for="vote_down"></label>
+            <button id="vote_down" type="submit">Vote-down</button></form>
             <br>
 
         </tr>

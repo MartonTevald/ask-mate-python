@@ -12,7 +12,7 @@
 <h1 align="left">T i d d e R</h1>
 <table align="center">
     <tr>
-        <th><a href="/id">Id</th>
+        <th><a href="/id" >Id</th>
         <th><a href="/submission_time">Submission time</a></th>
         <th><a href="/view_number"> View number</a></th>
         <th><a href="/vote_number"> Vote number</a></th>
@@ -27,7 +27,7 @@
             <td>{{ question.submission_time }}</td>
             <td>{{ question.view_number }}</td>
             <td>{{ question.vote_number }}</td>
-            <td><a href="/question/{{ question['id'] }} ">{{ question.title }}</a></td>
+            <td><a href="/question/{{ question['id'] }} " methods="get">{{ question.title }}</a></td>
             <td>{{ question.message }}</td>
             <td><img src="question.image"</td>
 
