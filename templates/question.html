@@ -12,10 +12,9 @@
 <h1 align="center">{{ question_row.title }}</h1><br>
 <h2  align="center">{{ question_row.message }}</h2>
 <br>
-<table align="right">
+<table align="center">
     <tr>
         <td align="center">id : {{ question_row.id }}</td>
-
     </tr>
     <tr>
         <td align="center">{{ question_row.submission_time }}</td>
@@ -26,19 +25,17 @@
     <tr>
         <td align="center">{{ question_row.image }}</td>
     </tr>
-    <tr align="left">
-
+    <tr align="center">
         <a href="/question/{{ question_row.id }}/edit">
             <h3>
                 <button type="submit">Edit</button>
             </h3>
         </a>
-        <td align="center">
+        <td>
             <a href="/question/{{ question_row.id }}/delete">
                 <h3>
                     <button type="submit">Delete</button>
                 </h3>
-
             </a>
         </td>
     </tr>
@@ -85,7 +82,7 @@
 <form action="/question/{{ question_row.id }}" method="post">
     <p align="center"><label for="answer_message">Your Answer::</label><br>
         <textarea id="answer_message" name="answer_message" rows="15" cols="60" minlength="10"></textarea></p>
-    <button type="submit">Answer</button>
+    <button  type="submit">Answer</button>
 {#    <a href="/add_question">#}
 {#    <button type="submit">New Answer</button>#}
 </form>
