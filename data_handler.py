@@ -41,11 +41,13 @@ def get_question_for_id(filename, id):
         if id == row['id']:
             return row
 
-def get_answers_for_vote(filename, id):
-    data = connection.get_csv_data(filename)
+
+def get_answer_for_vote(question_id,answer_id):
+    data = connection.get_csv_data('answer.csv')
+    sinlge_malt = []
     for row in data:
-        if id == row['question_id']:
-            return row
+        if question_id in answer_id:
+            sinlge_malt.append(row)
 
 
 def get_answers_for_id(filename, id):
@@ -65,6 +67,10 @@ def edit_answer_row(filename, dictionary, id):
     return connection.update_in_answer_file(filename, answer_header, dictionary, id)
 
 
+def edit_answer_id(filename, dictionary, answer_id):
+    return connection.update_id_in_answer_file(filename, answer_header, dictionary, answer_id)
+
+
 def del_question_row(filename, id):
     return connection.delete_in_question_file(filename, question_header, id)
 
@@ -77,19 +83,16 @@ def answer_delete_by_id(filename, id):
     return connection.delete_in_answer_by_id(filename, answer_header, id)
 
 
-def sort_ascending(filename, sort_by):
-    data = connection.get_csv_data(filename)
-    for values in data:
-        values['id'] = int(values['id'])
-        values['view_number'] = int(values['view_number'])
-        values['vote_number'] = int(values['vote_number'])
-    if sort_by == 'title':
-        return sorted(data, key=lambda k: k['title'])
-    if sort_by == sort_by:
-        return sorted(data, key=lambda k: k[sort_by], reverse=True)
-
-
-
+# def sort_ascending(filename, sort_by):
+#     data = connection.get_csv_data(filename)
+#     for values in data:
+#         values['id'] = int(values['id'])
+#         values['view_number'] = int(values['view_number'])
+#         values['vote_number'] = int(values['vote_number'])
+#     if sort_by == 'title':
+#         return sorted(data, key=lambda k: k['title'])
+#     if sort_by == sort_by:
+#         return sorted(data, key=lambda k: k[sort_by], reverse=True)
 
 
 def vote_up_(filename):

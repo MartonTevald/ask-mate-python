@@ -6,87 +6,83 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='format_question_html.css') }}">
 </head>
 <body bgcolor="#f0ffff">
-<p>
-    <img border="0" alt="T i d d e r" src="static/on_off_logo.png" width="150" height="80">
-</p>
-<h1 align="center">{{ question_row.title }}</h1><br>
-<h2  align="center">{{ question_row.message }}</h2>
+<img border="0" alt="T i d d e r" src="static/on_off_logo.png" width="150" height="80">
+<h1>{{ question_row.title }}</h1><br>
+<h3>{{ question_row.message }}</h3>
 <br>
-<table align="center">
+<table>
     <tr>
-        <td align="center">id : {{ question_row.id }}</td>
+        <td>ID : {{ question_row.id }} | {{ question_row.submission_time }}</td>
     </tr>
     <tr>
-        <td align="center">{{ question_row.submission_time }}</td>
+        <td>vote : {{ question_row.vote_number }}</td>
     </tr>
     <tr>
-        <td align="center">vote : {{ question_row.vote_number }}</td>
+        <td>{{ question_row.image }}</td>
     </tr>
-    <tr>
-        <td align="center">{{ question_row.image }}</td>
-    </tr>
-    <tr align="center">
-        <a href="/question/{{ question_row.id }}/edit">
-            <h3>
-                <button type="submit">Edit</button>
-            </h3>
+    <a href="/question/{{ question_row.id }}/edit">
+        <button type="submit">Edit</button>
+        <a href="/question/{{ question_row.id }}/delete">
+            <button type="submit">Delete</button>
         </a>
-        <td>
-            <a href="/question/{{ question_row.id }}/delete">
-                <h3>
-                    <button type="submit">Delete</button>
-                </h3>
-            </a>
-        </td>
-    </tr>
 </table>
 <form action="/question/{{ question_row.id }}/vote-up" method="post">
-<label for="question_up_vote"></label>
-    <button id="question_up_vote" type="submit">Vote-up</button></form>
+    <label for="question_up_vote"></label>
+    <button id="question_up_vote" type="submit">Vote-up</button>
+</form>
 <form action="/question/{{ question_row.id }}/vote-down" method="post">
-<label for="question_up_down"></label>
-    <button id="question_up_down" type="submit">Vote-down</button></form>
+    <label for="question_up_down"></label>
+    <button id="question_up_down" type="submit">Vote-down</button>
+</form>
 
-<h3><a href="/">Home</a></h3>
+<h3><a href="/">
+    <button>Home</button>
+</a></h3>
 
-<table align="center">
+<table>
     {% for answer in answer_row %}
         <tr>
-
-            <td>Comment <a href='/answer/{{ answer.id }}/delete' method="post">
+            <br>
+            <td><a href='/answer/{{ answer.id }}/delete' method="post">
                 <button type="submit">Delete</button>
                 <br>
-            </a><br>{{ answer.message }} </td>
+            </a></td>
+        <tr>
+            <td>{{ answer.message }}</td>
+        </tr>
         <tr>
             <td>{{ answer.vote_number }}</td>
             <td>{{ answer.submission_time }}</td>
-            <td>{{ answer.cote_number }}<br>
-            <form action="/answer/{{ answer.id }}/vote-up" method="post">
-            <label for="vote_up"></label>
-            <button id="vote_up" type="submit">Vote-up</button></form>
-
-
-            <form action="/answer/{{ answer.id }}/vote-down" method="post">
-            <label for="vote_down"></label>
-            <button id="vote_down" type="submit">Vote-down</button></form>
+            <td>{{ answer.id }}</td>
             <br>
-
         </tr>
-
+        <td>
+            <form action="/question/{{ question_row.id }}/{{ answer.id }}/vote-up" method="post">
+                <label for="vote-up"></label>
+                <button id="vote-up" type="submit">Vote-up</button>
+            </form>
+            <br>
+            <form action="/question/{{ question_row.id }}/{{ answer.id }}/vote-up" method="post">
+                <label for="vote-down"></label>
+                <button id="vote-down" type="submit">Vote-down</button>
+            </form>
+        </td>
         <br>
-
     {% endfor %}
+    <br>
 </table>
-
-
-<form action="/question/{{ question_row.id }}" method="post">
-    <p align="center"><label for="answer_message">Your Answer::</label><br>
-        <textarea id="answer_message" name="answer_message" rows="15" cols="60" minlength="10"></textarea></p>
-    <button  type="submit">Answer</button>
-{#    <a href="/add_question">#}
-{#    <button type="submit">New Answer</button>#}
-</form>
-
+<table>
+    <tr>
+        <form action="/question/{{ question_row.id }}" method="post">
+            <p><label for="answer_message">Your Answer::</label><br>
+                <textarea id="answer_message" name="answer_message" rows="8" cols="50" minlength="10"></textarea>
+            </p>
+            <button type="submit">Answer</button>
+            {#    <a href="/add_question">#}
+            {#    <button type="submit">New Answer</button>#}
+        </form>
+    </tr>
+</table>
 
 </body>
 </html>
