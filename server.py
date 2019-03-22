@@ -75,8 +75,8 @@ def list_answers(id=None):
                    'submission_time': data_handler.date_time(),
                    'vote_number': 0,
                    'question_id': id,
-                   'message': request.form['answer_message'],
-                   'image': 0
+                   'message': request.form.get('answer_message'),
+                   'image': request.form.get('image'),
                    }
         data_handler.write_to_answer_file('answer.csv', answers)
         return redirect(url_for('list_answers', id=id))
@@ -131,6 +131,7 @@ def question_vote_down(question_id):
 @app.route('/answer/<answer_id>/vote-up', methods=['POST', 'GET'])
 def question_answer_up(answer_id):
     answer = data_handler.get_answers_for_vote('answer.csv', answer_id)
+    print(answer)
     answer['vote_number'] = int(answer['vote_number'])
     answer['vote_number'] = answer['vote_number'] + 1
     data_handler.edit_answer_row('answer.csv', answer, answer_id)
@@ -144,6 +145,7 @@ def question_answer_down(answer_id):
     answer['vote_number'] = answer['vote_number'] - 1
     data_handler.edit_answer_row('answer.csv', answer, answer_id)
     return redirect('/')
+
 
 if __name__ == '__main__':
     app.run(

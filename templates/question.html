@@ -83,10 +83,11 @@
 
 
 <form action="/question/{{ question_row.id }}" method="post">
-    <p align="center"><label for="user_answer">Your Answer::</label><br>
-        <textarea id="user_answer" name="answer_message" rows="15" cols="60" minlength="10"></textarea></p>
+    <p align="center"><label for="answer_message">Your Answer::</label><br>
+        <textarea id="answer_message" name="answer_message" rows="15" cols="60" minlength="10"></textarea></p>
     <button type="submit">Answer</button>
-
+{#    <a href="/add_question">#}
+{#    <button type="submit">New Answer</button>#}
 </form>
 
 
