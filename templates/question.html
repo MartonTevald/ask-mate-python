@@ -57,12 +57,12 @@
             <br>
         </tr>
         <td>
-            <form action="/question/{{ question_row.id }}/{{ answer.id }}/vote-up" method="post">
+            <form action="/answer/{{ answer.id }}/vote-up" method="post">
                 <label for="vote-up"></label>
                 <button id="vote-up" type="submit">Vote-up</button>
             </form>
             <br>
-            <form action="/question/{{ question_row.id }}/{{ answer.id }}/vote-up" method="post">
+            <form action="/answer/{{ answer.id }}/vote-down" method="post">
                 <label for="vote-down"></label>
                 <button id="vote-down" type="submit">Vote-down</button>
             </form>

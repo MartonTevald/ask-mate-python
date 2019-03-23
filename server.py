@@ -70,7 +70,6 @@ def update_question(question_id):
 def list_answers(id=None):
     question_row = data_handler.get_question_for_id('question.csv', id)
     answer_row = data_handler.get_answers_for_id('answer.csv', id)
-    print(answer_row)
     if request.method == 'POST':
         answers = {'id': data_handler.get_id('answer.csv'),
                    'submission_time': data_handler.date_time(),
@@ -126,21 +125,20 @@ def question_vote_down(question_id):
     return redirect(url_for('list_answers', id=question_id))
 
 
-@app.route('/question/<question_id>/<answer_id>/vote-up', methods=['POST', 'GET'])
-def question_answer_up(question_id,answer_id):
-    answer = data_handler.get_answer_for_vote(question_id,answer_id)
-    print(answer)
-    # answer['vote_number'] = int(answer['vote_number']) + 1
-    # data_handler.edit_answer_id('answer.csv', answer, answer_id)
-    return redirect(url_for('list_answers', id=question_id))
+@app.route('/answer/<answer_id>/vote-up', methods=['POST', 'GET'])
+def question_answer_up(answer_id):
+    answer = data_handler.get_answer_for_vote(answer_id)
+    answer['vote_number'] = int(answer['vote_number']) + 1
+    data_handler.edit_answer_id('answer.csv', answer, answer_id)
+    return redirect('/')
 
 
-@app.route('/question/<question_id>/<answer_id>/vote-up', methods=['POST', 'GET'])
-def question_answer_down(question_id,answer_id):
-    # answer = data_handler.get_answer_for_vote('answer.csv', answer_id)
-    # answer['vote_number'] = int(answer['vote_number']) - 1
-    # data_handler.edit_answer_row('answer.csv', answer, answer_id)
-    return redirect(url_for('list_answers', id=question_id))
+@app.route('/answer/<answer_id>/vote-down', methods=['POST', 'GET'])
+def question_answer_down(answer_id):
+    answer = data_handler.get_answer_for_vote(answer_id)
+    answer['vote_number'] = int(answer['vote_number']) - 1
+    data_handler.edit_answer_id('answer.csv', answer, answer_id)
+    return redirect('/')
 
 
 if __name__ == '__main__':

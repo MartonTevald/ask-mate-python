@@ -42,12 +42,11 @@ def get_question_for_id(filename, id):
             return row
 
 
-def get_answer_for_vote(question_id,answer_id):
+def get_answer_for_vote(answer_id):
     data = connection.get_csv_data('answer.csv')
-    sinlge_malt = []
     for row in data:
-        if question_id in answer_id:
-            sinlge_malt.append(row)
+        if row['id'] == answer_id:
+            return row
 
 
 def get_answers_for_id(filename, id):
