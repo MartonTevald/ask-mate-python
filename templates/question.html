@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='format_question_html.css') }}">
 </head>
 <body bgcolor="#f0ffff">
-<img border="0" alt="T i d d e r" src="static/on_off_logo.png" width="150" height="80">
+<img border="0" alt="T i d d e r" src="/static/on_off_logo.png" width="150" height="80">
 <h1>{{ question_row.title }}</h1><br>
 <h3>{{ question_row.message }}</h3>
 <br>
@@ -18,7 +18,7 @@
         <td>vote : {{ question_row.vote_number }}</td>
     </tr>
     <tr>
-        <td>{{ question_row.image }}</td>
+        <td><img src="{{ question_row.image }}" alt="missing" width="150" height="150"></td>
     </tr>
     <a href="/question/{{ question_row.id }}/edit">
         <button type="submit">Edit</button>
@@ -54,6 +54,7 @@
             <td>{{ answer.vote_number }}</td>
             <td>{{ answer.submission_time }}</td>
             <td>{{ answer.id }}</td>
+            <td><img src="{{ answer.image }}" alt="missing" width="150" height="150"></td>
             <br>
         </tr>
         <td>

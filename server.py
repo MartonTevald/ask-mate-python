@@ -71,12 +71,13 @@ def list_answers(id=None):
     question_row = data_handler.get_question_for_id('question.csv', id)
     answer_row = data_handler.get_answers_for_id('answer.csv', id)
     if request.method == 'POST':
+        # image = if request.form.get('image') else 'No image'  # ez nemtom még így jó-e
         answers = {'id': data_handler.get_id('answer.csv'),
                    'submission_time': data_handler.date_time(),
                    'vote_number': 0,
                    'question_id': id,
                    'message': request.form.get('answer_message'),
-                   'image': 0,
+                   'image': request.form.get('image'),
                    }
         data_handler.write_to_answer_file('answer.csv', answers)
         return redirect(url_for('list_answers', id=id))

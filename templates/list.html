@@ -7,7 +7,7 @@
 </head>
 <body bgcolor="#f0ffff">
 <p align="left"><a  href="https://www.teddir.com">
-        <img  border="0" alt="teddir" src="static/on_off_logo.png" width="150" height="80">
+        <img  border="0" alt="teddir" src="/static/on_off_logo.png" width="150" height="80">
     </a></p>
 <h1 align="left">T i d d e R</h1>
 <table align="center">
@@ -29,7 +29,7 @@
             <td>{{ question.vote_number }}</td>
             <td><a href="/question/{{ question['id'] }} " methods="get">{{ question.title }}</a></td>
             <td>{{ question.message }}</td>
-            <td><img src="question.image"</td>
+            <td><img src="{{ question.image }}" alt="no file" width="150" height="150"></td>
 
         </tr>
     {% endfor %}
