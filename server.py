@@ -21,7 +21,7 @@ def add_question():
         return render_template('add-question.html',
                                question=empty_questions,
                                form_url=url_for('add_question'),
-                               page_title='Add Questions',
+                               page_title='Add New Question',
                                button_title='Submit',
                                button_page='Return'
                                )

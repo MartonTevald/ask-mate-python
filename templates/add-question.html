@@ -15,18 +15,18 @@
     <input type="hidden" name="view_number" value="0">
     <input type="hidden" name="vote_number" value="0">
     <p>
-        <label for="title">{{ page_title }}</label><br>
+        <label for="title">Question title:</label><br>
         <input type="text" name="title" id="title" required minlength="3"
                value="{{ question.title }}">
     </p>
     <p>
-        <label for="message">
+        <label for="message">Question text:</label><br>
             <textarea name="message" id="message" cols="80" rows="8" required>{{ question.message }}</textarea>
-        </label>
+
     </p>
     <p>
-        {#        <label for="image">{{ question.image }} </label>#}
-
+        <label for="upload_pic">Upload a picture:</label><br>
+        <input type="url" name="image" id="upload_pic">
     </p>
     <p>
 
