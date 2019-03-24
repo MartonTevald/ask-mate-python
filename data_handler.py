@@ -58,6 +58,13 @@ def get_answers_for_id(filename, id):
     return answer
 
 
+def get_question_id_for_answer_id(filename, answer_id):
+    data = connection.get_csv_data(filename)
+    for row in data:
+        if answer_id == row['id']:
+            return row['question_id']
+
+
 def edit_question_row(filename, dictionary, id):
     return connection.update_in_question_file(filename, question_header, dictionary, id)
 

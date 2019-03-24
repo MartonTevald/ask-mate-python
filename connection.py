@@ -52,7 +52,6 @@ def update_id_in_answer_file(filename, DATA_HEADER, dictionary, id):
                 writer.writerow(elem)
 
 
-
 def delete_in_question_file(filename, DATA_HEADER, id):
     data = get_csv_data(filename)
     with open(filename, 'w', newline='') as csvfile:
