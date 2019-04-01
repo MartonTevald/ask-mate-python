@@ -45,12 +45,24 @@ def add_new_question(cursor, new_data):
 #     # return datetime.fromtimestamp(submission_time)
 #     return datetime.utcfromtimestamp(submission_time).strftime('%Y-%m-%d|%H:%M')
 
+@connection.connection_handler
+def get_question_for_id(cursor, id):
+    cursor.execute("""
+                    SELECT * FROM question
+                    WHERE id = %(id)s """,
+                   {'id': id})
+    question = cursor.fetchall()
+    return question
 
-def get_question_for_id(filename, id):
-    data = connection.get_csv_data(filename)
-    for row in data:
-        if id == row['id']:
-            return row
+
+@connection.connection_handler
+def get_answers_for_id(cursor, id):
+    cursor.execute("""
+                    SELECT * FROM answer
+                    WHERE question_id = %(id)s""",
+                   {'id': id})
+    answers = cursor.fetchall()
+    return answers
 
 
 def get_answer_for_vote(answer_id):
@@ -58,15 +70,6 @@ def get_answer_for_vote(answer_id):
     for row in data:
         if row['id'] == answer_id:
             return row
-
-
-def get_answers_for_id(filename, id):
-    data = connection.get_csv_data(filename)
-    answer = []
-    for row in data:
-        if id == row['question_id']:
-            answer.append(row)
-    return answer
 
 
 def get_question_id_for_answer_id(filename, answer_id):
