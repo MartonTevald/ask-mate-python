@@ -64,20 +64,18 @@ def update_question(question_id):
 
 
 @app.route('/question/<id>', methods=['GET', 'POST'])
-def list_answers(id):
+def list_answers(id=None):
     question_row = data_handler.get_question_for_id(id)
-    print(question_row)
     answer_row = data_handler.get_answers_for_id(id)
     if request.method == 'POST':
         # image = if request.form.get('image') else 'No image'  # ez nemtom még így jó-e
-        answers = {'id': data_handler.get_id('answer.csv'),
-                   'submission_time': data_handler.date_time(),
+        answers = {'submission_time': data_handler.date_time(),
                    'vote_number': 0,
                    'question_id': id,
                    'message': request.form.get('answer_message'),
                    'image': request.form.get('image'),
                    }
-        data_handler.write_to_answer_file('answer.csv', answers)
+        data_handler.add_new_answer(answers)
         return redirect(url_for('list_answers', id=id))
     # question_row['view_number'] = int(question_row['view_number']) + 1
     # data_handler.edit_question_row('question.csv', question_row, id)

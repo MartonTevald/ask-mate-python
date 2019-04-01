@@ -20,18 +20,18 @@
     <tr>
         <td><img src="{{ question_row[0].image }}" alt="missing" width="150" height="150"></td>
     </tr>
-    <a href="/question/{{ question_row.id }}/edit">
+    <a href="/question/{{ question_row[0].id }}/edit">
         <button type="submit">Edit</button>
     </a>
-    <a href="/question/{{ question_row.id }}/delete">
+    <a href="/question/{{ question_row[0].id }}/delete">
         <button type="submit">Delete</button>
     </a>
 </table>
-<form action="/question/{{ question_row.id }}/vote-up" method="post">
+<form action="/question/{{ question_row[0].id }}/vote-up" method="post">
     <label for="question_up_vote"></label>
     <button id="question_up_vote" type="submit">Vote-up</button>
 </form>
-<form action="/question/{{ question_row.id }}/vote-down" method="post">
+<form action="/question/{{ question_row[0].id }}/vote-down" method="post">
     <label for="question_up_down"></label>
     <button id="question_up_down" type="submit">Vote-down</button>
 </form>
@@ -75,7 +75,7 @@
 </table>
 <table>
     <tr>
-        <form action="/question/{{ question_row.id }}" method="post">
+        <form action="/question/{{ question_row[0].id }}" method="post">
             <p><label for="answer_message">Your Answer::</label><br>
                 <textarea id="answer_message" name="answer_message" rows="8" cols="50" minlength="10"></textarea>
             </p>

@@ -28,6 +28,15 @@ def add_new_question(cursor, new_data):
                       'title': new_data['title'], 'message': new_data['message'], 'image': new_data['image']})
 
 
+@connection.connection_handler
+def add_new_answer(cursor, new_data):
+    cursor.execute("""INSERT INTO answer (submission_time,question_id,vote_number, message,image)
+                    VALUES (%(submission_time)s,%(question_id)s,%(vote_number)s,%(message)s,%(image)s)"""
+                   , {'submission_time': new_data['submission_time'], 'question_id': new_data['question_id'],
+                      'vote_number': new_data['vote_number'],
+                      'message': new_data['message'], 'image': new_data['image']})
+
+
 # def write_to_file(filename, dictionary):
 #     return connection.write_to_file(filename, question_header, dictionary)
 #
