@@ -14,23 +14,30 @@ def get_all_details(cursor):
     return questions
 
 
-def write_to_file(filename, dictionary):
-    return connection.write_to_file(filename, question_header, dictionary)
-
-
-def write_to_answer_file(filename, dictionary):
-    return connection.write_to_file(filename, answer_header, dictionary)
-
-
-# def get_id(filename):
-#     existing_data = get_all_details(filename)
-#     if len(existing_data) == 0:
-#         return '1'
-#     return str(int(existing_data[-1]['id']) + 1)
-
-
 def date_time():
-    return int(time.time())
+    dt = datetime.now()
+    return dt
+
+
+@connection.connection_handler
+def add_new_question(cursor, new_data):
+    cursor.execute("""INSERT INTO question (submission_time, view_number, vote_number, title, message, image)
+                    VALUES (%(submission_time)s,%(view_number)s,%(vote_number)s,%(title)s,%(message)s,%(image)s)"""
+                   , {'submission_time': new_data['submission_time'],
+                      'view_number': new_data['view_number'], 'vote_number': new_data['vote_number'],
+                      'title': new_data['title'], 'message': new_data['message'], 'image': new_data['image']})
+
+
+# def write_to_file(filename, dictionary):
+#     return connection.write_to_file(filename, question_header, dictionary)
+#
+#
+# def write_to_answer_file(filename, dictionary):
+#     return connection.write_to_file(filename, answer_header, dictionary)
+
+
+# def date_time():
+#     return int(time.time())
 
 
 #

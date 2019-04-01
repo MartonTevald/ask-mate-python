@@ -25,15 +25,14 @@ def add_question():
                                )
 
     if request.method == 'POST':
-        question = {'id': data_handler.get_id('question.csv'),
-                    'submission_time': int(data_handler.date_time()),
+        question = {'submission_time': data_handler.date_time(),
                     'view_number': request.form.get('view_number'),
                     'vote_number': request.form.get('vote_number'),
                     'title': request.form.get('title'),
                     'message': request.form.get('message'),
                     'image': request.form.get('image'),
                     }
-        data_handler.write_to_file('question.csv', question)
+        data_handler.add_new_question(question)
         return redirect('/')
 
 
