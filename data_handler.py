@@ -71,12 +71,13 @@ def get_question_id_for_answer_id(filename, answer_id):
             return row['question_id']
 
 
+@connection.connection_handler
 def del_question_row(cursor, id):
     cursor.execute("""
-                    DELETE FROM question
-                    WHERE id = %(id)s;
-                    DELETE FROM answer
-                    WHERE question_id = %(id)s """,
+                DELETE FROM answer
+                WHERE question_id = %(id)s;
+                DELETE FROM question
+                WHERE id = %(id)s""",
                    {'id': id})
     # return connection.delete_in_question_file(filename, question_header, id)
 
