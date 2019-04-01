@@ -37,13 +37,6 @@ def add_new_answer(cursor, new_data):
                       'message': new_data['message'], 'image': new_data['image']})
 
 
-# def write_to_file(filename, dictionary):
-#     return connection.write_to_file(filename, question_header, dictionary)
-#
-#
-# def write_to_answer_file(filename, dictionary):
-#     return connection.write_to_file(filename, answer_header, dictionary)
-
 @connection.connection_handler
 def get_question_for_id(cursor, id):
     cursor.execute("""
@@ -78,20 +71,26 @@ def get_question_id_for_answer_id(filename, answer_id):
             return row['question_id']
 
 
-def edit_question_row(filename, dictionary, id):
-    return connection.update_in_question_file(filename, question_header, dictionary, id)
+def del_question_row(cursor, id):
+    cursor.execute("""
+                    DELETE FROM question
+                    WHERE id = %(id)s;
+                    DELETE FROM answer
+                    WHERE question_id = %(id)s """,
+                   {'id': id})
+    # return connection.delete_in_question_file(filename, question_header, id)
 
 
 def edit_answer_row(filename, dictionary, id):
     return connection.update_in_answer_file(filename, answer_header, dictionary, id)
 
 
+def edit_question_row(filename, dictionary, id):
+    return connection.update_in_question_file(filename, question_header, dictionary, id)
+
+
 def edit_answer_id(filename, dictionary, answer_id):
     return connection.update_id_in_answer_file(filename, answer_header, dictionary, answer_id)
-
-
-def del_question_row(filename, id):
-    return connection.delete_in_question_file(filename, question_header, id)
 
 
 def del_answer_row(filename, id):
