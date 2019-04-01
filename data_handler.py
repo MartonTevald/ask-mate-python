@@ -99,7 +99,7 @@ def answer_delete_by_id(filename, id):
 #         return sorted(data, key=lambda k: k['title'])
 #     if sort_by == sort_by:
 #         return sorted(data, key=lambda k: k[sort_by], reverse=True)
-
+#
 
 def vote_up_(filename):
     # data = open(filename)
