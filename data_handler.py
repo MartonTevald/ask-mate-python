@@ -3,12 +3,12 @@ import time
 from datetime import datetime
 from operator import itemgetter
 
-question_header = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
-answer_header = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
-
-
-def get_all_details(filename):
-    return connection.get_csv_data(filename)
+# question_header = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
+# answer_header = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
+#
+#
+# def get_all_details(filename):
+#     return connection.get_csv_data(filename)
 
 
 def write_to_file(filename, dictionary):
@@ -19,20 +19,20 @@ def write_to_answer_file(filename, dictionary):
     return connection.write_to_file(filename, answer_header, dictionary)
 
 
-def get_id(filename):
-    existing_data = get_all_details(filename)
-    if len(existing_data) == 0:
-        return '1'
-    return str(int(existing_data[-1]['id']) + 1)
+# def get_id(filename):
+#     existing_data = get_all_details(filename)
+#     if len(existing_data) == 0:
+#         return '1'
+#     return str(int(existing_data[-1]['id']) + 1)
 
 
 def date_time():
     return int(time.time())
 
-
-def convert_unix_to_time(submission_time):
-    # return datetime.fromtimestamp(submission_time)
-    return datetime.utcfromtimestamp(submission_time).strftime('%Y-%m-%d|%H:%M')
+#
+# def convert_unix_to_time(submission_time):
+#     # return datetime.fromtimestamp(submission_time)
+#     return datetime.utcfromtimestamp(submission_time).strftime('%Y-%m-%d|%H:%M')
 
 
 def get_question_for_id(filename, id):
@@ -100,9 +100,3 @@ def answer_delete_by_id(filename, id):
 #     if sort_by == sort_by:
 #         return sorted(data, key=lambda k: k[sort_by], reverse=True)
 #
-
-def vote_up_(filename):
-    # data = open(filename)
-    # for elem in data:
-    #     elem['vote_number'] = elem['vote_number'] + str(1)
-    pass
