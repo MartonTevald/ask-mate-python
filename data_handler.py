@@ -57,11 +57,12 @@ def get_answers_for_id(cursor, id):
     return answers
 
 
-def get_answer_for_vote(answer_id):
-    data = connection.get_csv_data('answer.csv')
-    for row in data:
-        if row['id'] == answer_id:
-            return row
+#
+# def get_answer_for_vote(answer_id):
+#     data = connection.get_csv_data('answer.csv')
+#     for row in data:
+#         if row['id'] == answer_id:
+#             return row
 
 
 @connection.connection_handler
@@ -69,13 +70,9 @@ def get_question_id_for_answer_id(cursor, answer_id):
     cursor.execute("""
                     SELECT question_id FROM answer 
                     WHERE id = %(answer_id)s""",
-                   {'answer_id': answer_id})
-    question_id = cursor.fetchall()
+                   {'answer_id': int(answer_id)})
+    question_id = cursor.fetchone()
     return question_id
-    # data = connection.get_csv_data(filename)
-    # for row in data:
-    #     if answer_id == row['id']:
-    #         return row['question_id']
 
 
 @connection.connection_handler
@@ -86,23 +83,6 @@ def del_question_row(cursor, id):
                 DELETE FROM question
                 WHERE id = %(id)s""",
                    {'id': id})
-    # return connection.delete_in_question_file(filename, question_header, id)
-
-
-def edit_answer_row(filename, dictionary, id):
-    return connection.update_in_answer_file(filename, answer_header, dictionary, id)
-
-
-def edit_question_row(filename, dictionary, id):
-    return connection.update_in_question_file(filename, question_header, dictionary, id)
-
-
-def edit_answer_id(filename, dictionary, answer_id):
-    return connection.update_id_in_answer_file(filename, answer_header, dictionary, answer_id)
-
-
-def del_answer_row(filename, id):
-    return connection.delete_in_answer_file(filename, answer_header, id)
 
 
 @connection.connection_handler
@@ -111,7 +91,22 @@ def answer_delete_by_id(cursor, id):
                     DELETE FROM answer
                     WHERE id = %(id)s""",
                    {'id': id})
-    # return connection.delete_in_answer_by_id(filename, answer_header, id)
+
+#
+# def edit_answer_row(filename, dictionary, id):
+#     return connection.update_in_answer_file(filename, answer_header, dictionary, id)
+#
+#
+# def edit_question_row(filename, dictionary, id):
+#     return connection.update_in_question_file(filename, question_header, dictionary, id)
+#
+#
+# def edit_answer_id(filename, dictionary, answer_id):
+#     return connection.update_id_in_answer_file(filename, answer_header, dictionary, answer_id)
+#
+#
+# def del_answer_row(filename, id):
+#     return connection.delete_in_answer_file(filename, answer_header, id)
 
 # def sort_ascending(filename, sort_by):
 #     data = connection.get_csv_data(filename)
