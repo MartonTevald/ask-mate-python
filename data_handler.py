@@ -1,11 +1,7 @@
 import connection
 import time
 from datetime import datetime
-from operator import itemgetter
 
-
-# question_header = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
-# answer_header = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
 
 @connection.connection_handler
 def get_all_details(cursor):
@@ -63,8 +59,8 @@ def get_question_id_for_answer_id(cursor, answer_id):
                     SELECT question_id FROM answer 
                     WHERE id = %(answer_id)s""",
                    {'answer_id': int(answer_id)})
-    question_id = cursor.fetchone()
-    return question_id
+    question_id = cursor.fetchall()
+    return question_id[0].get('question_id')
 
 
 @connection.connection_handler
@@ -84,26 +80,45 @@ def answer_delete_by_id(cursor, id):
                     WHERE id = %(id)s""",
                    {'id': id})
 
-#
-# def get_answer_for_vote(answer_id):
-#     data = connection.get_csv_data('answer.csv')
-#     for row in data:
-#         if row['id'] == answer_id:
-#             return row
-# def edit_answer_row(filename, dictionary, id):
-#     return connection.update_in_answer_file(filename, answer_header, dictionary, id)
-#
-#
-# def edit_question_row(filename, dictionary, id):
-#     return connection.update_in_question_file(filename, question_header, dictionary, id)
-#
-#
-# def edit_answer_id(filename, dictionary, answer_id):
-#     return connection.update_id_in_answer_file(filename, answer_header, dictionary, answer_id)
-#
-#
-# def del_answer_row(filename, id):
-#     return connection.delete_in_answer_file(filename, answer_header, id)
+
+@connection.connection_handler
+def question_view_number_counter(cursor, id):
+    cursor.execute("""
+                UPDATE question
+                SET view_number = view_number +1
+                WHERE id = %(id)s""", {'id': id})
+
+
+@connection.connection_handler
+def question_vote_up(cursor, id):
+    cursor.execute("""
+                UPDATE question
+                SET vote_number = vote_number +1
+                WHERE id = %(id)s""", {'id': id})
+
+
+@connection.connection_handler
+def question_vote_down(cursor, id):
+    cursor.execute("""
+                UPDATE  question
+                SET  vote_number = vote_number -1
+                WHERE id= %(id)s""", {'id': id})
+
+
+@connection.connection_handler
+def answer_vote_up(cursor, id):
+    cursor.execute("""
+                UPDATE answer
+                SET vote_number = vote_number +1
+                WHERE id = %(id)s""", {'id': id})
+
+
+@connection.connection_handler
+def answer_vote_down(cursor, id):
+    cursor.execute("""
+                UPDATE answer
+                SET vote_number = vote_number -1
+                WHERE id = %(id)s""", {'id': id})
 
 # def sort_ascending(filename, sort_by):
 #     data = connection.get_csv_data(filename)
