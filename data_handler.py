@@ -57,14 +57,6 @@ def get_answers_for_id(cursor, id):
     return answers
 
 
-#
-# def get_answer_for_vote(answer_id):
-#     data = connection.get_csv_data('answer.csv')
-#     for row in data:
-#         if row['id'] == answer_id:
-#             return row
-
-
 @connection.connection_handler
 def get_question_id_for_answer_id(cursor, answer_id):
     cursor.execute("""
@@ -93,6 +85,11 @@ def answer_delete_by_id(cursor, id):
                    {'id': id})
 
 #
+# def get_answer_for_vote(answer_id):
+#     data = connection.get_csv_data('answer.csv')
+#     for row in data:
+#         if row['id'] == answer_id:
+#             return row
 # def edit_answer_row(filename, dictionary, id):
 #     return connection.update_in_answer_file(filename, answer_header, dictionary, id)
 #
