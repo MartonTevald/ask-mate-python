@@ -90,8 +90,7 @@ def delete_rows(question_id):
 
 @app.route('/answer/<answer_id>/delete', methods=['GET', 'POST'])
 def delete_answer(answer_id):
-    question_id = data_handler.get_question_id_for_answer_id(int(answer_id))
-    question_id = question_id["question_id"]
+    question_id = data_handler.get_question_id_for_answer_id(answer_id)
     data_handler.answer_delete_by_id(answer_id)
     return redirect(url_for('list_answers', id=question_id))
 

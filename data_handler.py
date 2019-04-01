@@ -71,8 +71,8 @@ def get_question_id_for_answer_id(cursor, answer_id):
                     SELECT question_id FROM answer 
                     WHERE id = %(answer_id)s""",
                    {'answer_id': int(answer_id)})
-    question_id = cursor.fetchone()
-    return question_id
+    question_id = cursor.fetchall()
+    return question_id[0].get('question_id')
 
 
 @connection.connection_handler
