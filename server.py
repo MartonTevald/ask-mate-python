@@ -64,8 +64,9 @@ def update_question(question_id):
 
 
 @app.route('/question/<id>', methods=['GET', 'POST'])
-def list_answers(id=None):
+def list_answers(id):
     question_row = data_handler.get_question_for_id(id)
+    print(question_row)
     answer_row = data_handler.get_answers_for_id(id)
     if request.method == 'POST':
         # image = if request.form.get('image') else 'No image'  # ez nemtom még így jó-e
@@ -80,7 +81,7 @@ def list_answers(id=None):
         return redirect(url_for('list_answers', id=id))
     # question_row['view_number'] = int(question_row['view_number']) + 1
     # data_handler.edit_question_row('question.csv', question_row, id)
-    return render_template('/question.html', question_row=question_row, answer_row=answer_row, id=id)
+    return render_template('/question.html', id=id, question_row=question_row, answer_row=answer_row)
 
 
 @app.route('/question/<question_id>/delete', methods=['GET', 'POST'])

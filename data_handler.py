@@ -35,16 +35,6 @@ def add_new_question(cursor, new_data):
 # def write_to_answer_file(filename, dictionary):
 #     return connection.write_to_file(filename, answer_header, dictionary)
 
-
-# def date_time():
-#     return int(time.time())
-
-
-#
-# def convert_unix_to_time(submission_time):
-#     # return datetime.fromtimestamp(submission_time)
-#     return datetime.utcfromtimestamp(submission_time).strftime('%Y-%m-%d|%H:%M')
-
 @connection.connection_handler
 def get_question_for_id(cursor, id):
     cursor.execute("""
