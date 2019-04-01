@@ -3,12 +3,15 @@ import time
 from datetime import datetime
 from operator import itemgetter
 
+
 # question_header = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
 # answer_header = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
-#
-#
-# def get_all_details(filename):
-#     return connection.get_csv_data(filename)
+
+@connection.connection_handler
+def get_all_details(cursor):
+    cursor.execute("""SELECT * FROM question;""")
+    questions = cursor.fetchall()
+    return questions
 
 
 def write_to_file(filename, dictionary):
@@ -28,6 +31,7 @@ def write_to_answer_file(filename, dictionary):
 
 def date_time():
     return int(time.time())
+
 
 #
 # def convert_unix_to_time(submission_time):
@@ -87,7 +91,6 @@ def del_answer_row(filename, id):
 
 def answer_delete_by_id(filename, id):
     return connection.delete_in_answer_by_id(filename, answer_header, id)
-
 
 # def sort_ascending(filename, sort_by):
 #     data = connection.get_csv_data(filename)

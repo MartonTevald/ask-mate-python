@@ -8,9 +8,7 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/list')
 def list():
-    questions = data_handler.get_all_details('question.csv')
-    for elem in questions:
-        elem['submission_time'] = data_handler.convert_unix_to_time(int(elem.get('submission_time')))
+    questions = data_handler.get_all_details()
     return render_template('list.html', questions=questions)
 
 
