@@ -142,6 +142,13 @@ def add_new_comment(cursor, new_data):
 
 
 @connection.connection_handler
+def get_comments(cursor, id):
+    cursor.execute("""SELECT * FROM comment WHERE %(id)s=question_id""", {'id': id})
+    comments = cursor.fetchall()
+    return comments
+
+
+@connection.connection_handler
 def sort_time_ascending(cursor):
     cursor.execute("""
                 SELECT *
@@ -210,3 +217,4 @@ def get_search_results(cursor, search_phrase):
     search_result = cursor.fetchall()
     print(search_result)
     return search_result
+

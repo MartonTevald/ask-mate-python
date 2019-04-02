@@ -80,6 +80,7 @@ def update_question(question_id):
 def list_answers(id=None):
     question_row = data_handler.get_question_for_id(id)
     answer_row = data_handler.get_answers_for_id(id)
+    question_comments = data_handler.get_comments(id)
     if request.method == 'POST':
         answers = {'submission_time': data_handler.date_time(),
                    'vote_number': 0,
@@ -90,7 +91,7 @@ def list_answers(id=None):
         data_handler.add_new_answer(answers)
         return redirect(url_for('list_answers', id=id))
     data_handler.question_view_number_counter(id)
-    return render_template('/question.html', id=id, question_row=question_row, answer_row=answer_row)
+    return render_template('/question.html', id=id, question_row=question_row, answer_row=answer_row, question_comments=question_comments)
 
 
 @app.route('/question/<question_id>/delete', methods=['GET', 'POST'])
