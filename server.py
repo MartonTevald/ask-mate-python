@@ -49,11 +49,9 @@ def add_question():
         return redirect('/')
 
 
-@app.route('/question/<question_id>/edit', methods=['GET', 'POST', 'DELETE'])
+@app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
 def update_question(question_id):
     if request.method == 'POST':
-        # if request.form.get('id') != question_id:
-        #     raise ValueError('The received id is not valid!')
         question = {'id': question_id,
                     'submission_time': data_handler.date_time(),
                     'view_number': request.form.get('view_number'),
@@ -62,7 +60,7 @@ def update_question(question_id):
                     'message': request.form.get('message'),
                     'image': request.form.get('image'),
                     }
-        data_handler.edit_question_row('question.csv', question, question_id)
+        data_handler.edit_question_row(question,question_id)
         return redirect('/')
 
     question = data_handler.get_question_for_id(question_id)

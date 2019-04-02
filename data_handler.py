@@ -25,6 +25,21 @@ def date_time():
 
 
 @connection.connection_handler
+def edit_question_row(cursor, new_data, id):
+    cursor.execute("""UPDATE question
+                    SET submission_time= %(submission_time)s,
+                    view_number= view_number,
+                    vote_number= vote_number,
+                    title= %(title)s,
+                    message= %(message)s,
+                    image= %(image)s
+                    WHERE id= %(id)s"""
+                   , {'id': id, 'submission_time': new_data['submission_time'],
+                      'view_number': new_data['view_number'], 'vote_number': new_data['vote_number'],
+                      'title': new_data['title'], 'message': new_data['message'], 'image': new_data['image']})
+
+
+@connection.connection_handler
 def add_new_question(cursor, new_data):
     cursor.execute("""INSERT INTO question (submission_time, view_number, vote_number, title, message, image)
                     VALUES (%(submission_time)s,%(view_number)s,%(vote_number)s,%(title)s,%(message)s,%(image)s)"""
@@ -203,7 +218,7 @@ def vote_descending(cursor):
 
 @connection.connection_handler
 def get_search_results(cursor, search_phrase):
-    cursor.execute("""SELECT * FROM question;
+    cursor.execute("""SELECT * FROM question
                         WHERE title LIKE %(search_phrase)s OR 
                         message LIKE %(search_phrase)s 
     """, {'search_phrase': search_phrase})
