@@ -13,9 +13,9 @@
 <table>
     <tr>
         <td>ID : {{ question_row[0].id }} | {{ question_row[0].submission_time }}
-        <a href="/question/{{ question_row[0].id }}/new-comment">
-        <button type="submit">Add Comment</button>
-    </a></td>
+            <a href="/question/{{ question_row[0].id }}/new-comment">
+                <button type="submit">Add Comment</button>
+            </a></td>
     </tr>
     <tr>
         <td>vote : {{ question_row[0].vote_number }}</td>
@@ -61,7 +61,6 @@
 <table>
     {% for answer in answer_row %}
         <tr>
-            <br>
             <td><a href='/answer/{{ answer.id }}/delete' method="post">
                 <button type="submit">Delete</button>
                 <br>
@@ -88,6 +87,10 @@
                 <label for="vote-down"></label>
                 <button id="vote-down" type="submit">Vote-down</button>
             </form>
+        </td>
+        <td>
+
+            <input type="button" onclick="window.location='/answer/{{ answer.id }}/edit'" value="Edit">
         </td>
         <br>
     {% endfor %}
@@ -119,8 +122,6 @@
                 <input type="url" name="image" id="upload_pic">
             </p>
             <button type="submit">Answer</button>
-            {#    <a href="/add_question">#}
-            {#    <button type="submit">New Answer</button>#}
         </form>
     </tr>
 </table>
