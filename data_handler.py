@@ -148,51 +148,72 @@ def get_comments(cursor, id):
     return comments
 
 
-# @connection.connection_handler
-# def sort_time_ascending(cursor):
-#     cursor.execute("""
-#                 SELECT *
-#                 FROM question
-#                 ORDER BY submission_time ASC """)
-#     sub_asc = cursor.fetchall()
-#     return sub_asc
-#
-#
-# @connection.connection_handler
-# def sort_time_descending(cursor):
-#     cursor.execute("""
-#                 SELECT *
-#                 FROM question
-#                 ORDER BY submission_time DESC """)
-#     sub_desc = cursor.fetchall()
-#     return sub_desc
+@connection.connection_handler
+def sort_time_ascending(cursor):
+    cursor.execute("""
+                SELECT *
+                FROM question
+                ORDER BY submission_time ASC """)
+    sub_asc = cursor.fetchall()
+    return sub_asc
 
 
 @connection.connection_handler
-def sort_ascending(cursor, sort_by):
-    if sort_by == 'submission_time':
-        cursor.execute("""
-                        SELECT * FROM question ORDER BY submission_time""")
-        asc = cursor.fetchall()
-        if asc == asc:
-            cursor.execute("""
-                                    SELECT * FROM question ORDER BY submission_time DESC""")
-            desc = cursor.fetchall()
-            return desc
-        else:
-            return asc
-    elif sort_by == 'title':
-        cursor.execute("""
-                        SELECT * FROM question ORDER BY title""")
-        order = cursor.fetchall()
-        return order
-    elif sort_by == 'view_number':
-        cursor.execute("""
-                        SELECT * FROM question ORDER BY view_number""")
-        order = cursor.fetchall()
-        return order
-    elif sort_by == 'vote_number':
-        cursor.execute("""
-                        SELECT * FROM question ORDER BY vote_number""")
-        order = cursor.fetchall()
-        return order
+def sort_time_descending(cursor):
+    cursor.execute("""
+                SELECT *
+                FROM question
+                ORDER BY submission_time DESC """)
+    sub_desc = cursor.fetchall()
+    return sub_desc
+
+
+@connection.connection_handler
+def view_ascending(cursor):
+    cursor.execute("""
+                SELECT *
+                FROM question
+                ORDER BY view_number ASC """)
+    view_asc = cursor.fetchall()
+    return view_asc
+
+
+@connection.connection_handler
+def view_descending(cursor):
+    cursor.execute("""
+                SELECT *
+                FROM question
+                ORDER BY view_number DESC """)
+    view_desc = cursor.fetchall()
+    return view_desc
+
+
+@connection.connection_handler
+def vote_ascending(cursor):
+    cursor.execute("""
+                SELECT *
+                FROM question
+                ORDER BY vote_number ASC """)
+    vote_asc = cursor.fetchall()
+    return vote_asc
+
+
+@connection.connection_handler
+def vote_descending(cursor):
+    cursor.execute("""
+                SELECT *
+                FROM question
+                ORDER BY vote_number DESC """)
+    vote_desc = cursor.fetchall()
+    return vote_desc
+
+
+@connection.connection_handler
+def get_search_results(cursor, search_phrase):
+    cursor.execute("""SELECT * FROM question;
+                        WHERE title LIKE %(search_phrase)s OR 
+                        message LIKE %(search_phrase)s 
+    """, {'search_phrase': search_phrase})
+    search_result = cursor.fetchall()
+    return search_result
+
