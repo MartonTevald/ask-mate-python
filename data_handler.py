@@ -142,6 +142,16 @@ def add_new_comment(cursor, new_data):
 
 
 # @connection.connection_handler
+# def sort_time_ascending(cursor):
+#     cursor.execute("""
+#                 SELECT *
+#                 FROM question
+#                 ORDER BY submission_time ASC """)
+#     sub_asc = cursor.fetchall()
+#     return sub_asc
+#
+#
+# @connection.connection_handler
 # def sort_time_descending(cursor):
 #     cursor.execute("""
 #                 SELECT *
@@ -182,6 +192,7 @@ def sort_ascending(cursor, sort_by):
 
 
 
+
 @connection.connection_handler
 def get_search_results(cursor,search_phrase):
     cursor.execute("""SELECT * FROM question;
@@ -190,4 +201,5 @@ def get_search_results(cursor,search_phrase):
     """, {'search_phrase': search_phrase})
     search_result = cursor.fetchall()
     return search_result
+
 

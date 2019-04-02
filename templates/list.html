@@ -10,28 +10,30 @@
     <img border="0" alt="teddir" src="/static/on_off_logo.png" width="150" height="80">
 </a></p>
 <h1 align="left">T i d d e R</h1>
+<<<<<<< HEAD
 <form>
     <label id = "search"></label>
     <input type="text" name="search">
     <button type="submit" value="search">Search</button>
-
-
 </form>
 
-<form action="/<sort_by>" method="post">
 
-    <select name="sort">
-        <OPTION name="Sub_ASC" Value="Sub_ASC">Date Ascending-Order</OPTION>
-        <OPTION name='Sub_DESC' Value="Sub_DESC">Date Descending-Order</OPTION>
-        <OPTION name="View_ASC" Value="View_ASC">View Ascending-Order</OPTION>
-        <OPTION name="View_DESC" Value="View_DESC">View Descending-Order</OPTION>
-        <OPTION name="Vote_ASC" Value="Vote_ASC">Vote Ascending-Order</OPTION>
-        <OPTION name="Vote_DESC" Value="Vote_DESC">Vote Ascending-Order</OPTION>
+
+<form action="{{ url_for('sort_questions',sort_by=sort_by) }}" method="post" id="sort">
+
+
+    <select class="form-control" id="sort" name="sort">
+        <OPTION id="Sub_ASC" name="Sub_ASC" Value="Sub_ASC">Date Ascending-Order</OPTION>
+        <OPTION id="Sub_DESC" name='Sub_DESC' Value="Sub_DESC">Date Descending-Order</OPTION>
+        <OPTION id="View_ASC" name="View_ASC" Value="View_ASC">View Ascending-Order</OPTION>
+        <OPTION id="View_DESC" name="View_DESC" Value="View_DESC">View Descending-Order</OPTION>
+        <OPTION id="Vote_ASC" name="Vote_ASC" Value="Vote_ASC">Vote Ascending-Order</OPTION>
+        <OPTION id="Vote_DESC" name="Vote_DESC" Value="Vote_DESC">Vote Ascending-Order</OPTION>
     </select>
 
-    <button type="submit" value="Sort">Sort</button>
+    <button name=submit type="submit" value="submit">Sort</button>
 </form>
-
+<br>
 <form action="{{ url_for('first_five_question_by_date') }}" method="post" id="show">
     <select class="form-control" name="show" id="show">
         <OPTION id="show_all" name="show_all" value="show_all">Show All Questions</OPTION>
@@ -43,10 +45,10 @@
 <table align="center">
     <tr>
         <th>Id</th>
-        <th><a href="/submission_time/asc">Submission time</a></th>
-        <th><a href="/view_number/asc"> View number</a></th>
-        <th><a href="/vote_number/asc"> Vote number</a></th>
-        <th><a href="/title/asc">Title</th>
+        <th>Submission time</th>
+        <th>View number</th>
+        <th>Vote number</th>
+        <th>Title</th>
         <th>Message</th>
         <th>Image</th>
 
