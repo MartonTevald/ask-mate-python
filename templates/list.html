@@ -13,17 +13,23 @@
 <form action="/<sort_by>" method="post">
 
     <select name="sort">
-        <OPTION Value="Sub_ASC">Date Ascending-Order</OPTION>
-        <OPTION Value="Sub_DESC">Date Descending-Order</OPTION>
-        <OPTION Value="View_ASC">View Ascending-Order</OPTION>
-        <OPTION Value="View_DESC">View Descending-Order</OPTION>
-        <OPTION Value="Vote_ASC">Vote Ascending-Order</OPTION>
-        <OPTION Value="Vote_DESC">Vote Ascending-Order</OPTION>
+        <OPTION name="Sub_ASC" Value="Sub_ASC">Date Ascending-Order</OPTION>
+        <OPTION name='Sub_DESC' Value="Sub_DESC">Date Descending-Order</OPTION>
+        <OPTION name="View_ASC" Value="View_ASC">View Ascending-Order</OPTION>
+        <OPTION name="View_DESC" Value="View_DESC">View Descending-Order</OPTION>
+        <OPTION name="Vote_ASC" Value="Vote_ASC">Vote Ascending-Order</OPTION>
+        <OPTION name="Vote_DESC" Value="Vote_DESC">Vote Ascending-Order</OPTION>
     </select>
 
     <button type="submit" value="Sort">Sort</button>
 </form>
-<a href="/list">Show All Questions</a>
+<form action="/" method="post">
+    <select name="show">
+        <OPTION name=show_all value="show_all">Show All Questions</OPTION>
+        <OPTION name=show_latest value="show_latest">Show 5 latest</OPTION>
+    </select>
+<button type="submit"value="submit">Submit</button>
+</form>
 <table align="center">
     <tr>
         <th>Id</th>
