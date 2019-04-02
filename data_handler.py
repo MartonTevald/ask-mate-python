@@ -131,3 +131,15 @@ def answer_vote_down(cursor, id):
 #     if sort_by == sort_by:
 #         return sorted(data, key=lambda k: k[sort_by], reverse=True)
 #
+
+
+@connection.connection_handler
+def add_new_comment(cursor, new_data):
+    cursor.execute("""INSERT INTO comment (question_id, answer_id, message, submission_time, edited_count)
+                    VALUES (%(question_id)s,%(answer_id)s,%(message)s,%(submission_time)s,%(edited_count)s)"""
+                   , {'question_id': new_data['question_id'],
+                      'answer_id': new_data['answer_id'],
+                      'message': new_data['message'],
+                      'submission_time': new_data['submission_time'],
+                      'edited_count': new_data['edited_count']})
+
