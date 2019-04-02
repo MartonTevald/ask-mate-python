@@ -38,7 +38,20 @@
     <label for="question_up_down"></label>
     <button id="question_up_down" type="submit">Vote-down</button>
 </form>
-
+<table>
+    <tr>
+        <th>Comments:</th>
+    </tr>
+    {% for comment in question_comments %}
+    <tr>
+        <td>{{ comment.message }}</td>
+    </tr>
+    <tr>
+        <td>{{ comment.submission_time }}</td>
+        <td>{{ comment.edited_count }}</td>
+    </tr>
+    {% endfor %}
+</table>
 <h3><a href="/">
     <button>Home</button>
 </a></h3>
