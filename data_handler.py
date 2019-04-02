@@ -178,3 +178,13 @@ def sort_ascending(cursor, sort_by):
                         SELECT * FROM question ORDER BY vote_number""")
         order = cursor.fetchall()
         return order
+
+
+@connection.connection_handler
+def get_search_results(search_phrase):
+    cursor.execute("""SELECT * FROM question;
+                        WHERE title LIKE %(search_phrase)s OR 
+                        message LIKE %(search_phrase)s 
+    """, {'search_phrase': search_phrase})
+    search_result = cursor.fetchall()
+    return search_result

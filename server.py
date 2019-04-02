@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 import data_handler
+import psycopg2
 import os
 
 app = Flask(__name__)
@@ -133,6 +134,14 @@ def sort_questions(sort_by):
 @app.route('/question/<question_id>/edit', methods=['POST'])
 def add_question_comment():
     pass
+
+@app.route('/search?q=<search_phrase>', methods= ['GET','POST'])
+def search(search_phrase ):
+    if request == 'POST':
+        search_results = data_handler.get_search_results(search_phrase)
+    print(search_results)
+    return render_template('list.html', search_results=search_results)
+
 
 
 if __name__ == '__main__':
