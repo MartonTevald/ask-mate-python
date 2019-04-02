@@ -188,8 +188,15 @@ def add_new_comment(cursor, new_data):
 
 
 @connection.connection_handler
-def get_comments(cursor, id):
+def get_question_comments(cursor, id):
     cursor.execute("""SELECT * FROM comment WHERE %(id)s=question_id""", {'id': id})
+    comments = cursor.fetchall()
+    return comments
+
+
+@connection.connection_handler
+def get_answer_comments(cursor):
+    cursor.execute("""SELECT * FROM comment WHERE answer_id=answer_id""", {'id': id})
     comments = cursor.fetchall()
     return comments
 
