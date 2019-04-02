@@ -63,6 +63,16 @@ def get_answers_for_id(cursor, id):
 
 
 @connection.connection_handler
+def get_answers_for_answer_id(cursor, id):
+    cursor.execute("""
+                    SELECT * FROM answer
+                    WHERE id = %(id)s""",
+                   {'id': id})
+    answers = cursor.fetchall()
+    return answers
+
+
+@connection.connection_handler
 def get_question_id_for_answer_id(cursor, answer_id):
     cursor.execute("""
                     SELECT question_id FROM answer 

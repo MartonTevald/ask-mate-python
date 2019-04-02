@@ -21,7 +21,7 @@
         <td>vote : {{ question_row[0].vote_number }}</td>
     </tr>
     <tr>
-        <td><img src="{{ question_row[0].image }}" alt="missing" width="150" height="150"></td>
+        <td><img src="{{ question_row[0].image }}" alt="no picture" width="150" height="150"></td>
     </tr>
     <a href="/question/{{ question_row[0].id }}/edit">
         <button type="submit">Edit</button>
@@ -48,7 +48,9 @@
     </tr>
     <tr>
         <td>{{ comment.submission_time }}</td>
-        <td>{{ comment.edited_count }}</td>
+        {% if comment.edited_count %}
+        <td>Edited: {{ comment.edited_count }} time(s)</td>
+        {% endif %}
     </tr>
     {% endfor %}
 </table>
@@ -69,7 +71,7 @@
         </tr>
         <tr>
             <td>{{ answer.vote_number }}</td>
-            <td>{{ answer.submission_time }}<a href="/question/{{ question_row[0].id }}/new-comment">
+            <td>{{ answer.submission_time }}<a href="/answer/{{ answer_row[0].id }}/new-comment">
         <button type="submit">Add Comment</button>
     </a></td>
             <td>{{ answer.id }}</td>
@@ -89,6 +91,22 @@
         </td>
         <br>
     {% endfor %}
+    <table>
+        <tr>
+            <th>Comments:</th>
+        </tr>
+        {% for comment in answer_comments %}
+        <tr>
+            <td>{{ comment.message }}</td>
+        </tr>
+        <tr>
+            <td>{{ comment.submission_time }}</td>
+            {% if comment.edited_count %}
+                <td>Edited: {{ comment.edited_count }} time(s)</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
     <br>
 </table>
 <table>
