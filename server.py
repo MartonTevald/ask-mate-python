@@ -5,13 +5,20 @@ import os
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route('/', methods=['POST', 'GET'])
 def first_five_question_by_date():
-    questions = data_handler.get_first_five_question()
-    return render_template('list.html', questions=questions)
+    questions = data_handler.get_all_details()
+    last_questions = data_handler.get_first_five_question()
+    if request.method == 'POST':
+        if 'show_all' == request.form.get('show'):
+            return render_template('list.html', questions=questions)
+        elif 'show_latest' == request.form.get('show'):
+            return render_template('list.html', questions=last_questions)
+    elif request.method == 'GET':
+        return render_template("list.html", questions=last_questions)
 
 
-@app.route('/list')
+@app.route('/list', methods=['POST', 'GET'])
 def list():
     questions = data_handler.get_all_details()
     return render_template('list.html', questions=questions)
