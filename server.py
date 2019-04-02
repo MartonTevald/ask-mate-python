@@ -6,6 +6,11 @@ app = Flask(__name__)
 
 
 @app.route('/')
+def first_five_question_by_date():
+    questions = data_handler.get_first_five_question()
+    return render_template('list.html', questions=questions)
+
+
 @app.route('/list')
 def list():
     questions = data_handler.get_all_details()
@@ -52,7 +57,7 @@ def update_question(question_id):
         data_handler.edit_question_row('question.csv', question, question_id)
         return redirect('/')
 
-    question = data_handler.get_question_for_id('question.csv', question_id)
+    question = data_handler.get_question_for_id(question_id)
 
     return render_template('add-question.html',
                            question=question,
@@ -118,12 +123,11 @@ def question_answer_down(answer_id):
     data_handler.answer_vote_down(answer_id)
     return redirect(url_for('list_answers', id=question_id))
 
-# @app.route('/<sort_by>')
-# def sort_questions(sort_by):
-#     sorted_data = data_handler.sort_ascending('question.csv', sort_by)
-#     for elem in sorted_data:
-#         elem['submission_time'] = data_handler.convert_unix_to_time(int(elem.get('submission_time')))
-#     return render_template('/list.html', questions=sorted_data)
+
+@app.route('/<sort_by>/asc')
+def sort_questions(sort_by):
+    sorted_data = data_handler.sort_ascending(sort_by)
+    return render_template('/list.html', questions=sorted_data)
 
 
 if __name__ == '__main__':

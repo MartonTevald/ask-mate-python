@@ -4,6 +4,14 @@ from datetime import datetime
 
 
 @connection.connection_handler
+def get_first_five_question(cursor):
+    cursor.execute("""SELECT * FROM question ORDER BY submission_time DESC 
+                        LIMIT 5 OFFSET 0""")
+    question = cursor.fetchall()
+    return question
+
+
+@connection.connection_handler
 def get_all_details(cursor):
     cursor.execute("""SELECT * FROM question;""")
     questions = cursor.fetchall()
@@ -12,7 +20,8 @@ def get_all_details(cursor):
 
 def date_time():
     dt = datetime.now()
-    return dt
+    date = dt.strftime('%Y-%m-%dT%H:%M:%S')
+    return date
 
 
 @connection.connection_handler
@@ -120,14 +129,52 @@ def answer_vote_down(cursor, id):
                 SET vote_number = vote_number -1
                 WHERE id = %(id)s""", {'id': id})
 
-# def sort_ascending(filename, sort_by):
-#     data = connection.get_csv_data(filename)
-#     for values in data:
-#         values['id'] = int(values['id'])
-#         values['view_number'] = int(values['view_number'])
-#         values['vote_number'] = int(values['vote_number'])
-#     if sort_by == 'title':
-#         return sorted(data, key=lambda k: k['title'])
-#     if sort_by == sort_by:
-#         return sorted(data, key=lambda k: k[sort_by], reverse=True)
+
+# @connection.connection_handler
+# def sort_time_ascending(cursor):
+#     cursor.execute("""
+#                 SELECT *
+#                 FROM question
+#                 ORDER BY submission_time ASC """)
+#     sub_asc = cursor.fetchall()
+#     return sub_asc
 #
+#
+# @connection.connection_handler
+# def sort_time_descending(cursor):
+#     cursor.execute("""
+#                 SELECT *
+#                 FROM question
+#                 ORDER BY submission_time DESC """)
+#     sub_desc = cursor.fetchall()
+#     return sub_desc
+
+
+@connection.connection_handler
+def sort_ascending(cursor, sort_by):
+    if sort_by == 'submission_time':
+        cursor.execute("""
+                        SELECT * FROM question ORDER BY submission_time""")
+        asc = cursor.fetchall()
+        if asc == asc:
+            cursor.execute("""
+                                    SELECT * FROM question ORDER BY submission_time DESC""")
+            desc = cursor.fetchall()
+            return desc
+        else:
+            return asc
+    elif sort_by == 'title':
+        cursor.execute("""
+                        SELECT * FROM question ORDER BY title""")
+        order = cursor.fetchall()
+        return order
+    elif sort_by == 'view_number':
+        cursor.execute("""
+                        SELECT * FROM question ORDER BY view_number""")
+        order = cursor.fetchall()
+        return order
+    elif sort_by == 'vote_number':
+        cursor.execute("""
+                        SELECT * FROM question ORDER BY vote_number""")
+        order = cursor.fetchall()
+        return order
