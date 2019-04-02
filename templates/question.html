@@ -13,9 +13,9 @@
 <table>
     <tr>
         <td>ID : {{ question_row[0].id }} | {{ question_row[0].submission_time }}
-        <a href="/question/{{ question_row[0].id }}/new-comment">
-        <button type="submit">Add Comment</button>
-    </a></td>
+            <a href="/question/{{ question_row[0].id }}/new-comment">
+                <button type="submit">Add Comment</button>
+            </a></td>
     </tr>
     <tr>
         <td>vote : {{ question_row[0].vote_number }}</td>
@@ -43,13 +43,13 @@
         <th>Comments:</th>
     </tr>
     {% for comment in question_comments %}
-    <tr>
-        <td>{{ comment.message }}</td>
-    </tr>
-    <tr>
-        <td>{{ comment.submission_time }}</td>
-        <td>{{ comment.edited_count }}</td>
-    </tr>
+        <tr>
+            <td>{{ comment.message }}</td>
+        </tr>
+        <tr>
+            <td>{{ comment.submission_time }}</td>
+            <td>{{ comment.edited_count }}</td>
+        </tr>
     {% endfor %}
 </table>
 <h3><a href="/">
@@ -59,7 +59,6 @@
 <table>
     {% for answer in answer_row %}
         <tr>
-            <br>
             <td><a href='/answer/{{ answer.id }}/delete' method="post">
                 <button type="submit">Delete</button>
                 <br>
@@ -70,9 +69,9 @@
         <tr>
             <td>{{ answer.vote_number }}</td>
             <td>{{ answer.submission_time }}<a href="/question/{{ question_row[0].id }}/new-comment">
-        <button type="submit">Add Comment</button>
-    </a></td>
-            <td>{{ answer.id }}</td>
+                <button type="submit">Add Comment</button>
+            </a></td>
+
             <td><img src="{{ answer.image }}" alt="missing" width="150" height="150"></td>
             <br>
         </tr>
@@ -86,6 +85,10 @@
                 <label for="vote-down"></label>
                 <button id="vote-down" type="submit">Vote-down</button>
             </form>
+        </td>
+        <td>
+
+            <input type="button" onclick="window.location='/answer/{{ answer.id }}/edit'" value="Edit">
         </td>
         <br>
     {% endfor %}

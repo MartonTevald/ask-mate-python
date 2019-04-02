@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>| Ask new answer |</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
+</head>
+<body bgcolor="#f0ffff">
+<h1>{{ page_title }}</h1>
+
+<form action="{{ form_url }}"
+      method="post">
+    <input type="hidden" name="id" value="">
+    <input type="hidden" name="submission_time" value="0">
+    <input type="hidden" name="vote_number" value="0">
+    <p>
+        <label for="message">Answer text:</label><br>
+        <textarea name="message" id="message" cols="80" rows="8">{{ answer[0].message }}</textarea>
+
+    </p>
+    <p>
+        <label for="upload_pic">Upload a picture:</label><br>
+        <input type="url" name="image" id="upload_pic">
+    </p>
+    <p>
+
+        <a href="{{ url_for('list') }}">
+            <h3 align="left">
+                <button type="submit">{{ button_title }}</button>
+            </h3>
+        </a>
+        <br>
+        <a href="{{ url_for('list') }}" methods="post">
+            <h3 align="left">
+                <button type="submit">{{ button_page }}</button>
+            </h3>
+        </a>
+    </p>
+
+</form>
+
+
+</body>
+</html>

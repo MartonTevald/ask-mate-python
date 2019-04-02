@@ -25,6 +25,17 @@ def date_time():
 
 
 @connection.connection_handler
+def edit_answer_row(cursor, new_data, id):
+    cursor.execute("""UPDATE answer
+                    SET submission_time= %(submission_time)s,
+                    message = %(message)s,
+                    image = %(image)s
+                    WHERE id = %(id)s """
+                   , {'id': id, 'submission_time': new_data['submission_time'],
+                      'message': new_data['message'], 'image': new_data['image']})
+
+
+@connection.connection_handler
 def edit_question_row(cursor, new_data, id):
     cursor.execute("""UPDATE question
                     SET submission_time= %(submission_time)s,
@@ -65,6 +76,16 @@ def get_question_for_id(cursor, id):
                    {'id': id})
     question = cursor.fetchall()
     return question
+
+
+@connection.connection_handler
+def get_answers_id_for_edit(cursor, id):
+    cursor.execute("""
+                    SELECT * FROM answer
+                    WHERE id = %(id)s""",
+                   {'id': id})
+    answers = cursor.fetchall()
+    return answers
 
 
 @connection.connection_handler
@@ -231,4 +252,3 @@ def get_search_results(cursor, search_phrase):
     """, {'search_phrase': search_phrase})
     search_result = cursor.fetchall()
     return search_result
-

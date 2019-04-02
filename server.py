@@ -60,7 +60,7 @@ def update_question(question_id):
                     'message': request.form.get('message'),
                     'image': request.form.get('image'),
                     }
-        data_handler.edit_question_row(question,question_id)
+        data_handler.edit_question_row(question, question_id)
         return redirect('/')
 
     question = data_handler.get_question_for_id(question_id)
@@ -89,7 +89,32 @@ def list_answers(id=None):
         data_handler.add_new_answer(answers)
         return redirect(url_for('list_answers', id=id))
     data_handler.question_view_number_counter(id)
-    return render_template('/question.html', id=id, question_row=question_row, answer_row=answer_row, question_comments=question_comments)
+    return render_template('/question.html', id=id, question_row=question_row, answer_row=answer_row,
+                           question_comments=question_comments)
+
+
+@app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])
+def edit_answer(answer_id):
+    if request.method == 'POST':
+        answer = {'id': answer_id,
+                  'submission_time': data_handler.date_time(),
+                  'vote_number': request.form.get('vote_number'),
+                  'question_id': request.form.get('question_id'),
+                  'message': request.form.get('message'),
+                  'image': request.form.get('image'),
+                  }
+        data_handler.edit_answer_row(answer, answer_id)
+        return redirect('/')
+    if request.method == 'GET':
+        answer = data_handler.get_answers_id_for_edit(answer_id)
+
+        return render_template('edit-answer.html',
+                               answer=answer,
+                               form_url=url_for('edit_answer', answer_id=answer_id),
+                               page_title='Update Answer',
+                               button_title='Update',
+                               button_page='Return '
+                               )
 
 
 @app.route('/question/<question_id>/delete', methods=['GET', 'POST'])
