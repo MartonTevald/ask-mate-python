@@ -131,10 +131,12 @@ def question_answer_down(answer_id):
     return redirect(url_for('list_answers', id=question_id))
 
 
-@app.route('/<sort_by>/asc')
+@app.route('/<sort_by>', methods=['POST', 'GET'])
 def sort_questions(sort_by):
-    sorted_data = data_handler.sort_ascending(sort_by)
-    return render_template('/list.html', questions=sorted_data)
+    sorted_data = data_handler.sort_time_ascending(sort_by)
+    if request.method == 'POST':
+        if 'Sub_ASC' == request.form.get('sort'):
+            return render_template('/list.html', questions=sorted_data)
 
 
 @app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])
