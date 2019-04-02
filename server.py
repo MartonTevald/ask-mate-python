@@ -138,8 +138,24 @@ def sort_questions(sort_by):
     return render_template('/list.html', questions=sorted_data)
 
 
-@app.route('/question/<question_id>/edit', methods=['POST'])
-def add_question_comment():
+@app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])
+def add_question_comment(question_id=None):
+    comment = data_handler.get_question_for_id(question_id)
+
+    if request.method == 'POST':
+        comment = {'submission_time': data_handler.date_time(),
+                   'question_id': request.form.get('question_id'),
+                   'answer_id': request.form.get('answer_id'),
+                   'message': request.form.get('message'),
+                   'edited_count': request.form.get('edited_count'),
+                   }
+        data_handler.add_new_comment(comment)
+        return redirect(url_for('list_answers', id=question_id))
+    return render_template('/add-comment.html', comment=comment, button_title="Post New Comment")
+
+
+@app.route('/answer/<answer_id>/new-comment', methods=['POST'])
+def add_answer_comment():
     pass
 
 @app.route('/search?q=<search_phrase>', methods= ['GET','POST'])

@@ -130,16 +130,17 @@ def answer_vote_down(cursor, id):
                 WHERE id = %(id)s""", {'id': id})
 
 
-# @connection.connection_handler
-# def sort_time_ascending(cursor):
-#     cursor.execute("""
-#                 SELECT *
-#                 FROM question
-#                 ORDER BY submission_time ASC """)
-#     sub_asc = cursor.fetchall()
-#     return sub_asc
-#
-#
+@connection.connection_handler
+def add_new_comment(cursor, new_data):
+    cursor.execute("""INSERT INTO comment (question_id, answer_id, message, submission_time, edited_count)
+                    VALUES (%(question_id)s,%(answer_id)s,%(message)s,%(submission_time)s,%(edited_count)s)"""
+                   , {'question_id': new_data['question_id'],
+                      'answer_id': new_data['answer_id'],
+                      'message': new_data['message'],
+                      'submission_time': new_data['submission_time'],
+                      'edited_count': new_data['edited_count']})
+
+
 # @connection.connection_handler
 # def sort_time_descending(cursor):
 #     cursor.execute("""
@@ -180,11 +181,13 @@ def sort_ascending(cursor, sort_by):
         return order
 
 
+
 @connection.connection_handler
-def get_search_results(search_phrase):
+def get_search_results(cursor,search_phrase):
     cursor.execute("""SELECT * FROM question;
                         WHERE title LIKE %(search_phrase)s OR 
                         message LIKE %(search_phrase)s 
     """, {'search_phrase': search_phrase})
     search_result = cursor.fetchall()
     return search_result
+
