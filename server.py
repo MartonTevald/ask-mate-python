@@ -130,6 +130,11 @@ def sort_questions(sort_by):
     return render_template('/list.html', questions=sorted_data)
 
 
+@app.route('/question/<question_id>/edit', methods=['POST'])
+def add_question_comment():
+    pass
+
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',

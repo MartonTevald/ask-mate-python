@@ -12,7 +12,10 @@
 <br>
 <table>
     <tr>
-        <td>ID : {{ question_row[0].id }} | {{ question_row[0].submission_time }}</td>
+        <td>ID : {{ question_row[0].id }} | {{ question_row[0].submission_time }}
+        <a href="/question/{{ question_row[0].id }}/new-comment">
+        <button type="submit">Add Comment</button>
+    </a></td>
     </tr>
     <tr>
         <td>vote : {{ question_row[0].vote_number }}</td>
@@ -53,7 +56,9 @@
         </tr>
         <tr>
             <td>{{ answer.vote_number }}</td>
-            <td>{{ answer.submission_time }}</td>
+            <td>{{ answer.submission_time }}<a href="/question/{{ question_row[0].id }}/new-comment">
+        <button type="submit">Add Comment</button>
+    </a></td>
             <td>{{ answer.id }}</td>
             <td><img src="{{ answer.image }}" alt="missing" width="150" height="150"></td>
             <br>
