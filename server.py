@@ -89,7 +89,7 @@ def list_answers(id=None):
         data_handler.add_new_answer(answers)
         return redirect(url_for('list_answers', id=id))
     data_handler.question_view_number_counter(id)
-    return render_template('/question.html', id=id, question_row=question_row, answer_row=answer_row,
+    return render_template('question.html', id=id, question_row=question_row, answer_row=answer_row,
                            question_comments=question_comments)
 
 
@@ -161,22 +161,22 @@ def sort_questions():
     if request.method == 'POST':
         if 'sub_asc' == request.form.get('sort'):
             sorted_data = data_handler.sort_time_ascending()
-            return render_template('/list.html', questions=sorted_data)
+            return render_template('list.html', questions=sorted_data)
         if 'sub_desc' == request.form.get('sort'):
             sorted_data = data_handler.sort_time_descending()
-            return render_template('/list.html', questions=sorted_data)
+            return render_template('list.html', questions=sorted_data)
         if 'view_asc' == request.form.get('sort'):
             sorted_data = data_handler.view_ascending()
-            return render_template('/list.html', questions=sorted_data)
+            return render_template('list.html', questions=sorted_data)
         if 'view_desc' == request.form.get('sort'):
             sorted_data = data_handler.view_descending()
-            return render_template('/list.html', questions=sorted_data)
+            return render_template('list.html', questions=sorted_data)
         if 'vote_asc' == request.form.get('sort'):
             sorted_data = data_handler.vote_ascending()
-            return render_template('/list.html', questions=sorted_data)
+            return render_template('list.html', questions=sorted_data)
         if 'vote_desc' == request.form.get('sort'):
             sorted_data = data_handler.vote_descending()
-            return render_template('/list.html', questions=sorted_data)
+            return render_template('list.html', questions=sorted_data)
         else:
             redirect('/')
 
@@ -193,7 +193,7 @@ def add_question_comment(question_id=None):
                    }
         data_handler.add_new_comment(comment)
         return redirect(url_for('list_answers', id=question_id))
-    return render_template('/add-comment.html', comment=comment, button_title="Post New Comment")
+    return render_template('add-question-comment.html', comment=comment, button_title="Post New Comment")
 
 
 @app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
@@ -208,7 +208,7 @@ def add_answer_comment(answer_id=None):
                    }
         data_handler.add_new_comment(comment)
         return redirect(url_for('list_answers', id=answer_id))
-    return render_template('/add-comment.html', comment=comment, button_title="Post New Comment")
+    return render_template('add-question-comment.html', comment=comment, button_title="Post New Comment")
 
 
 @app.route('/search?q=<search_phrase>', methods=['GET', 'POST'])
