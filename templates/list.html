@@ -6,17 +6,39 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
 </head>
 <body bgcolor="#f0ffff">
-<p align="left"><a  href="https://www.teddir.com">
-        <img  border="0" alt="teddir" src="/static/on_off_logo.png" width="150" height="80">
-    </a></p>
+<p align="left"><a href="https://www.teddir.com">
+    <img border="0" alt="teddir" src="/static/on_off_logo.png" width="150" height="80">
+</a></p>
 <h1 align="left">T i d d e R</h1>
+<form action="/<sort_by>" method="post">
+
+    <select name="sort">
+        <OPTION name="Sub_ASC" Value="Sub_ASC">Date Ascending-Order</OPTION>
+        <OPTION name='Sub_DESC' Value="Sub_DESC">Date Descending-Order</OPTION>
+        <OPTION name="View_ASC" Value="View_ASC">View Ascending-Order</OPTION>
+        <OPTION name="View_DESC" Value="View_DESC">View Descending-Order</OPTION>
+        <OPTION name="Vote_ASC" Value="Vote_ASC">Vote Ascending-Order</OPTION>
+        <OPTION name="Vote_DESC" Value="Vote_DESC">Vote Ascending-Order</OPTION>
+    </select>
+
+    <button type="submit" value="Sort">Sort</button>
+</form>
+
+<form action="{{ url_for('first_five_question_by_date') }}" method="post" id="show">
+    <select class="form-control" name="show" id="show">
+        <OPTION id="show_all" name="show_all" value="show_all">Show All Questions</OPTION>
+        <OPTION name="show_latest" value="show_latest">Show 5 latest</OPTION>
+    </select>
+    <button name="submit" type="submit" value="submit">Submit</button>
+</form>
+
 <table align="center">
     <tr>
-        <th><a href="/id" >Id</th>
-        <th><a href="/submission_time">Submission time</a></th>
-        <th><a href="/view_number"> View number</a></th>
-        <th><a href="/vote_number"> Vote number</a></th>
-        <th><a href="/title">Title</th>
+        <th>Id</th>
+        <th><a href="/submission_time/asc">Submission time</a></th>
+        <th><a href="/view_number/asc"> View number</a></th>
+        <th><a href="/vote_number/asc"> Vote number</a></th>
+        <th><a href="/title/asc">Title</th>
         <th>Message</th>
         <th>Image</th>
 
