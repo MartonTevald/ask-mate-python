@@ -132,12 +132,29 @@ def question_answer_down(answer_id):
     return redirect(url_for('list_answers', id=question_id))
 
 
-@app.route('/<sort_by>', methods=['POST', 'GET'])
-def sort_questions(sort_by):
-    sorted_data = data_handler.sort_time_ascending(sort_by)
+@app.route('/list/', methods=['POST', 'GET'])
+def sort_questions():
     if request.method == 'POST':
-        if 'Sub_ASC' == request.form.get('sort'):
+        if 'sub_asc' == request.form.get('sort'):
+            sorted_data = data_handler.sort_time_ascending()
             return render_template('/list.html', questions=sorted_data)
+        if 'sub_desc' == request.form.get('sort'):
+            sorted_data = data_handler.sort_time_descending()
+            return render_template('/list.html', questions=sorted_data)
+        if 'view_asc' == request.form.get('sort'):
+            sorted_data = data_handler.view_ascending()
+            return render_template('/list.html', questions=sorted_data)
+        if 'view_desc' == request.form.get('sort'):
+            sorted_data = data_handler.view_descending()
+            return render_template('/list.html', questions=sorted_data)
+        if 'vote_asc' == request.form.get('sort'):
+            sorted_data = data_handler.vote_ascending()
+            return render_template('/list.html', questions=sorted_data)
+        if 'vote_desc' == request.form.get('sort'):
+            sorted_data = data_handler.vote_descending()
+            return render_template('/list.html', questions=sorted_data)
+        else:
+            redirect('/')
 
 
 @app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])

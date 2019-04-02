@@ -11,6 +11,7 @@
 </a></p>
 <h1 align="left">T i d d e R</h1>
 
+
 <form action="{{ url_for('search', search_phrase = search_phrase) }}" method="post">
     <label id = "search"></label>
     <input type="text" name="search_phrase">
@@ -19,18 +20,17 @@
 
 
 
-<form action="{{ url_for('sort_questions',sort_by=sort_by) }}" method="post" id="sort">
 
 
-    <select class="form-control" id="sort" name="sort">
-        <OPTION id="Sub_ASC" name="Sub_ASC" Value="Sub_ASC">Date Ascending-Order</OPTION>
-        <OPTION id="Sub_DESC" name='Sub_DESC' Value="Sub_DESC">Date Descending-Order</OPTION>
-        <OPTION id="View_ASC" name="View_ASC" Value="View_ASC">View Ascending-Order</OPTION>
-        <OPTION id="View_DESC" name="View_DESC" Value="View_DESC">View Descending-Order</OPTION>
-        <OPTION id="Vote_ASC" name="Vote_ASC" Value="Vote_ASC">Vote Ascending-Order</OPTION>
-        <OPTION id="Vote_DESC" name="Vote_DESC" Value="Vote_DESC">Vote Ascending-Order</OPTION>
-    </select>
-
+<form action="{{ url_for('sort_questions',sort=sort) }}" method="post" id="sort">
+    <SELECT class="form-control" id="sort" name="sort">
+        <OPTION id="sub_asc" name="sub_asc" Value="sub_asc">Date Ascending-Order</OPTION>
+        <OPTION id="sub_desc" name='sub_desc' Value="sub_desc">Date Descending-Order</OPTION>
+        <OPTION id="view_asc" name="view_asc" Value="view_asc">View Ascending-Order</OPTION>
+        <OPTION id="view_desc" name="view_desc" Value="view_desc">View Descending-Order</OPTION>
+        <OPTION id="vote_asc" name="vote_asc" Value="vote_asc">Vote Ascending-Order</OPTION>
+        <OPTION id="vote_desc" name="vote_desc" Value="vote_desc">Vote Descending-Order</OPTION>
+    </SELECT>
     <button name=submit type="submit" value="submit">Sort</button>
 </form>
 <br>
