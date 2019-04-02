@@ -141,6 +141,13 @@ def add_new_comment(cursor, new_data):
                       'edited_count': new_data['edited_count']})
 
 
+@connection.connection_handler
+def get_comments(cursor, id):
+    cursor.execute("""SELECT * FROM comment WHERE %(id)s=question_id""", {'id': id})
+    comments = cursor.fetchall()
+    return comments
+
+
 # @connection.connection_handler
 # def sort_time_ascending(cursor):
 #     cursor.execute("""
