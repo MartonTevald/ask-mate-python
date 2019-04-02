@@ -10,10 +10,10 @@
     <img border="0" alt="teddir" src="/static/on_off_logo.png" width="150" height="80">
 </a></p>
 <h1 align="left">T i d d e R</h1>
-<<<<<<< HEAD
-<form>
+
+<form action="{{ url_for('search', search_phrase = search_phrase) }}" method="post">
     <label id = "search"></label>
-    <input type="text" name="search">
+    <input type="text" name="search_phrase">
     <button type="submit" value="search">Search</button>
 </form>
 

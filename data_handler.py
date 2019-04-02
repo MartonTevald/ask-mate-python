@@ -200,6 +200,7 @@ def get_search_results(cursor,search_phrase):
                         message LIKE %(search_phrase)s 
     """, {'search_phrase': search_phrase})
     search_result = cursor.fetchall()
+    print(search_result)
     return search_result
 
 

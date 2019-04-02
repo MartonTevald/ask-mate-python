@@ -160,13 +160,12 @@ def add_question_comment(question_id=None):
 def add_answer_comment():
     pass
 
-@app.route('/search?q=<search_phrase>', methods= ['GET','POST'])
-def search(search_phrase ):
+
+@app.route('/search?q=<search_phrase>', methods=['GET', 'POST'])
+def search(search_phrase):
     if request == 'POST':
         search_results = data_handler.get_search_results(search_phrase)
-    print(search_results)
     return render_template('list.html', search_results=search_results)
-
 
 
 if __name__ == '__main__':
