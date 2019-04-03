@@ -261,15 +261,40 @@ def vote_descending(cursor):
     return vote_desc
 
 
+def do_search(search_phrase):
+    question_ids_from_questions = get_search_question_ids(search_phrase)
+    question_ids_from_answers = get_search_answers_ids(search_phrase)
+    ids_ = []
+    if len(question_ids_from_answers) > 0 and len(question_ids_from_questions)> 0:
+        print('both valid')
+        ids_ = question_ids_from_answers + question_ids_from_questions
+
+    elif len(question_ids_from_answers) > 0:
+        print('fromanswers is valid only')
+        ids_ = question_ids_from_answers
+    elif len(question_ids_from_questions)> 0:
+        ids_ = question_ids_from_questions
+        print('fromquestions is valid only')
+
+    print(ids_)
+    result = make_the_result(ids_)
+    return result
+
+
 @connection.connection_handler
 def get_search_question_ids(cursor, search_phrase):
     phrase = search_phrase.lower()
-    cursor.execute("""SELECT * FROM question
+    cursor.execute("""SELECT id FROM question
                         WHERE lower(title) LIKE '%%' || %(phrase)s || '%%' OR
                         lower (message ) LIKE '%%' || %(phrase)s || '%%' 
     """, {'phrase': phrase})
-    search_results_from_questions = cursor.fetchall()
-    return search_results_from_questions
+
+    ids_dictsinlist = cursor.fetchall()
+    ids = []
+    for id in ids_dictsinlist:
+        ids.append(id['id'])
+    print(ids)
+    return ids
 
 
 @connection.connection_handler
@@ -279,14 +304,26 @@ def get_search_answers_ids(cursor, search_phrase):
     SELECT question_id FROM answer
     WHERE lower (message ) LIKE '%%' || %(phrase)s || '%%'""", {'phrase': phrase})
     question_id = cursor.fetchall()
-    for id in
+    print(question_id)
     if len(question_id) > 0:
-        #print(question_id)   #this is a list with dictionaries
+        # print(question_id)   #this is a list with dictionaries
         cursor.execute(""" SELECT * FROM question
                            WHERE id = %(question_id)s """, {'question_id': question_id[0]['question_id']})
-        questions_matches_from_answers = cursor.fetchall()   #this can be out of range
-        #print(questions_matches_from_answers)
-        return questions_matches_from_answers
+        ids_dictsinlist = cursor.fetchall()
+        ids = []
+        for id in ids_dictsinlist:
+            ids.append(id['id'])
+        print(ids)
+        return ids
+    else:
+        return []
 
-
-
+@connection.connection_handler
+def make_the_result(cursor, ids_):
+    if len(ids_)> 0:
+        cursor.execute(""" SELECT * FROM question
+                            WHERE id IN %(ids)s""", {'ids': tuple(ids_)})
+        result_table = cursor.fetchall()
+        return result_table
+    else:
+        return []
