@@ -74,7 +74,7 @@
                 <a href='/answer/{{ answer.id }}/delete' method="post">
                     <button type="submit">Delete Comment</button>
                 </a>
-                <input type="button" onclick="window.location='/answer/{{ answer.id }}/edit'" value="Edit">
+                <input type="button" onclick="window.location='/answer/{{ answer.id }}/edit'" value="Edit Comment">
                 <label for="vote-up"></label>
                 <a type="button" onclick="window.location='/answer/{{ answer.id }}/vote-up'"><img
                         class="vote" border="0" alt="up"
@@ -86,7 +86,7 @@
             </td>
         </tr>
         <tr class="answer_table">
-                <td class="answer_table" align="left">Comments:</td>
+                <td class="answer_table" id="answer_message" align="left">Comments:</td>
             </tr>
             {% for comment in answer_comments %}
                 {% if comment.answer_id == answer.id %}
@@ -97,8 +97,9 @@
                                value="Edit A Comment">
                         <br>
                         {% if comment.edited_count %}
-                            Edited: {{ comment.edited_count }} time(s). Last edit was at: {{ time }}
+                            <p>Edited: {{ comment.edited_count }} time(s). Last edit was at: {{ time }}</p>
                             <br>
+
                             </td>
                         {% endif %}
                 {% endif %}
@@ -117,7 +118,7 @@
             <p><label for="upload_pic">Upload a picture:</label><br>
                 <input type="url" name="image" id="upload_pic">
             </p>
-            <button type="submit">Answer</button>
+            <button type="submit">Add Answer</button>
         </form>
         </td>
     </tr>

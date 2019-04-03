@@ -332,19 +332,18 @@ def vote_descending(cursor):
     return vote_desc
 
 
-
 def do_search(search_phrase):
     question_ids_from_questions = get_search_question_ids(search_phrase)
     question_ids_from_answers = get_search_answers_ids(search_phrase)
     ids_ = []
-    if len(question_ids_from_answers) > 0 and len(question_ids_from_questions)> 0:
+    if len(question_ids_from_answers) > 0 and len(question_ids_from_questions) > 0:
         print('both valid')
         ids_ = question_ids_from_answers + question_ids_from_questions
 
     elif len(question_ids_from_answers) > 0:
         print('fromanswers is valid only')
         ids_ = question_ids_from_answers
-    elif len(question_ids_from_questions)> 0:
+    elif len(question_ids_from_questions) > 0:
         ids_ = question_ids_from_questions
         print('fromquestions is valid only')
 
@@ -391,9 +390,10 @@ def get_search_answers_ids(cursor, search_phrase):
     else:
         return []
 
+
 @connection.connection_handler
 def make_the_result(cursor, ids_):
-    if len(ids_)> 0:
+    if len(ids_) > 0:
         cursor.execute(""" SELECT * FROM question
                             WHERE id IN %(ids)s""", {'ids': tuple(ids_)})
         result_table = cursor.fetchall()
@@ -466,4 +466,3 @@ def delete_question_tag(cursor, id):
 #                     DELETE FROM comment
 #                     WHERE  answer_id = %(id)s""",
 #                    {'answer_id': id})
-

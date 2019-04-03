@@ -22,16 +22,24 @@ h4 {
 .question_table {
     font-size: 15px;
     alignment: center;
-    border: 2px solid #ddd;
-    display: inline-block;
+    /*border: 2px solid #ddd;*/
+    /*display: inline-block;*/
     float: right;
     border-collapse: collapse;
     width: 30%;
     align-items: center;
+    border-width: initial;
+}
+
+#answer_message{
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .answer_table {
-    border: 2px solid #ddd;
+    border: 2px #ddd;
+    /*border-width: initial;*/
+    border-right: None;
     /*display: inline-block;*/
     /*float: left;*/
     border-collapse: collapse;
