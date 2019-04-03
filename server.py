@@ -75,7 +75,8 @@ def update_question(question_id):
 
 @app.route('/question/<id>', methods=['GET', 'POST'])
 def list_answers(id=None):
-    time = request.args.get('time')
+    time = request.args.get('time')  # answer comment edit time stamp
+    q_c_time = request.args.get('q_c_time')
     question_row = data_handler.get_question_for_id(id)
     answer_row = data_handler.get_answers_for_id(id)
     question_comments = data_handler.get_question_comments(id)
@@ -91,7 +92,7 @@ def list_answers(id=None):
         return redirect(url_for('list_answers', id=id))
     data_handler.question_view_number_counter(id)
     return render_template('question.html', id=id, question_row=question_row, answer_row=answer_row,
-                           question_comments=question_comments, answer_comments=answer_comments, time=time)
+                           question_comments=question_comments, answer_comments=answer_comments, time=time, q_c_time=q_c_time)
 
 
 @app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])
@@ -198,7 +199,7 @@ def add_question_comment(question_id=None):
                    }
         data_handler.add_new_comment(comment)
         return redirect(url_for('list_answers', id=question_id))
-    return render_template('add-question-comment.html', comment=comment, button_title="Post New Comment")
+    return render_template('add-question-comment.html', comment=comment, edit_comment=None, button_title="Post New Comment")
 
 
 @app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
@@ -215,6 +216,24 @@ def add_answer_comment(answer_id=None):
         data_handler.add_new_comment(comment)
         return redirect(url_for('list_answers', id=question_id))
     return render_template('add-answer-comment.html', comment=comment, edit_comment=None, button_title="Post New Comment")
+
+
+@app.route('/question-comment/<comment_id>/edit', methods=['GET', 'POST'])
+def edit_question_comment(comment_id):
+    question_id = data_handler.get_question_id_by_comment_id(comment_id)
+    if request.method == 'POST':
+        comment = {'id': comment_id,
+                   'submission_time': request.form.get('submission_time'),
+                   'question_id': request.form.get('question_id'),
+                   'answer_id': request.form.get('answer_id'),
+                   'message': request.form.get('message'),
+                   'edited_count': request.form.get('edited_count'),
+                   }
+        data_handler.update_comment(comment)
+        q_c_time = data_handler.date_time()
+        return redirect(url_for('list_answers', id=question_id, q_c_time=q_c_time))
+    comment = data_handler.get_answer_comment_by_comment_id(comment_id)
+    return render_template('add-question-comment.html', edit_comment=comment, comment=None, button_title="Edit Comment")
 
 
 @app.route('/answer-comment/<comment_id>/edit', methods=['GET', 'POST'])

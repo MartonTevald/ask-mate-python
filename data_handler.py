@@ -266,6 +266,13 @@ def get_question_id_by_answer_id(cursor, id):
 
 
 @connection.connection_handler
+def get_question_id_by_comment_id(cursor, id):
+    cursor.execute("""select question_id from comment where id = %(id)s""", {'id': id})
+    question_id = cursor.fetchall()
+    return question_id[0].get('question_id')
+
+
+@connection.connection_handler
 def sort_time_ascending(cursor):
     cursor.execute("""
                 SELECT *

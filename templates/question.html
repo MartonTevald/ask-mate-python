@@ -47,12 +47,12 @@
             <td id="comment">{{ comment.message }}</td>
         </tr>
         <tr>
-            <td id="comment">{{ comment.submission_time }}</td>
+            <td id="comment">{{ comment.submission_time }}
+                <input type="button" onclick="window.location='/question-comment/{{ comment.id }}/edit'" value="Edit Q Comment"></td>
             {% if comment.edited_count %}
                 <tr>
-                    <td id="comment">Edited: {{ comment.edited_count }} time(s)</td>
+                    <td id="comment">Edited: {{ comment.edited_count }} time(s).  Last edit was at: {{ q_c_time }}</td>
                 </tr>
-
             {% endif %}
     {% endfor %}
 
