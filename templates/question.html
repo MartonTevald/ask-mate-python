@@ -95,15 +95,13 @@
                     <td id="comment">{{ comment.message }}</td>
                     <tr>
                     <td>{{ comment.submission_time }}
-                        <button>Edit</button>
+                        <input type="button" onclick="window.location='/answer-comment/{{ comment.id }}/edit'" value="Edit A Comment">
                         <br>
-
                         {% if comment.edited_count %}
-                            Edited: {{ comment.edited_count }} time(s)
+                            Edited: {{ comment.edited_count }} time(s). Last edit was at: {{ time }}
                             <br>
                             </td>
                         {% endif %}
-
                 {% endif %}
             </tr>
             {% endfor %}
