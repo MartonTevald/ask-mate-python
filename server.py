@@ -255,6 +255,21 @@ def edit_answer_comment(comment_id):
     return render_template('add-answer-comment.html', edit_comment=comment, comment=None, button_title="Edit Comment")
 
 
+@app.route('/question-comment/<comment_id>/delete')
+def delete_question_comment(comment_id):
+    question_id = data_handler.get_question_id_by_comment_id(comment_id)
+    data_handler.delete_comment_by_comment_id(comment_id)
+    return redirect(url_for('list_answers', id=question_id))
+
+
+@app.route('/answer-comment/<comment_id>/delete')
+def delete_answer_comment(comment_id):
+    answer_id = data_handler.get_answer_id_by_comment_id(comment_id)
+    question_id = data_handler.get_question_id_by_answer_id(answer_id)
+    data_handler.delete_comment_by_comment_id(comment_id)
+    return redirect(url_for('list_answers', id=question_id))
+
+
 @app.route('/search/', methods=['GET'])
 def search():
     search_phrase = request.args.get('search_phrase')

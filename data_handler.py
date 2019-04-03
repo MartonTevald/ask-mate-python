@@ -75,7 +75,7 @@ def get_question_for_id(cursor, id):
                     WHERE id = %(id)s """,
                    {'id': id})
     question = cursor.fetchall()
-    return question
+    return question[0]
 
 
 @connection.connection_handler
@@ -256,6 +256,11 @@ def get_answer_id_by_comment_id(cursor, id):
     cursor.execute("""SELECT answer_id FROM comment WHERE id = %(id)s""", {'id': id})
     answer_id = cursor.fetchall()
     return answer_id[0].get('answer_id')
+
+
+@connection.connection_handler
+def delete_comment_by_comment_id(cursor, id):
+    cursor.execute("""DELETE FROM comment WHERE id = %(id)s""", {'id': id})
 
 
 @connection.connection_handler
