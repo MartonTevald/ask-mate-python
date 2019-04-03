@@ -20,7 +20,7 @@ def get_all_details(cursor):
 
 def date_time():
     dt = datetime.now()
-    date = dt.strftime('%Y-%m-%dT%H:%M:%S')
+    date = dt.strftime('%Y-%m-%d %H:%M:%S')
     return date
 
 
