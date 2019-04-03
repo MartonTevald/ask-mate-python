@@ -17,11 +17,11 @@
     <p>
         <label for="title">Question title:</label><br>
         <input type="text" name="title" id="title"
-               value="{{ question.title }}">
+               value="{{ question[0].title }}">
     </p>
     <p>
         <label for="message">Question text:</label><br>
-        <textarea name="message" id="message" cols="80" rows="8" >{{ question.message }}</textarea>
+        <textarea name="message" id="message" cols="80" rows="8" >{{ question[0].message }}</textarea>
 
     </p>
     <p>

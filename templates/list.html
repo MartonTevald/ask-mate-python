@@ -15,7 +15,7 @@
 
 <form action='/search' method="GET">
     <label id = "search"></label>
-    <input type="text" name="search_phrase">
+    <input  type="text" name="search_phrase">
     <button type="submit" >Search</button>
 </form>
 
@@ -61,7 +61,7 @@
             <td>{{ question.submission_time }}</td>
             <td>{{ question.view_number }}</td>
             <td>{{ question.vote_number }}</td>
-            <td><a href="/question/{{ question['id'] }} " methods="get">{{ question.title }}</a></td>
+            <td id="question_title"><a href="/question/{{ question['id'] }} " methods="get">{{ question.title }}</a></td>
             <td>{{ question.message }}</td>
             <td><img src="{{ question.image }}" alt="no file" width="150" height="150"></td>
 

@@ -64,7 +64,6 @@ def update_question(question_id):
         return redirect('/')
 
     question = data_handler.get_question_for_id(question_id)
-
     return render_template('add-question.html',
                            question=question,
                            form_url=url_for('update_question', question_id=question_id),
