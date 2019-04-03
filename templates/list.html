@@ -12,10 +12,10 @@
 <h1 align="left">T i d d e R</h1>
 
 
-<form action="{{ url_for('search', search_phrase = search_phrase) }}" method="post">
+<form action='/search' method="GET">
     <label id = "search"></label>
     <input type="text" name="search_phrase">
-    <button type="submit" value="search">Search</button>
+    <button type="submit" >Search</button>
 </form>
 
 
