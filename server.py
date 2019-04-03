@@ -119,7 +119,6 @@ def edit_answer(answer_id):
                                )
 
 
-
 @app.route('/question/<question_id>/delete', methods=['GET', 'POST'])
 def delete_rows(question_id):
     data_handler.del_question_row(question_id)
@@ -218,14 +217,18 @@ def add_answer_comment(answer_id=None):
 @app.route('/search/', methods=['GET'])
 def search():
     search_phrase = request.args.get('search_phrase')
-    #print(search_phrase)
-
     search_result_from_question = data_handler.get_search_results_from_questions(search_phrase)
-    #print(search_result_from_question)
-
     search_result_from_answer = data_handler.get_search_results_from_answers(search_phrase)
-    #search result = ffj+ lfihsr
-    return render_template('list.html', questions=search_result_from_question)
+    #print(search_result_from_question)
+    #print(search_result_from_answer)
+    result_list = search_result_from_question + search_result_from_answer
+    print(result_list)
+    list_to_set = set(result_list)
+    print(list_to_set)
+    final_list = list(list_to_set)
+    print(final_list)
+    #return render_template('list.html', questions=result)
+    #return render_template('list.html', questions=search_result_from_question)
 
 
 if __name__ == '__main__':

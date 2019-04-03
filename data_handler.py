@@ -262,8 +262,7 @@ def vote_descending(cursor):
 
 
 @connection.connection_handler
-
-def get_search_results_from_questions(cursor, search_phrase):
+def get_search_question_ids(cursor, search_phrase):
     phrase = search_phrase.lower()
     cursor.execute("""SELECT * FROM question
                         WHERE lower(title) LIKE '%%' || %(phrase)s || '%%' OR
@@ -274,21 +273,20 @@ def get_search_results_from_questions(cursor, search_phrase):
 
 
 @connection.connection_handler
-def get_search_results_from_answers(cursor, search_phrase):
+def get_search_answers_ids(cursor, search_phrase):
     phrase = search_phrase.lower()
     cursor.execute("""
     SELECT question_id FROM answer
     WHERE lower (message ) LIKE '%%' || %(phrase)s || '%%'""", {'phrase': phrase})
     question_id = cursor.fetchall()
-    print(question_id)   #this is a list with dictionaries
-    #cursor.execute(""" SELECT * FROM question
-                        WHERE id = %(question_id)s """, {'question_id': question_id})
+    for id in
+    if len(question_id) > 0:
+        #print(question_id)   #this is a list with dictionaries
+        cursor.execute(""" SELECT * FROM question
+                           WHERE id = %(question_id)s """, {'question_id': question_id[0]['question_id']})
+        questions_matches_from_answers = cursor.fetchall()   #this can be out of range
+        #print(questions_matches_from_answers)
+        return questions_matches_from_answers
 
-def get_search_results(cursor, search_phrase):
-    cursor.execute("""SELECT * FROM question
-                        WHERE title LIKE %(search_phrase)s OR 
-                        message LIKE %(search_phrase)s 
-    """, {'search_phrase': search_phrase})
-    search_result = cursor.fetchall()
-    return search_result
+
 
