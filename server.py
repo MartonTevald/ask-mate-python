@@ -90,6 +90,7 @@ def list_answers(id=None):
         data_handler.add_new_answer(answers)
         return redirect(url_for('list_answers', id=id))
     data_handler.question_view_number_counter(id)
+
     return render_template('question.html', id=id, question_row=question_row, answer_row=answer_row,
                            question_comments=question_comments, answer_comments=answer_comments)
 
@@ -116,6 +117,7 @@ def edit_answer(answer_id):
                                button_title='Update',
                                button_page='Return '
                                )
+
 
 
 @app.route('/question/<question_id>/delete', methods=['GET', 'POST'])
@@ -213,12 +215,17 @@ def add_answer_comment(answer_id=None):
     return render_template('add-answer-comment.html', comment=comment, button_title="Post New Comment")
 
 
-@app.route('/search?q=<search_phrase>', methods=['GET', 'POST'])
-def search(search_phrase):
-    if request == 'POST':
-        search_results = data_handler.get_search_results(search_phrase)
-    print(search_results)
-    return render_template('list.html', search_results=search_results)
+@app.route('/search/', methods=['GET'])
+def search():
+    search_phrase = request.args.get('search_phrase')
+    #print(search_phrase)
+
+    search_result_from_question = data_handler.get_search_results_from_questions(search_phrase)
+    #print(search_result_from_question)
+
+    search_result_from_answer = data_handler.get_search_results_from_answers(search_phrase)
+    #search result = ffj+ lfihsr
+    return render_template('list.html', questions=search_result_from_question)
 
 
 if __name__ == '__main__':
