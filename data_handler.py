@@ -269,3 +269,53 @@ def get_search_results(cursor, search_phrase):
     """, {'search_phrase': search_phrase})
     search_result = cursor.fetchall()
     return search_result
+
+
+@connection.connection_handler
+def get_tag_id_from_question_id(cursor, id):
+    cursor.execute("""SELECT tag_id FROM question_tag
+                    WHERE question_id = %(id)s"""
+                   , {'question_id': id})
+    tag_id = cursor.fetchall()
+    return tag_id
+
+
+@connection.connection_handler
+def get_tag_from_tag_id(cursor, id):
+    tag_id = get_tag_id_from_question_id(id)
+    cursor.execute("""SELECT name FROM tag
+                        WHERE id = %(tag_id)s""",
+                   {'id': tag_id})
+    name = cursor.fethcall()
+    return name
+
+
+@connection.connection_handler
+def get_tags_for_select(cursor):
+    cursor.execute("""SELECT * FROM tag
+    """)
+    tags = cursor.fetchall()
+    return tags
+
+
+@connection.connection_handler
+def add_to_tag_table(cursor, new_data):
+    cursor.execute("""INSERT INTO tag (name)
+                    VALUES (%(name)s)"""
+                   , {'submission_time': new_data['submission_time']})
+
+
+@connection.connection_handler
+def write_to_question_tag(cursor, question_id, tag_id):
+    cursor.execute("""
+                    INSERT INTO question_tag (question_id, tag_id) 
+                    VALUES (%(question_id)s,%(tag_id)s)"""
+                   , {'question_id': question_id, 'tag_id': tag_id})
+
+
+@connection.connection_handler
+def delete_question_tag(cursor, id):
+    cursor.execute("""
+                    DELETE FROM question_tag
+                    WHERE question_id = %(id)s
+                    """, {'question_id': id})

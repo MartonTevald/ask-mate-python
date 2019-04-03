@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='format_question_html.css') }}">
 </head>
 <body bgcolor="#f0ffff">
-<img border="0" alt="T i d d e r" src="/static/on_off_logo.png" width="150" height="80">
+<img id="logo" border="0" alt="T i d d e r" src="/static/on_off_logo.png" width="150" height="80">
 <h1>{{ question_row[0].title }}</h1><br>
 <h3>{{ question_row[0].message }}</h3>
 <br>
@@ -73,7 +73,6 @@
             <td>{{ answer.submission_time }}<a href="/answer/{{ answer.id }}/new-comment">
         <button type="submit">Add Comment</button>
         </a></td>
-            <td>{{ answer.id }}</td>
             <td><img src="{{ answer.image }}" alt="missing" width="150" height="150"></td>
             <br>
         </tr>
@@ -103,7 +102,8 @@
                 <td>{{ comment.message }}</td>
             </tr>
             <tr>
-                <td>{{ comment.submission_time }}</td>
+                <td>{{ comment.submission_time }}
+                <button>Edit</button></td>
                 {% if comment.edited_count %}
                     <td>Edited: {{ comment.edited_count }} time(s)</td>
                 {% endif %}
