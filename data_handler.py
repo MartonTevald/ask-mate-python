@@ -75,7 +75,7 @@ def get_question_for_id(cursor, id):
                     WHERE id = %(id)s """,
                    {'id': id})
     question = cursor.fetchall()
-    return question
+    return question[0]
 
 
 @connection.connection_handler
