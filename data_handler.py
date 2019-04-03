@@ -20,7 +20,7 @@ def get_all_details(cursor):
 
 def date_time():
     dt = datetime.now()
-    date = dt.strftime('%Y-%m-%dT%H:%M:%S')
+    date = dt.strftime('%Y-%m-%d %H:%M:%S')
     return date
 
 
@@ -188,8 +188,18 @@ def add_new_comment(cursor, new_data):
 
 
 @connection.connection_handler
+def update_comment(cursor, comment):
+    cursor.execute("""UPDATE comment
+                    SET 
+                    message = %(message)s,
+                    edited_count = edited_count +1
+                    WHERE id = %(id)s"""
+                   , {'id': comment['id'], 'message': comment['message']})
+
+
+@connection.connection_handler
 def get_question_comments(cursor, id):
-    cursor.execute("""SELECT * FROM comment WHERE %(id)s=question_id""", {'id': id})
+    cursor.execute("""SELECT * FROM comment WHERE question_id = %(id)s""", {'id': id})
     comments = cursor.fetchall()
     return comments
 
@@ -199,6 +209,27 @@ def get_answer_comments(cursor):
     cursor.execute("""SELECT * FROM comment WHERE answer_id=answer_id""", {'id': id})
     comments = cursor.fetchall()
     return comments
+
+
+@connection.connection_handler
+def get_answer_comment_by_comment_id(cursor, id):
+    cursor.execute("""SELECT * FROM comment WHERE id = %(id)s""", {'id': id})
+    comment = cursor.fetchall()
+    return comment[0]
+
+
+@connection.connection_handler
+def get_answer_id_by_comment_id(cursor, id):
+    cursor.execute("""SELECT answer_id FROM comment WHERE id = %(id)s""", {'id': id})
+    answer_id = cursor.fetchall()
+    return answer_id[0].get('answer_id')
+
+
+@connection.connection_handler
+def get_question_id_by_answer_id(cursor, id):
+    cursor.execute("""SELECT question_id FROM answer WHERE id = %(id)s""", {'id': id})
+    question_id = cursor.fetchall()
+    return question_id[0].get('question_id')
 
 
 @connection.connection_handler

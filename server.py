@@ -76,6 +76,7 @@ def update_question(question_id):
 
 @app.route('/question/<id>', methods=['GET', 'POST'])
 def list_answers(id=None):
+    time = request.args.get('time')
     question_row = data_handler.get_question_for_id(id)
     answer_row = data_handler.get_answers_for_id(id)
     question_comments = data_handler.get_question_comments(id)
@@ -90,9 +91,8 @@ def list_answers(id=None):
         data_handler.add_new_answer(answers)
         return redirect(url_for('list_answers', id=id))
     data_handler.question_view_number_counter(id)
-
     return render_template('question.html', id=id, question_row=question_row, answer_row=answer_row,
-                           question_comments=question_comments, answer_comments=answer_comments)
+                           question_comments=question_comments, answer_comments=answer_comments, time=time)
 
 
 @app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])
@@ -212,7 +212,27 @@ def add_answer_comment(answer_id=None):
                    }
         data_handler.add_new_comment(comment)
         return redirect(url_for('list_answers', id=question_id))
-    return render_template('add-answer-comment.html', comment=comment, button_title="Post New Comment")
+    return render_template('add-answer-comment.html', comment=comment, edit_comment=None, button_title="Post New Comment")
+
+
+@app.route('/comment/<comment_id>/edit', methods=['GET', 'POST'])
+def edit_answer_comment(comment_id):
+    answer_id = data_handler.get_answer_id_by_comment_id(comment_id)
+    question_id = data_handler.get_question_id_by_answer_id(answer_id)
+    if request.method == 'POST':
+        comment = {'id': comment_id,
+                   'submission_time': request.form.get('submission_time'),
+                   'question_id': request.form.get('question_id'),
+                   'answer_id': request.form.get('answer_id'),
+                   'message': request.form.get('message'),
+                   'edited_count': request.form.get('edited_count'),
+                   }
+        data_handler.update_comment(comment)
+        time = data_handler.date_time()
+        print(time)
+        return redirect(url_for('list_answers', id=question_id, time=time))
+    comment = data_handler.get_answer_comment_by_comment_id(comment_id)
+    return render_template('add-answer-comment.html', edit_comment=comment, comment=None, button_title="Edit Comment")
 
 
 @app.route('/search/', methods=['GET'])
