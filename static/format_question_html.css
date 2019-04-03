@@ -9,6 +9,12 @@ table {
   /*width: 70%;*/
   align-items: center;
 }
+h1{
+    text-align: center;
+}
+h2{
+    text-align: justify;
+}
 h4{
     font-size: 40px;
     /*font-style: italic;*/
