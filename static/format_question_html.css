@@ -36,15 +36,19 @@ h4 {
     font-weight: bold;
 }
 
+.add_answer{
+
+}
+
 .answer_table {
     border: 2px #ddd;
     /*border-width: initial;*/
     border-right: None;
     /*display: inline-block;*/
     /*float: left;*/
-    border-collapse: collapse;
+    /*border-collapse: collapse;*/
     width: 65%;
-    align-items: center;
+    /*align-items: center;*/
 }
 
 

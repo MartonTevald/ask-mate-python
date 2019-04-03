@@ -17,12 +17,13 @@
 <table class="question_table" >
     <tr>
         <td>ID : {{ question_row.id }} |
-            {{ question_row.submission_time }}
+            {{ question_row.submission_time }} |
+            VOTE  {{ question_row.vote_number }}
         <td>
         <td><a href="/question/{{ question_row.id }}/new-comment">
             <button type="submit">Add Comment</button>
         </a></td>
-        <td>vote : {{ question_row.vote_number }}</td>
+
         <td><a href="/question/{{ question_row.id }}/edit">
             <button type="submit">Edit Question</button>
         </a></td>
@@ -96,12 +97,12 @@
                 {% if comment.answer_id == answer.id %}
                     <td  id="comment">{{ comment.message }}</td>
                     <tr >
-                    <td>{{ comment.submission_time }}
+                    <td id="comment_info">{{ comment.submission_time }}
                         <input type="button" onclick="window.location='/answer-comment/{{ comment.id }}/edit'" value="Edit A Comment">
                         <input type="button" onclick="window.location='/answer-comment/{{ comment.id }}/delete'" value="Remove A Comment">
                         <br>
                         {% if comment.edited_count %}
-                            <p>Edited: {{ comment.edited_count }} time(s). Last edit was at: {{ time }}</p>
+                            <p id="comment_info">Edited: {{ comment.edited_count }} time(s). Last edit was at: {{ time }}</p>
                             <br>
 
                             </td>
@@ -112,7 +113,7 @@
         </table>
     {% endfor %}
 <br>
-<table>
+<table class="add_answer">
     <tr>
         <td>
         <form action="/question/{{ question_row.id }}" method="post">
