@@ -29,26 +29,23 @@ h4 {
     width: 30%;
     align-items: center;
     border-width: initial;
+    /*visibility: collapse;*/
 }
 
-#answer_message{
+#answer_message {
     font-size: 20px;
     font-weight: bold;
 }
 
-.add_answer{
+.add_answer {
 
 }
 
 .answer_table {
     border: 2px #ddd;
-    /*border-width: initial;*/
     border-right: None;
-    /*display: inline-block;*/
-    /*float: left;*/
-    /*border-collapse: collapse;*/
     width: 65%;
-    /*align-items: center;*/
+
 }
 
 
@@ -88,3 +85,37 @@ img:hover {
 }
 
 
+/*.tblcls {*/
+/*    border-collapse: collapse;*/
+/*    border: 2px solid #006655;*/
+/*}*/
+
+/*.tblcls th {*/
+/*    border: 1px dashed black;*/
+/*    color: #fff;*/
+/*    background: #006655;*/
+/*}*/
+
+/*.tblcls td {*/
+/*    padding: 10px;*/
+/*    border: 1px dotted black;*/
+/*    color: #000;*/
+/*    background: #84FFEA;*/
+/*}*/
+
+#show_hide {
+    position: center;
+    margin: 30px 5px;
+}
+
+#show_answers {
+    position: center;
+    margin: 30px 5px;
+}
+
+#hide_question_comments {
+    position: center;
+    margin: 30px 5px;
+    alignment: right;
+
+}

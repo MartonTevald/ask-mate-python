@@ -4,8 +4,35 @@
     <meta charset="UTF-8">
     <title>This was really hard to make</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='format_question_html.css') }}">
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $("#hide_question_comments").click(function () {
+                $(".question_comments").toggle(1000)
+            });
+        });
+    </script>
+
+    <script>
+
+        $(document).ready(function () {
+            $("#show_hide").click(function () {
+                $(".add_answer").toggle(1000)
+            });
+        });
+    </script>
+    <script>
+
+        $(document).ready(function () {
+            $("#show_answers").click(function () {
+                $(".answer_table").toggle(1000)
+            });
+        });
+    </script>
 </head>
 <body bgcolor="#f0ffff">
+
 <img id="logo" border="0" alt="T i d d e r" src="/static/on_off_logo.png" width="150" height="80">
 
 <h1>{{ question_row.title }}</h1><br>
@@ -14,11 +41,11 @@
 <h4><a href="/">
     <button>Home</button>
 </a></h4>
-<table class="question_table" >
+<table class="question_table">
     <tr>
         <td>ID : {{ question_row.id }} |
             {{ question_row.submission_time }} |
-            VOTE  {{ question_row.vote_number }}
+            VOTE {{ question_row.vote_number }}
         <td>
         <td><a href="/question/{{ question_row.id }}/new-comment">
             <button type="submit">Add Comment</button>
@@ -31,8 +58,8 @@
             <button type="submit">Delete Question</button>
         </a></td>
     </tr>
-     <tr>
-         <td>
+    <tr>
+        <td>
             <a type="button" onclick="window.location='/question/{{ question_row.id }}/vote-up'"><img
                     class="vote_question" border="0" alt="up"
                     src="/static/photos/vote_up.png"></a>
@@ -41,28 +68,38 @@
                     src="/static/photos/vote_down.png"></a>
         </td>
     </tr>
-    <tr>
-        <td>Comments:</td>
-        {% for comment in question_comments %}
-            <tr>
-                <td id="comment">{{ comment.message }}</td>
-            </tr>
-            <tr>
-            <td id="comment_info">{{ comment.submission_time }}
-                <input type="button" onclick="window.location='/question-comment/{{ comment.id }}/edit'"
-                       value="Edit Q Comment">
-             <input type="button" onclick="window.location='/question-comment/{{ comment.id }}/delete'" value="Remove Q Comment">
+    {#    <tr>#}
+</table>
+<p align="right"><button id="hide_question_comments">Show/Hide Comments(Q)</button></p>
+<table align="right" class="question_comments">
+    <td>Comments:
+    </td>
+    {% for comment in question_comments %}
+        <tr>
+            <td id="comment">
+                {{ comment.message }}
             </td>
-            {% if comment.edited_count %}
-                <td id="comment_info">Edited: {{ comment.edited_count }} time(s). Last edit was
-                    at: {{ q_c_time }}</td>
-            {% endif %}
-        {% endfor %}
+        </tr>
+        <tr>
+        <td id="comment_info">{{ comment.submission_time }}
+            <input type="button" onclick="window.location='/question-comment/{{ comment.id }}/edit'"
+                   value="Edit Q Comment">
+            <input type="button" onclick="window.location='/question-comment/{{ comment.id }}/delete'"
+                   value="Remove Q Comment">
+        </td>
+        {% if comment.edited_count %}
+            <td id="comment_info">Edited: {{ comment.edited_count }} time(s). Last edit was
+                at: {{ q_c_time }}</td>
+        {% endif %}
+    {% endfor %}
+    </tr>
 
 </table>
 
 
+<button id="show_answers">Show/Hide Answers</button>
 {% for answer in answer_row %}
+
     <table class="answer_table">
         <tr>
             <td id="answer_message">{{ answer.message }}</td>
@@ -70,7 +107,7 @@
         <tr>
             <td><img src="{{ answer.image }}" alt="Image" width="150" height="150">
                 <p>{{ answer.vote_number }}||
-                {{ answer.submission_time }}</p>
+                    {{ answer.submission_time }}</p>
                 <a href="/answer/{{ answer.id }}/new-comment">
                     <button type="submit">Add Comment</button>
                 </a>
@@ -91,42 +128,48 @@
             </td>
         </tr>
         <tr class="answer_table">
-                <td class="answer_table" id="answer_message" align="left">Comments:</td>
-            </tr>
-            {% for comment in answer_comments %}
-                {% if comment.answer_id == answer.id %}
-                    <td  id="comment">{{ comment.message }}</td>
-                    <tr >
-                    <td id="comment_info">{{ comment.submission_time }}
-                        <input type="button" onclick="window.location='/answer-comment/{{ comment.id }}/edit'" value="Edit A Comment">
-                        <input type="button" onclick="window.location='/answer-comment/{{ comment.id }}/delete'" value="Remove A Comment">
+            <td class="answer_table" id="answer_message" align="left">Comments:</td>
+        </tr>
+        {% for comment in answer_comments %}
+            {% if comment.answer_id == answer.id %}
+                <td id="comment">{{ comment.message }}</td>
+                <tr>
+                <td id="comment_info">{{ comment.submission_time }}
+                    <input type="button" onclick="window.location='/answer-comment/{{ comment.id }}/edit'"
+                           value="Edit A Comment">
+                    <input type="button" onclick="window.location='/answer-comment/{{ comment.id }}/delete'"
+                           value="Remove A Comment">
+                    <br>
+                    {% if comment.edited_count %}
+                        <p id="comment_info">Edited: {{ comment.edited_count }} time(s). Last edit was
+                            at: {{ time }}</p>
                         <br>
-                        {% if comment.edited_count %}
-                            <p id="comment_info">Edited: {{ comment.edited_count }} time(s). Last edit was at: {{ time }}</p>
-                            <br>
 
-                            </td>
-                        {% endif %}
-                {% endif %}
-            </tr>
-            {% endfor %}
-        </table>
-    {% endfor %}
+                        </td>
+                    {% endif %}
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+{% endfor %}
 <br>
+<button id="show_hide">Show/Hide Add Answer</button>
+
 <table class="add_answer">
     <tr>
         <td>
-        <form action="/question/{{ question_row.id }}" method="post">
-            <p><label for="answer_message">Your Answer::</label><br>
-                <textarea id="answer_message" name="answer_message" rows="8" cols="50" minlength="10"></textarea>
-            </p>
-            <p><label for="upload_pic">Upload a picture:</label><br>
-                <input type="url" name="image" id="upload_pic">
-            </p>
-            <button type="submit">Add Answer</button>
-        </form>
+            <form action="/question/{{ question_row.id }}" method="post">
+                <p><label for="answer_message">Your Answer::</label><br>
+                    <textarea id="answer_message" name="answer_message" rows="8" cols="50" minlength="10"></textarea>
+                </p>
+                <p><label for="upload_pic">Upload a picture:</label><br>
+                    <input type="url" name="image" id="upload_pic">
+                </p>
+                <button type="submit">Add Answer</button>
+            </form>
         </td>
     </tr>
+
 </table>
 </body>
 </html>
