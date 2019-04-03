@@ -11,10 +11,7 @@
 <form action="{{ form_url }}"
       method="post">
     <input type="hidden" name="id" value="">
-    <input type="hidden" name="question_id" value={{ comment[0].id }}>
-    {% if comment.answer_id %}
-        <input type="hidden" name="answer_id" value={{ comment[0].id }}>
-    {% endif %}
+    <input type="hidden" name="answer_id" value={{ comment[0].id }}>
     <input type="hidden" name="submission_time" value={{ comment[0].submission_time }}>
     <p>
         <label for="message">Your comment:</label><br>

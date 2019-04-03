@@ -49,11 +49,9 @@ def add_question():
         return redirect('/')
 
 
-@app.route('/question/<question_id>/edit', methods=['GET', 'POST', 'DELETE'])
+@app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
 def update_question(question_id):
     if request.method == 'POST':
-        # if request.form.get('id') != question_id:
-        #     raise ValueError('The received id is not valid!')
         question = {'id': question_id,
                     'submission_time': data_handler.date_time(),
                     'view_number': request.form.get('view_number'),
@@ -62,7 +60,7 @@ def update_question(question_id):
                     'message': request.form.get('message'),
                     'image': request.form.get('image'),
                     }
-        data_handler.edit_question_row('question.csv', question, question_id)
+        data_handler.edit_question_row(question, question_id)
         return redirect('/')
 
     question = data_handler.get_question_for_id(question_id)
@@ -80,7 +78,8 @@ def update_question(question_id):
 def list_answers(id=None):
     question_row = data_handler.get_question_for_id(id)
     answer_row = data_handler.get_answers_for_id(id)
-    question_comments = data_handler.get_comments(id)
+    question_comments = data_handler.get_question_comments(id)
+    answer_comments = data_handler.get_answer_comments()
     if request.method == 'POST':
         answers = {'submission_time': data_handler.date_time(),
                    'vote_number': 0,
@@ -91,8 +90,34 @@ def list_answers(id=None):
         data_handler.add_new_answer(answers)
         return redirect(url_for('list_answers', id=id))
     data_handler.question_view_number_counter(id)
-    return render_template('/question.html', id=id, question_row=question_row, answer_row=answer_row,
-                           question_comments=question_comments)
+
+    return render_template('question.html', id=id, question_row=question_row, answer_row=answer_row,
+                           question_comments=question_comments, answer_comments=answer_comments)
+
+
+@app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])
+def edit_answer(answer_id):
+    if request.method == 'POST':
+        answer = {'id': answer_id,
+                  'submission_time': data_handler.date_time(),
+                  'vote_number': request.form.get('vote_number'),
+                  'question_id': request.form.get('question_id'),
+                  'message': request.form.get('message'),
+                  'image': request.form.get('image'),
+                  }
+        data_handler.edit_answer_row(answer, answer_id)
+        return redirect('/')
+    if request.method == 'GET':
+        answer = data_handler.get_answers_id_for_edit(answer_id)
+
+        return render_template('edit-answer.html',
+                               answer=answer,
+                               form_url=url_for('edit_answer', answer_id=answer_id),
+                               page_title='Update Answer',
+                               button_title='Update',
+                               button_page='Return '
+                               )
+
 
 
 @app.route('/question/<question_id>/delete', methods=['GET', 'POST'])
@@ -139,22 +164,22 @@ def sort_questions():
     if request.method == 'POST':
         if 'sub_asc' == request.form.get('sort'):
             sorted_data = data_handler.sort_time_ascending()
-            return render_template('/list.html', questions=sorted_data)
+            return render_template('list.html', questions=sorted_data)
         if 'sub_desc' == request.form.get('sort'):
             sorted_data = data_handler.sort_time_descending()
-            return render_template('/list.html', questions=sorted_data)
+            return render_template('list.html', questions=sorted_data)
         if 'view_asc' == request.form.get('sort'):
             sorted_data = data_handler.view_ascending()
-            return render_template('/list.html', questions=sorted_data)
+            return render_template('list.html', questions=sorted_data)
         if 'view_desc' == request.form.get('sort'):
             sorted_data = data_handler.view_descending()
-            return render_template('/list.html', questions=sorted_data)
+            return render_template('list.html', questions=sorted_data)
         if 'vote_asc' == request.form.get('sort'):
             sorted_data = data_handler.vote_ascending()
-            return render_template('/list.html', questions=sorted_data)
+            return render_template('list.html', questions=sorted_data)
         if 'vote_desc' == request.form.get('sort'):
             sorted_data = data_handler.vote_descending()
-            return render_template('/list.html', questions=sorted_data)
+            return render_template('list.html', questions=sorted_data)
         else:
             redirect('/')
 
@@ -162,7 +187,6 @@ def sort_questions():
 @app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])
 def add_question_comment(question_id=None):
     comment = data_handler.get_question_for_id(question_id)
-
     if request.method == 'POST':
         comment = {'submission_time': data_handler.date_time(),
                    'question_id': request.form.get('question_id'),
@@ -172,12 +196,23 @@ def add_question_comment(question_id=None):
                    }
         data_handler.add_new_comment(comment)
         return redirect(url_for('list_answers', id=question_id))
-    return render_template('/add-comment.html', comment=comment, button_title="Post New Comment")
+    return render_template('add-question-comment.html', comment=comment, button_title="Post New Comment")
 
 
-@app.route('/answer/<answer_id>/new-comment', methods=['POST'])
-def add_answer_comment():
-    pass
+@app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
+def add_answer_comment(answer_id=None):
+    comment = data_handler.get_answers_for_answer_id(answer_id)
+    question_id = data_handler.get_question_id_for_answer_id(answer_id)
+    if request.method == 'POST':
+        comment = {'submission_time': data_handler.date_time(),
+                   'question_id': request.form.get('question_id'),
+                   'answer_id': request.form.get('answer_id'),
+                   'message': request.form.get('message'),
+                   'edited_count': request.form.get('edited_count'),
+                   }
+        data_handler.add_new_comment(comment)
+        return redirect(url_for('list_answers', id=question_id))
+    return render_template('add-answer-comment.html', comment=comment, button_title="Post New Comment")
 
 
 @app.route('/search/', methods=['GET'])
