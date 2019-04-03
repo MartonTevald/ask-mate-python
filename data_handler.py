@@ -92,7 +92,8 @@ def get_answers_id_for_edit(cursor, id):
 def get_answers_for_id(cursor, id):
     cursor.execute("""
                     SELECT * FROM answer
-                    WHERE question_id = %(id)s""",
+                    WHERE question_id = %(id)s
+                     ORDER BY submission_time""",
                    {'id': id})
     answers = cursor.fetchall()
     return answers

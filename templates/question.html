@@ -60,18 +60,18 @@
 </table>
 
 
-<table>
+<table id="answer_table">
     {% for answer in answer_row %}
-        <tr>
-            <td>{{ answer.message }}</td>
+        <tr id="answer_table">
+            <td id="answer_table">{{ answer.message }}</td>
         </tr>
-        <tr>
-            <td><img src="{{ answer.image }}" alt="Image" width="150" height="150">
+        <tr id="answer_table">
+            <td id="answer_table" ><img src="{{ answer.image }}" alt="Image" width="150" height="150">
                 {{ answer.vote_number }}||
-                {{ answer.submission_time }}<a href="/answer/{{ answer.id }}/new-comment">
+                {{ answer.submission_time }}<a id="answer_table" href="/answer/{{ answer.id }}/new-comment">
                     <button type="submit">Add Comment</button>
                 </a>
-                <a href='/answer/{{ answer.id }}/delete' method="post">
+                <a id="answer_table" href='/answer/{{ answer.id }}/delete' method="post">
                     <button type="submit">Delete</button>
                 </a>
                 <input type="button" onclick="window.location='/answer/{{ answer.id }}/edit'" value="Edit">
