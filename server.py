@@ -162,7 +162,7 @@ def question_answer_down(answer_id):
     return redirect(url_for('list_answers', id=question_id))
 
 
-@app.route('/list', methods=['POST', 'GET'])
+@app.route('/list/', methods=['POST', 'GET'])
 def sort_questions():
     if request.method == 'POST':
         if 'sub_asc' == request.form.get('sort'):
