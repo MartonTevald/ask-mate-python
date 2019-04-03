@@ -20,7 +20,7 @@ def get_all_details(cursor):
 
 def date_time():
     dt = datetime.now()
-    date = dt.strftime('%Y-%m-%dT%H:%M:%S')
+    date = dt.strftime('%Y-%m-%d %H:%M:%S')
     return date
 
 
@@ -92,7 +92,8 @@ def get_answers_id_for_edit(cursor, id):
 def get_answers_for_id(cursor, id):
     cursor.execute("""
                     SELECT * FROM answer
-                    WHERE question_id = %(id)s""",
+                    WHERE question_id = %(id)s
+                     ORDER BY submission_time""",
                    {'id': id})
     answers = cursor.fetchall()
     return answers
@@ -119,8 +120,37 @@ def get_question_id_for_answer_id(cursor, answer_id):
 
 
 @connection.connection_handler
+def get_all_comments_for_answer(cursor, question_id):
+    answer_ids = get_all_answer_id_to_delete_comments(question_id)
+    if len(answer_ids) > 0:
+        cursor.execute("""
+                        DELETE FROM comment
+                        WHERE answer_id IN %(id)s """,
+                       {'id': answer_ids})
+    else:
+        return
+
+
+@connection.connection_handler
+def get_all_answer_id_to_delete_comments(cursor, question_id):
+    cursor.execute("""
+                SELECT id FROM answer
+                WHERE question_id = %(id)s
+                """, {'id': question_id})
+    answer_ids = cursor.fetchall()
+
+    id_values = []
+    for ids in answer_ids:
+        id_values.append(ids['id'])
+    id_values = tuple(id_values)
+    return tuple(id_values)
+
+
+@connection.connection_handler
 def del_question_row(cursor, id):
     cursor.execute("""
+                DELETE FROM comment
+                WHERE question_id = %(id)s;
                 DELETE FROM answer
                 WHERE question_id = %(id)s;
                 DELETE FROM question
@@ -131,8 +161,11 @@ def del_question_row(cursor, id):
 @connection.connection_handler
 def answer_delete_by_id(cursor, id):
     cursor.execute("""
+                    DELETE FROM comment
+                    WHERE answer_id = %(id)s;
                     DELETE FROM answer
-                    WHERE id = %(id)s""",
+                    WHERE id = %(id)s;
+                    """,
                    {'id': id})
 
 
@@ -188,8 +221,18 @@ def add_new_comment(cursor, new_data):
 
 
 @connection.connection_handler
+def update_comment(cursor, comment):
+    cursor.execute("""UPDATE comment
+                    SET 
+                    message = %(message)s,
+                    edited_count = edited_count +1
+                    WHERE id = %(id)s"""
+                   , {'id': comment['id'], 'message': comment['message']})
+
+
+@connection.connection_handler
 def get_question_comments(cursor, id):
-    cursor.execute("""SELECT * FROM comment WHERE %(id)s=question_id""", {'id': id})
+    cursor.execute("""SELECT * FROM comment WHERE question_id = %(id)s""", {'id': id})
     comments = cursor.fetchall()
     return comments
 
@@ -199,6 +242,27 @@ def get_answer_comments(cursor):
     cursor.execute("""SELECT * FROM comment WHERE answer_id=answer_id""", {'id': id})
     comments = cursor.fetchall()
     return comments
+
+
+@connection.connection_handler
+def get_answer_comment_by_comment_id(cursor, id):
+    cursor.execute("""SELECT * FROM comment WHERE id = %(id)s""", {'id': id})
+    comment = cursor.fetchall()
+    return comment[0]
+
+
+@connection.connection_handler
+def get_answer_id_by_comment_id(cursor, id):
+    cursor.execute("""SELECT answer_id FROM comment WHERE id = %(id)s""", {'id': id})
+    answer_id = cursor.fetchall()
+    return answer_id[0].get('answer_id')
+
+
+@connection.connection_handler
+def get_question_id_by_answer_id(cursor, id):
+    cursor.execute("""SELECT question_id FROM answer WHERE id = %(id)s""", {'id': id})
+    question_id = cursor.fetchall()
+    return question_id[0].get('question_id')
 
 
 @connection.connection_handler
@@ -261,6 +325,7 @@ def vote_descending(cursor):
     return vote_desc
 
 
+
 def do_search(search_phrase):
     question_ids_from_questions = get_search_question_ids(search_phrase)
     question_ids_from_answers = get_search_answers_ids(search_phrase)
@@ -304,6 +369,7 @@ def get_search_answers_ids(cursor, search_phrase):
     SELECT question_id FROM answer
     WHERE lower (message ) LIKE '%%' || %(phrase)s || '%%'""", {'phrase': phrase})
     question_id = cursor.fetchall()
+
     print(question_id)
     if len(question_id) > 0:
         # print(question_id)   #this is a list with dictionaries
@@ -327,3 +393,70 @@ def make_the_result(cursor, ids_):
         return result_table
     else:
         return []
+
+
+def get_search_results(cursor, search_phrase):
+    cursor.execute("""SELECT * FROM question
+                        WHERE title LIKE %(search_phrase)s OR 
+                        message LIKE %(search_phrase)s 
+    """, {'search_phrase': search_phrase})
+    search_result = cursor.fetchall()
+    return search_result
+
+
+@connection.connection_handler
+def get_tag_id_from_question_id(cursor, id):
+    cursor.execute("""SELECT tag_id FROM question_tag
+                    WHERE question_id = %(id)s"""
+                   , {'question_id': id})
+    tag_id = cursor.fetchall()
+    return tag_id
+
+
+@connection.connection_handler
+def get_tag_from_tag_id(cursor, id):
+    tag_id = get_tag_id_from_question_id(id)
+    cursor.execute("""SELECT name FROM tag
+                        WHERE id = %(tag_id)s""",
+                   {'id': tag_id})
+    name = cursor.fethcall()
+    return name
+
+
+@connection.connection_handler
+def get_tags_for_select(cursor):
+    cursor.execute("""SELECT * FROM tag
+    """)
+    tags = cursor.fetchall()
+    return tags
+
+
+@connection.connection_handler
+def add_to_tag_table(cursor, new_data):
+    cursor.execute("""INSERT INTO tag (name)
+                    VALUES (%(name)s)"""
+                   , {'submission_time': new_data['submission_time']})
+
+
+@connection.connection_handler
+def write_to_question_tag(cursor, question_id, tag_id):
+    cursor.execute("""
+                    INSERT INTO question_tag (question_id, tag_id) 
+                    VALUES (%(question_id)s,%(tag_id)s)"""
+                   , {'question_id': question_id, 'tag_id': tag_id})
+
+
+@connection.connection_handler
+def delete_question_tag(cursor, id):
+    cursor.execute("""
+                    DELETE FROM question_tag
+                    WHERE question_id = %(id)s
+                    """, {'question_id': id})
+
+# @connection.connection_handler
+# def delete_comments_by_answer(cursor, id):
+#     cursor.execute("""
+#                     DELETE FROM comment
+#                     WHERE  answer_id = %(id)s""",
+#                    {'answer_id': id})
+

@@ -76,6 +76,7 @@ def update_question(question_id):
 
 @app.route('/question/<id>', methods=['GET', 'POST'])
 def list_answers(id=None):
+    time = request.args.get('time')
     question_row = data_handler.get_question_for_id(id)
     answer_row = data_handler.get_answers_for_id(id)
     question_comments = data_handler.get_question_comments(id)
@@ -90,13 +91,13 @@ def list_answers(id=None):
         data_handler.add_new_answer(answers)
         return redirect(url_for('list_answers', id=id))
     data_handler.question_view_number_counter(id)
-
     return render_template('question.html', id=id, question_row=question_row, answer_row=answer_row,
-                           question_comments=question_comments, answer_comments=answer_comments)
+                           question_comments=question_comments, answer_comments=answer_comments, time=time)
 
 
 @app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])
 def edit_answer(answer_id):
+    id = data_handler.get_question_id_for_answer_id(answer_id)
     if request.method == 'POST':
         answer = {'id': answer_id,
                   'submission_time': data_handler.date_time(),
@@ -106,7 +107,9 @@ def edit_answer(answer_id):
                   'image': request.form.get('image'),
                   }
         data_handler.edit_answer_row(answer, answer_id)
-        return redirect('/')
+        return redirect(url_for('list_answers', id=id))
+        # return redirect('/')
+
     if request.method == 'GET':
         answer = data_handler.get_answers_id_for_edit(answer_id)
 
@@ -121,6 +124,7 @@ def edit_answer(answer_id):
 
 @app.route('/question/<question_id>/delete', methods=['GET', 'POST'])
 def delete_rows(question_id):
+    data_handler.get_all_comments_for_answer(question_id)
     data_handler.del_question_row(question_id)
     return redirect('/')
 
@@ -158,7 +162,7 @@ def question_answer_down(answer_id):
     return redirect(url_for('list_answers', id=question_id))
 
 
-@app.route('/list/', methods=['POST', 'GET'])
+@app.route('/list', methods=['POST', 'GET'])
 def sort_questions():
     if request.method == 'POST':
         if 'sub_asc' == request.form.get('sort'):
@@ -211,15 +215,45 @@ def add_answer_comment(answer_id=None):
                    }
         data_handler.add_new_comment(comment)
         return redirect(url_for('list_answers', id=question_id))
-    return render_template('add-answer-comment.html', comment=comment, button_title="Post New Comment")
+    return render_template('add-answer-comment.html', comment=comment, edit_comment=None, button_title="Post New Comment")
+
+
+@app.route('/answer-comment/<comment_id>/edit', methods=['GET', 'POST'])
+def edit_answer_comment(comment_id):
+    answer_id = data_handler.get_answer_id_by_comment_id(comment_id)
+    question_id = data_handler.get_question_id_by_answer_id(answer_id)
+    if request.method == 'POST':
+        comment = {'id': comment_id,
+                   'submission_time': request.form.get('submission_time'),
+                   'question_id': request.form.get('question_id'),
+                   'answer_id': request.form.get('answer_id'),
+                   'message': request.form.get('message'),
+                   'edited_count': request.form.get('edited_count'),
+                   }
+        data_handler.update_comment(comment)
+        time = data_handler.date_time()
+        return redirect(url_for('list_answers', id=question_id, time=time))
+    comment = data_handler.get_answer_comment_by_comment_id(comment_id)
+    return render_template('add-answer-comment.html', edit_comment=comment, comment=None, button_title="Edit Comment")
 
 
 @app.route('/search/', methods=['GET'])
 def search():
     search_phrase = request.args.get('search_phrase')
+
     result = data_handler.do_search(search_phrase)
     return render_template('list.html', questions=result)
 
+
+    # print(search_phrase)
+
+    search_result_from_question = data_handler.get_search_results_from_questions(search_phrase)
+    # print(search_result_from_question)
+
+    search_result_from_answer = data_handler.get_search_results_from_answers(search_phrase)
+    # search result = ffj+ lfihsr
+    return render_template('list.html', questions=search_result_from_question)
+9
 
 
 if __name__ == '__main__':
