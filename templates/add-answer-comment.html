@@ -19,7 +19,7 @@
     </p>
     <input type="hidden" name="edited_count" value={{ edit_comment.edited_count if edit_comment.edited_count else 0 }}>
     {% if edit_comment.id %}
-        <a href="/comment/{{ edit_comment.id }}/edit">
+        <a href="/answer-comment/{{ edit_comment.id }}/edit">
         <h3 align="left">
             <button type="submit">{{ button_title }}</button>
         </h3>

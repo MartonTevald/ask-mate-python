@@ -218,7 +218,7 @@ def add_answer_comment(answer_id=None):
     return render_template('add-answer-comment.html', comment=comment, edit_comment=None, button_title="Post New Comment")
 
 
-@app.route('/comment/<comment_id>/edit', methods=['GET', 'POST'])
+@app.route('/answer-comment/<comment_id>/edit', methods=['GET', 'POST'])
 def edit_answer_comment(comment_id):
     answer_id = data_handler.get_answer_id_by_comment_id(comment_id)
     question_id = data_handler.get_question_id_by_answer_id(answer_id)
@@ -232,7 +232,6 @@ def edit_answer_comment(comment_id):
                    }
         data_handler.update_comment(comment)
         time = data_handler.date_time()
-        print(time)
         return redirect(url_for('list_answers', id=question_id, time=time))
     comment = data_handler.get_answer_comment_by_comment_id(comment_id)
     return render_template('add-answer-comment.html', edit_comment=comment, comment=None, button_title="Edit Comment")
