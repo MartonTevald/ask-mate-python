@@ -259,6 +259,11 @@ def get_answer_id_by_comment_id(cursor, id):
 
 
 @connection.connection_handler
+def delete_comment_by_comment_id(cursor, id):
+    cursor.execute("""DELETE FROM comment WHERE id = %(id)s""", {'id': id})
+
+
+@connection.connection_handler
 def get_question_id_by_answer_id(cursor, id):
     cursor.execute("""SELECT question_id FROM answer WHERE id = %(id)s""", {'id': id})
     question_id = cursor.fetchall()
@@ -390,6 +395,7 @@ def get_search_answers_ids(cursor, search_phrase):
         return ids
     else:
         return []
+
 
 @connection.connection_handler
 def make_the_result(cursor, ids_):

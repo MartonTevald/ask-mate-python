@@ -50,7 +50,9 @@
         </tr>
         <tr>
             <td>{{ comment.submission_time }}
-                <input type="button" onclick="window.location='/question-comment/{{ comment.id }}/edit'" value="Edit Q Comment"></td>
+                <input type="button" onclick="window.location='/question-comment/{{ comment.id }}/edit'" value="Edit Q Comment">
+                <input type="button" onclick="window.location='/question-comment/{{ comment.id }}/delete'" value="Remove Q Comment">
+            </td>
             {% if comment.edited_count %}
                 <tr>
                     <td>Edited: {{ comment.edited_count }} time(s).  Last edit was at: {{ q_c_time }}</td>
@@ -97,6 +99,7 @@
                     <tr>
                     <td>{{ comment.submission_time }}
                         <input type="button" onclick="window.location='/answer-comment/{{ comment.id }}/edit'" value="Edit A Comment">
+                        <input type="button" onclick="window.location='/answer-comment/{{ comment.id }}/delete'" value="Remove A Comment">
                         <br>
                         {% if comment.edited_count %}
                             Edited: {{ comment.edited_count }} time(s). Last edit was at: {{ time }}
