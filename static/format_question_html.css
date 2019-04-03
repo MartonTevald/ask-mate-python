@@ -24,9 +24,10 @@ h4{
     border-radius: 4px;
 }
 
-/*#question_comments{*/
-/*    border-collapse: collapse*/
-/*}*/
+#answer_table{
+    border: #dddddd;
+    border-radius: 8px;
+}
 
 #comment{
     font-style: italic;

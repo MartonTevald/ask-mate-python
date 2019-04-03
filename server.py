@@ -259,6 +259,11 @@ def edit_answer_comment(comment_id):
 @app.route('/search/', methods=['GET'])
 def search():
     search_phrase = request.args.get('search_phrase')
+
+    result = data_handler.do_search(search_phrase)
+    return render_template('list.html', questions=result)
+
+
     # print(search_phrase)
 
     search_result_from_question = data_handler.get_search_results_from_questions(search_phrase)
@@ -267,6 +272,7 @@ def search():
     search_result_from_answer = data_handler.get_search_results_from_answers(search_phrase)
     # search result = ffj+ lfihsr
     return render_template('list.html', questions=search_result_from_question)
+9
 
 
 if __name__ == '__main__':
