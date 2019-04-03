@@ -119,8 +119,37 @@ def get_question_id_for_answer_id(cursor, answer_id):
 
 
 @connection.connection_handler
+def get_all_comments_for_answer(cursor, question_id):
+    answer_ids = get_all_answer_id_to_delete_comments(question_id)
+    if len(answer_ids) > 0:
+        cursor.execute("""
+                        DELETE FROM comment
+                        WHERE answer_id IN %(id)s """,
+                       {'id': answer_ids})
+    else:
+        return
+
+
+@connection.connection_handler
+def get_all_answer_id_to_delete_comments(cursor, question_id):
+    cursor.execute("""
+                SELECT id FROM answer
+                WHERE question_id = %(id)s
+                """, {'id': question_id})
+    answer_ids = cursor.fetchall()
+
+    id_values = []
+    for ids in answer_ids:
+        id_values.append(ids['id'])
+    id_values = tuple(id_values)
+    return tuple(id_values)
+
+
+@connection.connection_handler
 def del_question_row(cursor, id):
     cursor.execute("""
+                DELETE FROM comment
+                WHERE question_id = %(id)s;
                 DELETE FROM answer
                 WHERE question_id = %(id)s;
                 DELETE FROM question
@@ -131,8 +160,11 @@ def del_question_row(cursor, id):
 @connection.connection_handler
 def answer_delete_by_id(cursor, id):
     cursor.execute("""
+                    DELETE FROM comment
+                    WHERE answer_id = %(id)s;
                     DELETE FROM answer
-                    WHERE id = %(id)s""",
+                    WHERE id = %(id)s;
+                    """,
                    {'id': id})
 
 
@@ -341,3 +373,10 @@ def delete_question_tag(cursor, id):
                     DELETE FROM question_tag
                     WHERE question_id = %(id)s
                     """, {'question_id': id})
+
+# @connection.connection_handler
+# def delete_comments_by_answer(cursor, id):
+#     cursor.execute("""
+#                     DELETE FROM comment
+#                     WHERE  answer_id = %(id)s""",
+#                    {'answer_id': id})

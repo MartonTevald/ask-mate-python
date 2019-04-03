@@ -7,113 +7,109 @@
 </head>
 <body bgcolor="#f0ffff">
 <img id="logo" border="0" alt="T i d d e r" src="/static/on_off_logo.png" width="150" height="80">
+
 <h1>{{ question_row[0].title }}</h1><br>
 <h3>{{ question_row[0].message }}</h3>
+<h4><a href="/">
+    <button>Home</button>
+</a></h4>
 <br>
-<table>
+<table id="question_table" align="right">
     <tr>
         <td>ID : {{ question_row[0].id }} | {{ question_row[0].submission_time }}
             <a href="/question/{{ question_row[0].id }}/new-comment">
                 <button type="submit">Add Comment</button>
-            </a></td>
-    </tr>
-    <tr>
-        <td>vote : {{ question_row[0].vote_number }}</td>
-    </tr>
-    <tr>
-        <td><img src="{{ question_row[0].image }}" alt="no picture" width="150" height="150"></td>
-    </tr>
-    <a href="/question/{{ question_row[0].id }}/edit">
-        <button type="submit">Edit</button>
-    </a>
-    <a href="/question/{{ question_row[0].id }}/delete">
-        <button type="submit">Delete</button>
-    </a>
-</table>
-<form action="/question/{{ question_row[0].id }}/vote-up" method="post">
-    <label for="question_up_vote"></label>
-    <button id="question_up_vote" type="submit">Vote-up</button>
-</form>
-<form action="/question/{{ question_row[0].id }}/vote-down" method="post">
-    <label for="question_up_down"></label>
-    <button id="question_up_down" type="submit">Vote-down</button>
-</form>
-<table>
-    <tr>
-        <th>Comments:</th>
-    </tr>
-    {% for comment in question_comments %}
-    <tr>
-        <td>{{ comment.message }}</td>
-    </tr>
-    <tr>
-        <td>{{ comment.submission_time }}</td>
-        {% if comment.edited_count %}
-        <td>Edited: {{ comment.edited_count }} time(s)</td>
-        {% endif %}
-    </tr>
-    {% endfor %}
-</table>
-<h3><a href="/">
-    <button>Home</button>
-</a></h3>
-
-<table>
-    {% for answer in answer_row %}
-        <tr>
-            <td><a href='/answer/{{ answer.id }}/delete' method="post">
+            </a>
+            vote : {{ question_row[0].vote_number }}
+            <img src="{{ question_row[0].image }}" alt="no picture" width="150" height="150">
+            <a href="/question/{{ question_row[0].id }}/edit">
+                <button type="submit">Edit</button>
+            </a>
+            <a href="/question/{{ question_row[0].id }}/delete">
                 <button type="submit">Delete</button>
-                <br>
-            </a></td>
+            </a>
+
+            <form action="/question/{{ question_row[0].id }}/vote-up" method="post">
+                <label for="question_up_vote"></label>
+                <button id="question_up_vote" type="submit">Vote-up</button>
+            </form>
+            <form action="/question/{{ question_row[0].id }}/vote-down" method="post">
+                <label for="question_up_down"></label>
+                <button id="question_up_down" type="submit">Vote-down</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
+
+<table id="question_comments_table" align="right">
+    <td>Comments:</td>
+    {% for comment in question_comments %}
+        <tr>
+            <td id="comment">{{ comment.message }}</td>
+        </tr>
+        <tr>
+            <td>{{ comment.submission_time }}</td>
+            {% if comment.edited_count %}
+                <tr>
+                    <td>Edited: {{ comment.edited_count }} time(s)</td>
+                </tr>
+            {% endif %}
+    {% endfor %}
+
+</table>
+
+
+<table >
+    {% for answer in answer_row %}
         <tr>
             <td>{{ answer.message }}</td>
         </tr>
         <tr>
-            <td>{{ answer.vote_number }}</td>
-            <td>{{ answer.submission_time }}<a href="/answer/{{ answer.id }}/new-comment">
-        <button type="submit">Add Comment</button>
-        </a></td>
-            <td><img src="{{ answer.image }}" alt="missing" width="150" height="150"></td>
-            <br>
+            <td><img src="{{ answer.image }}" alt="Image" width="150" height="150">
+                {{ answer.vote_number }}||
+                {{ answer.submission_time }}<a href="/answer/{{ answer.id }}/new-comment">
+                    <button type="submit">Add Comment</button>
+                </a>
+                <a href='/answer/{{ answer.id }}/delete' method="post">
+                    <button type="submit">Delete</button>
+                </a>
+                <input type="button" onclick="window.location='/answer/{{ answer.id }}/edit'" value="Edit">
+                <form action="/answer/{{ answer.id }}/vote-up" method="post">
+                    <label for="vote-up"></label>
+                    <button id="vote-up" type="submit">Vote-up</button>
+                </form>
+                <form action="/answer/{{ answer.id }}/vote-down" method="post">
+                    <label for="vote-down"></label>
+                    <button id="vote-down" type="submit">Vote-down</button>
+                </form>
+            </td>
         </tr>
-        <td>
-            <form action="/answer/{{ answer.id }}/vote-up" method="post">
-                <label for="vote-up"></label>
-                <button id="vote-up" type="submit">Vote-up</button>
-            </form>
-            <br>
-            <form action="/answer/{{ answer.id }}/vote-down" method="post">
-                <label for="vote-down"></label>
-                <button id="vote-down" type="submit">Vote-down</button>
-            </form>
-        </td>
-        <td>
-
-            <input type="button" onclick="window.location='/answer/{{ answer.id }}/edit'" value="Edit">
-        </td>
-        <br>
-        <table>
+        </table>
+        <table >
             <tr>
                 <th>Comments:</th>
             </tr>
             {% for comment in answer_comments %}
                 {% if comment.answer_id == answer.id %}
-            <tr>
-                <td>{{ comment.message }}</td>
-            </tr>
-            <tr>
-                <td>{{ comment.submission_time }}
-                <button>Edit</button></td>
-                {% if comment.edited_count %}
-                    <td>Edited: {{ comment.edited_count }} time(s)</td>
-                {% endif %}
+                    <td id="comment">{{ comment.message }}</td>
+                    <tr>
+                    <td>{{ comment.submission_time }}
+                        <button>Edit</button>
+                        <br>
+
+                        {% if comment.edited_count %}
+                            Edited: {{ comment.edited_count }} time(s)
+                            <br>
+                            </td>
+                        {% endif %}
+
                 {% endif %}
             </tr>
             {% endfor %}
         </table>
     {% endfor %}
-    <br>
-</table>
+<br>
 <table>
     <tr>
         <form action="/question/{{ question_row[0].id }}" method="post">
@@ -127,6 +123,5 @@
         </form>
     </tr>
 </table>
-
 </body>
 </html>
