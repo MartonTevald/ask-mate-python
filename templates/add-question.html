@@ -16,17 +16,17 @@
     <input type="hidden" name="vote_number" value="0">
     <p>
         <label for="title">Question title:</label><br>
-        <input type="text" name="title" id="title"
+        <input type="text" name="title" id="add_answer_format"
                value="{{ question.title }}">
     </p>
     <p>
         <label for="message">Question text:</label><br>
-        <textarea name="message" id="message" cols="80" rows="8" >{{ question.message }}</textarea>
+        <textarea name="message" id="add_answer_format" cols="80" rows="8" >{{ question.message }}</textarea>
 
     </p>
     <p>
         <label for="upload_pic">Upload a picture:</label><br>
-        <input type="url" name="image" id="upload_pic">
+        <input type="url" name="image" id="add_answer_format">
     </p>
     <p>
 
@@ -42,7 +42,6 @@
             </h3>
         </a>
     </p>
-
 </form>
 
 

@@ -104,3 +104,19 @@ img:hover {
 #head_Columns{
     background-color: #dddddd;
 }
+
+
+input[type="text"]:focus:hover{
+outline: none;
+box-shadow: 0px 0px 5px #000000;
+border:1px solid #000000;
+border-radius:0;
+
+}
+
+textarea{
+  outline: none;
+box-shadow: 0px 0px 5px #000000;
+border:1px solid #000000;
+border-radius:0;
+}
