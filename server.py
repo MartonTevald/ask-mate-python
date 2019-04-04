@@ -1,7 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
 import data_handler
-import psycopg2
-import os
 
 app = Flask(__name__)
 
@@ -9,7 +7,7 @@ app = Flask(__name__)
 @app.route('/', methods=['POST', 'GET'])
 def first_five_question_by_date():
     questions = data_handler.get_all_details()
-    last_questions = data_handler.get_first_five_question()
+    last_questions = data_handler.get_questions()
     if request.method == 'POST':
         if 'show_all' == request.form.get('show'):
             return render_template('list.html', questions=questions)

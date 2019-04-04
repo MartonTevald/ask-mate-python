@@ -1,12 +1,35 @@
+from psycopg2 import sql
+
 import connection
 import time
 from datetime import datetime
 
 
+#
+# @connection.connection_handler
+# def get_questions(cursor, limit=100, offset, order_column, order_direction):
+#     cursor.execute(
+#         sql.SQL("""
+#             SELECT *
+#             FROM question
+#             ORDER BY submission_time DESC
+#             LIMIT {limit}
+#             OFFSET 0
+#         """).format(
+#             limit=sql.Identifier(limit)
+#         )
+#     )
+#     question = cursor.fetchall()
+#     return question
+
+
 @connection.connection_handler
-def get_first_five_question(cursor):
-    cursor.execute("""SELECT * FROM question ORDER BY submission_time DESC 
-                        LIMIT 5 OFFSET 0""")
+def get_questions(cursor):
+    cursor.execute("""
+            SELECT * 
+            FROM question 
+            ORDER BY submission_time DESC 
+            LIMIT 5""")
     question = cursor.fetchall()
     return question
 

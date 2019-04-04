@@ -33,32 +33,38 @@
 </head>
 <body bgcolor="#f0ffff">
 
-<img id="logo" border="0" alt="T i d d e r" src="/static/on_off_logo.png" width="150" height="80">
+<a href="/"><img id="logo" border="0" alt="T i d d e r" src="/static/on_off_logo.png" width="150" height="80"></a>
 
-<h1>{{ question_row.title }}</h1><br>
-<h3>{{ question_row.message }}</h3>
-<img src="{{ question_row.image }}" alt="no picture" width="150" height="150">
-<h4><a href="/">
-    <button>Home</button>
-</a></h4>
 <table class="question_table">
     <tr>
-        <td>ID : {{ question_row.id }} |
-            {{ question_row.submission_time }} |
-            VOTE {{ question_row.vote_number }}
-        <td>
+        <th>ID</th>
+        <th>Time</th>
+        <th>Vote</th>
+        <th>View Number</th>
+        <th>Title</th>
+        <th>Message</th>
+        <th>Image</th>
+    </tr>
+    <tr>
+        <td>{{ question_row.id }}</td>
+        <td>{{ question_row.submission_time }}</td>
+        <td>{{ question_row.vote_number }}</td>
+        <td>{{ question_row.view_number }}</td>
+        <td>{{ question_row.title }}</td>
+        <td>{{ question_row.message }}</td>
+        <td><img src="{{ question_row.image }}" alt="no picture" width="150" height="150"></td>
+
+    </tr>
+    <tr>
         <td><a href="/question/{{ question_row.id }}/new-comment">
             <button type="submit">Add Comment</button>
         </a></td>
-
         <td><a href="/question/{{ question_row.id }}/edit">
             <button type="submit">Edit Question</button>
         </a></td>
         <td><a href="/question/{{ question_row.id }}/delete">
             <button type="submit">Delete Question</button>
         </a></td>
-    </tr>
-    <tr>
         <td>
             <a type="button" onclick="window.location='/question/{{ question_row.id }}/vote-up'"><img
                     class="vote_question" border="0" alt="up"
@@ -66,12 +72,12 @@
             <a type="button" onclick="window.location='/question/{{ question_row.id }}/vote-down'"><img
                     class="vote_question" border="0" alt="down"
                     src="/static/photos/vote_down.png"></a>
+            <button id="hide_question_comments">Show/Hide Comments(Q)</button>
+
         </td>
     </tr>
-    {#    <tr>#}
 </table>
-<p align="right"><button id="hide_question_comments">Show/Hide Comments(Q)</button></p>
-<table align="right" class="question_comments">
+<table class="question_comments">
     <td>Comments:
     </td>
     {% for comment in question_comments %}
@@ -93,43 +99,47 @@
         {% endif %}
     {% endfor %}
     </tr>
-
 </table>
-
-
 <button id="show_answers">Show/Hide Answers</button>
 {% for answer in answer_row %}
-
     <table class="answer_table">
         <tr>
-            <td id="answer_message">{{ answer.message }}</td>
+            <th>ID</th>
+            <th>Time</th>
+            <th>Vote</th>
+            <th>Message</th>
+            <th>Image</th>
         </tr>
-        <tr>
+        <tr align="center">
+            <td>{{ answer.id }}</td>
+            <td>{{ answer.submission_time }}</td>
+            <td>{{ answer.vote_number }}</td>
+            <td id="answer_message">{{ answer.message }}</td>
             <td><img src="{{ answer.image }}" alt="Image" width="150" height="150">
-                <p>{{ answer.vote_number }}||
-                    {{ answer.submission_time }}</p>
-                <a href="/answer/{{ answer.id }}/new-comment">
-                    <button type="submit">Add Comment</button>
-                </a>
-                <a href='/answer/{{ answer.id }}/delete' method="post">
-                    <button type="submit">Delete Answer</button>
-                </a>
-
-                <input type="button" onclick="window.location='/answer/{{ answer.id }}/edit'" value="Edit Answer">
-
-                <label for="vote-up"></label>
-                <a type="button" onclick="window.location='/answer/{{ answer.id }}/vote-up'"><img
-                        class="vote" border="0" alt="up"
-                        src="/static/photos/vote_up.png"></a>
+            <td>
+        <tr>
+            <td><a href="/answer/{{ answer.id }}/new-comment">
+                <button type="submit">Add Comment</button>
+            </a>
+            <td><a href='/answer/{{ answer.id }}/delete' method="post">
+                <button type="submit">Delete Answer</button>
+            </a></td>
+        <td><input type="button" onclick="window.location='/answer/{{ answer.id }}/edit'" value="Edit Answer"></td>
+            <td>
+            <label for="vote-up"></label>
+            <a type="button" onclick="window.location='/answer/{{ answer.id }}/vote-up'"><img
+                    class="vote" border="0" alt="up"
+                    src="/static/photos/vote_up.png"></a>
                 <label for="vote-down"></label>
-                <a type="button" onclick="window.location='/answer/{{ answer.id }}/vote-down'"><img
-                        class="vote" border="0" alt="down"
-                        src="/static/photos/vote_down.png"></a>
+            <a type="button" onclick="window.location='/answer/{{ answer.id }}/vote-down'"><img
+                    class="vote" border="0" alt="down"
+                    src="/static/photos/vote_down.png"></a>
             </td>
         </tr>
-        <tr class="answer_table">
-            <td class="answer_table" id="answer_message" align="left">Comments:</td>
+        <tr >
+            <td id="answer_message" align="left">Comments:</td>
         </tr>
+
         {% for comment in answer_comments %}
             {% if comment.answer_id == answer.id %}
                 <td id="comment">{{ comment.message }}</td>
