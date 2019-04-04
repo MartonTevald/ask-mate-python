@@ -66,14 +66,17 @@
             <button type="submit">Delete Question</button>
         </a></td>
         <td>
+            <button id="hide_question_comments">Show/Hide Comments(Q)</button>
+        </td>
+        <td>
+        </td>
+        <td>
             <a type="button" onclick="window.location='/question/{{ question_row.id }}/vote-up'"><img
                     class="vote_question" border="0" alt="up"
                     src="/static/photos/vote_up.png"></a>
             <a type="button" onclick="window.location='/question/{{ question_row.id }}/vote-down'"><img
                     class="vote_question" border="0" alt="down"
                     src="/static/photos/vote_down.png"></a>
-            <button id="hide_question_comments">Show/Hide Comments(Q)</button>
-
         </td>
     </tr>
 </table>
@@ -136,23 +139,20 @@
                         src="/static/photos/vote_down.png"></a>
             </td>
         </tr>
-        <tr>
-            <td id="answer_message" align="left">Comments:</td>
-        </tr>
-
         {% for comment in answer_comments %}
             {% if comment.answer_id == answer.id %}
                 <td id="comment">{{ comment.message }}</td>
                 <tr>
-                <td id="comment_info">{{ comment.submission_time }}<td>
-                 <td>   <input type="button" onclick="window.location='/answer-comment/{{ comment.id }}/edit'"
+                <td id="comment_info">{{ comment.submission_time }}
+                <td>
+                <td><input type="button" onclick="window.location='/answer-comment/{{ comment.id }}/edit'"
                            value="Edit A Comment">
                     <input type="button" onclick="window.location='/answer-comment/{{ comment.id }}/delete'"
                            value="Remove A Comment">
                 </td>
                 {% if comment.edited_count %}
-                    <p id="comment_info">Edited: {{ comment.edited_count }} time(s). Last edit was
-                        at: {{ time }}</p>
+                    <td id="comment_info">Edited: {{ comment.edited_count }} time(s). Last edit was
+                        at: {{ time }}</td>
                     <br>
 
                     </td>
