@@ -29,12 +29,6 @@
         </div>
     </div>
 </form>
-{##}
-{#<form action='/search' method="GET">#}
-{#    <label id="search"></label>#}
-{#    <input type="text" name="search_phrase">#}
-{#    <button type="submit">Search</button>#}
-</form>
 
 <form action="{{ url_for('sort_questions',sort=sort) }}" method="post" id="sort">
     <SELECT class="form-control" id="sort" name="sort">

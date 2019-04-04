@@ -37,13 +37,13 @@
 
 <table class="question_table">
     <tr>
-        <th>ID</th>
-        <th>Time</th>
-        <th>Vote</th>
-        <th>View Number</th>
-        <th>Title</th>
-        <th>Message</th>
-        <th>Image</th>
+        <th id="head_Columns">ID </th>
+        <th id="head_Columns">Time</th>
+        <th id="head_Columns">Vote</th>
+        <th id="head_Columns">View Number</th>
+        <th id="head_Columns">Title</th>
+        <th id="head_Columns">Message</th>
+        <th id="head_Columns">Image</th>
     </tr>
     <tr>
         <td>{{ question_row.id }}</td>
@@ -104,11 +104,11 @@
 {% for answer in answer_row %}
     <table class="answer_table">
         <tr>
-            <th>ID</th>
-            <th>Time</th>
-            <th>Vote</th>
-            <th>Message</th>
-            <th>Image</th>
+            <th id="head_Columns">ID</th>
+            <th id="head_Columns">Time</th>
+            <th id="head_Columns">Vote</th>
+            <th id="head_Columns">Message</th>
+            <th id="head_Columns">Image</th>
         </tr>
         <tr align="center">
             <td>{{ answer.id }}</td>
