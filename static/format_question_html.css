@@ -37,6 +37,11 @@ h4 {
     align-items: center;
 }
 
+#question_message{
+    font-size: 20px;
+    font-weight: bold;
+}
+
 #answer_message {
     font-size: 20px;
     font-weight: bold;
