@@ -6,6 +6,15 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='format_question_html.css') }}">
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
     <script>
+        function confirmDelete(url) {
+            if (confirm("Are you sure you want to delete this?")) {
+                window.open(url);
+            } else {
+                false;
+            }
+        }
+    </script>
+    <script>
 
         $(document).ready(function () {
             $("#hide_question_comments").click(function () {
@@ -62,7 +71,8 @@
         <td><a href="/question/{{ question_row.id }}/edit">
             <button type="submit">Edit Question</button>
         </a></td>
-        <td><a href="/question/{{ question_row.id }}/delete">
+        <td><a href="/question/{{ question_row.id }}/delete"
+               onclick="return confirm('Are you sure you want to Remove?');">
             <button type="submit">Delete Question</button>
         </a></td>
         <td>
@@ -93,8 +103,9 @@
         <td id="comment_info">{{ comment.submission_time }}
             <input type="button" onclick="window.location='/question-comment/{{ comment.id }}/edit'"
                    value="Edit Q Comment">
-            <input type="button" onclick="window.location='/question-comment/{{ comment.id }}/delete'"
-                   value="Remove Q Comment">
+            <input type="button" name="delete" value="Delete Q Comment"
+                   onClick="confirmDelete('/question-comment/{{ comment.id }}/delete')"
+            >
         </td>
         {% if comment.edited_count %}
             <td id="comment_info">Edited: {{ comment.edited_count }} time(s). Last edit was
@@ -124,7 +135,8 @@
             <td><a href="/answer/{{ answer.id }}/new-comment">
                 <button type="submit">Add Comment</button>
             </a>
-            <td><a href='/answer/{{ answer.id }}/delete' method="post">
+            <td><a href='/answer/{{ answer.id }}/delete' method="post"
+                   onclick="return confirm('Are you sure you want to Remove?');">
                 <button type="submit">Delete Answer</button>
             </a></td>
             <td><input type="button" onclick="window.location='/answer/{{ answer.id }}/edit'" value="Edit Answer"></td>
@@ -147,8 +159,9 @@
                 <td>
                 <td><input type="button" onclick="window.location='/answer-comment/{{ comment.id }}/edit'"
                            value="Edit A Comment">
-                    <input type="button" onclick="window.location='/answer-comment/{{ comment.id }}/delete'"
-                           value="Remove A Comment">
+                    <input type="button" name="delete" value="Delete A Comment"
+                           onClick="confirmDelete('/answer-comment/{{ comment.id }}/delete')"
+                    >
                 </td>
                 {% if comment.edited_count %}
                     <td id="comment_info">Edited: {{ comment.edited_count }} time(s). Last edit was

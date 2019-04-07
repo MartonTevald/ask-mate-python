@@ -36,7 +36,8 @@ def get_questions(cursor):
 
 @connection.connection_handler
 def get_all_details(cursor):
-    cursor.execute("""SELECT * FROM question;""")
+    cursor.execute("""SELECT * FROM question
+    ;""")
     questions = cursor.fetchall()
     return questions
 
