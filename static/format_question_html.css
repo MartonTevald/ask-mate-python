@@ -101,6 +101,38 @@ img:hover {
 
 }
 
+button,#button{
+    -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: auto;
+  padding: 2px;
+  border: 2px double;
+    border-color: #dddddd;
+  -webkit-border-radius: 68px;
+  border-radius: 68px;
+  font: normal 16px/1 Arial, Helvetica, sans-serif;
+  color: rgba(255,255,255,1);
+  text-align: center;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  background: -webkit-repeating-linear-gradient(-8.130102354155966deg, rgba(84,84,81,1) 0, rgba(239,239,237,1) 1%, rgba(204,204,204,1) 13%, rgba(91,91,90,1) 100%);
+  background: -moz-repeating-linear-gradient(98.13010235415597deg, rgba(84,84,81,1) 0, rgba(239,239,237,1) 1%, rgba(204,204,204,1) 13%, rgba(91,91,90,1) 100%);
+  background: repeating-linear-gradient(98.13010235415597deg, rgba(84,84,81,1) 0, rgba(239,239,237,1) 1%, rgba(204,204,204,1) 13%, rgba(91,91,90,1) 100%);
+  background-position: 50% 50%;
+  -webkit-background-origin: padding-box;
+  background-origin: padding-box;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  -webkit-background-size: auto auto;
+  background-size: auto auto;
+  -webkit-box-shadow: 1px 1px 1px 0 rgba(0,0,0,0.3) ;
+  box-shadow: 1px 1px 1px 0 rgba(0,0,0,0.3) ;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.2) ;
+  -webkit-transform: rotateX(4.583662361046586deg) rotateY(-3.437746770784939deg)   ;
+  transform: rotateX(4.583662361046586deg) rotateY(-3.437746770784939deg)   ;
+}
+
 #head_Columns{
     background-color: #dddddd;
 }

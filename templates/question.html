@@ -68,9 +68,9 @@
         </tr>
         <tr>
         <td id="comment_info">{{ comment.submission_time }}
-            <input type="button" onclick="window.location='/question-comment/{{ comment.id }}/edit'"
+            <input type="button" id="button" onclick="window.location='/question-comment/{{ comment.id }}/edit'"
                    value="Edit Q Comment">
-            <input type="button" name="delete" value="Delete Q Comment"
+            <input type="button" id="button" name="delete" value="Delete Q Comment"
                    onClick="confirmDelete('/question-comment/{{ comment.id }}/delete')"
             >
         </td>
@@ -106,7 +106,7 @@
                    onclick="return confirm('Are you sure you want to Remove?');">
                 <button type="submit">Delete Answer</button>
             </a></td>
-            <td><input type="button" onclick="window.location='/answer/{{ answer.id }}/edit'" value="Edit Answer"></td>
+            <td><input type="button" onclick="window.location='/answer/{{ answer.id }}/edit'"  id="button"value="Edit Answer"></td>
             <td>
                 <label for="vote-up"></label>
                 <a type="button" onclick="window.location='/answer/{{ answer.id }}/vote-up'"><img
@@ -125,8 +125,8 @@
                 <td id="comment_info">{{ comment.submission_time }}
                 <td>
                 <td><input type="button" onclick="window.location='/answer-comment/{{ comment.id }}/edit'"
-                           value="Edit A Comment">
-                    <input type="button" name="delete" value="Delete A Comment"
+                           value="Edit A Comment" id="button">
+                    <input type="button" name="delete" value="Delete A Comment" id="button"
                            onClick="confirmDelete('/answer-comment/{{ comment.id }}/delete')"
                     >
                 </td>
@@ -141,7 +141,7 @@
     </table>
 {% endfor %}
 <br>
-<button id="show_hide">Show/Hide Add Answer</button>
+<button id="show_hide" >Show/Hide Add Answer</button>
 
 <table class="add_answer">
     <tr>
@@ -153,7 +153,7 @@
                 <p><label for="upload_pic">Upload a picture:</label><br>
                     <input type="url" name="image" id="upload_pic">
                 </p>
-                <button type="submit">Add Answer</button>
+                <button type="submit" id="button">Add Answer</button>
             </form>
         </td>
     </tr>
