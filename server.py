@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 
 @app.route('/', methods=['POST', 'GET'])
-def first_five_question_by_date():
+def list_of_questions():
     questions = data_handler.get_all_details()
     last_questions = data_handler.get_latest_five_questions()
     if request.method == 'POST':
@@ -15,12 +15,6 @@ def first_five_question_by_date():
             return render_template('list.html', questions=last_questions)
     elif request.method == 'GET':
         return render_template("list.html", questions=last_questions)
-
-
-@app.route('/list', methods=['POST', 'GET'])
-def list():
-    questions = data_handler.get_all_details()
-    return render_template('list.html', questions=questions)
 
 
 @app.route('/add-question', methods=['GET', 'POST'])
@@ -143,7 +137,7 @@ def question_vote_up(question_id):
 
 @app.route('/question/<question_id>/vote-down', methods=['POST', 'GET'])
 def question_vote_down(question_id):
-    data_handler.vote_down(question_id,'question')
+    data_handler.vote_down(question_id, 'question')
     return redirect(url_for('list_answers', id=question_id))
 
 

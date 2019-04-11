@@ -42,7 +42,7 @@
     <button name=submit type="submit" value="submit">Sort</button>
 </form>
 <br>
-<form action="{{ url_for('first_five_question_by_date') }}" method="post" id="show">
+<form action="{{ url_for('list_of_questions') }}" method="post" id="show">
     <select class="form-control" name="show" id="show">
         <OPTION id="show_all" name="show_all" value="show_all">Show All Questions</OPTION>
         <OPTION name="show_latest" value="show_latest">Show 5 latest</OPTION>
