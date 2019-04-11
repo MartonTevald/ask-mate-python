@@ -1,36 +1,16 @@
 from psycopg2 import sql
-
 import connection
-import time
 from datetime import datetime
 
 
-#
-# @connection.connection_handler
-# def get_questions(cursor, limit=100, offset, order_column, order_direction):
-#     cursor.execute(
-#         sql.SQL("""
-#             SELECT *
-#             FROM question
-#             ORDER BY submission_time DESC
-#             LIMIT {limit}
-#             OFFSET 0
-#         """).format(
-#             limit=sql.Identifier(limit)
-#         )
-#     )
-#     question = cursor.fetchall()
-#     return question
-
-
 @connection.connection_handler
-def get_questions(cursor):
+def get_latest_five_questions(cursor):
     cursor.execute("""
             SELECT * 
             FROM question 
             ORDER BY submission_time DESC 
-            LIMIT 5""")
-    question = cursor.fetchall()
+            """)
+    question = cursor.fetchmany(5)
     return question
 
 
@@ -161,6 +141,7 @@ def get_all_answer_id_to_delete_comments(cursor, question_id):
                 SELECT id FROM answer
                 WHERE question_id = %(id)s
                 """, {'id': question_id})
+
     answer_ids = cursor.fetchall()
 
     id_values = []
@@ -202,35 +183,21 @@ def question_view_number_counter(cursor, id):
 
 
 @connection.connection_handler
-def question_vote_up(cursor, id):
-    cursor.execute("""
-                UPDATE question
-                SET vote_number = vote_number +1
-                WHERE id = %(id)s""", {'id': id})
+def vote_up(cursor, id, table):
+    cursor.execute(
+        sql.SQL("""
+        UPDATE {table}
+        SET vote_number = vote_number + 1
+        WHERE id = @id""").format(table=sql.Identifier(table), id=sql.Identifier(id)))
 
 
 @connection.connection_handler
-def question_vote_down(cursor, id):
-    cursor.execute("""
-                UPDATE  question
-                SET  vote_number = vote_number -1
-                WHERE id= %(id)s""", {'id': id})
-
-
-@connection.connection_handler
-def answer_vote_up(cursor, id):
-    cursor.execute("""
-                UPDATE answer
-                SET vote_number = vote_number +1
-                WHERE id = %(id)s""", {'id': id})
-
-
-@connection.connection_handler
-def answer_vote_down(cursor, id):
-    cursor.execute("""
-                UPDATE answer
-                SET vote_number = vote_number -1
-                WHERE id = %(id)s""", {'id': id})
+def vote_down(cursor, id, table):
+    cursor.execute(
+        sql.SQL("""
+            UPDATE {table}
+            SET vote_number = vote_number -1
+            WHERE id = @id""").format(table=sql.Identifier(table), id=sql.Identifier(id)))
 
 
 @connection.connection_handler
@@ -302,63 +269,39 @@ def get_question_id_by_comment_id(cursor, id):
 
 
 @connection.connection_handler
-def sort_time_ascending(cursor):
-    cursor.execute("""
-                SELECT *
-                FROM question
-                ORDER BY submission_time ASC """)
-    sub_asc = cursor.fetchall()
-    return sub_asc
+def ascending_order(cursor, sorted):
+    if sorted == 'sub_asc':
+        sort = 'submission_time'
+    if sorted == 'view_asc':
+        sort = 'view_number'
+    if sorted == 'vote_asc':
+        sort = 'vote_number'
+    cursor.execute(sql.SQL("""
+                    SELECT *
+                    FROM question
+                    ORDER BY {sort} ASC """)
+                   .format(sort=sql.Identifier(sort)))
+
+    sort_asc = cursor.fetchall()
+    return sort_asc
 
 
 @connection.connection_handler
-def sort_time_descending(cursor):
-    cursor.execute("""
-                SELECT *
-                FROM question
-                ORDER BY submission_time DESC """)
-    sub_desc = cursor.fetchall()
-    return sub_desc
+def descending_order(cursor, sorted):
+    if sorted == 'sub_desc':
+        sort = 'submission_time'
+    if sorted == 'view_desc':
+        sort = 'view_number'
+    if sorted == 'vote_desc':
+        sort = 'vote_number'
+    cursor.execute(sql.SQL("""
+                        SELECT *
+                        FROM question
+                        ORDER BY {sort} DESC """)
+                        .format(sort=sql.Identifier(sort)))
 
-
-@connection.connection_handler
-def view_ascending(cursor):
-    cursor.execute("""
-                SELECT *
-                FROM question
-                ORDER BY view_number ASC """)
-    view_asc = cursor.fetchall()
-    return view_asc
-
-
-@connection.connection_handler
-def view_descending(cursor):
-    cursor.execute("""
-                SELECT *
-                FROM question
-                ORDER BY view_number DESC """)
-    view_desc = cursor.fetchall()
-    return view_desc
-
-
-@connection.connection_handler
-def vote_ascending(cursor):
-    cursor.execute("""
-                SELECT *
-                FROM question
-                ORDER BY vote_number ASC """)
-    vote_asc = cursor.fetchall()
-    return vote_asc
-
-
-@connection.connection_handler
-def vote_descending(cursor):
-    cursor.execute("""
-                SELECT *
-                FROM question
-                ORDER BY vote_number DESC """)
-    vote_desc = cursor.fetchall()
-    return vote_desc
+    sort_desc = cursor.fetchall()
+    return sort_desc
 
 
 def do_search(search_phrase):
@@ -439,59 +382,52 @@ def get_search_results(cursor, search_phrase):
     search_result = cursor.fetchall()
     return search_result
 
-
-@connection.connection_handler
-def get_tag_id_from_question_id(cursor, id):
-    cursor.execute("""SELECT tag_id FROM question_tag
-                    WHERE question_id = %(id)s"""
-                   , {'question_id': id})
-    tag_id = cursor.fetchall()
-    return tag_id
-
-
-@connection.connection_handler
-def get_tag_from_tag_id(cursor, id):
-    tag_id = get_tag_id_from_question_id(id)
-    cursor.execute("""SELECT name FROM tag
-                        WHERE id = %(tag_id)s""",
-                   {'id': tag_id})
-    name = cursor.fethcall()
-    return name
-
-
-@connection.connection_handler
-def get_tags_for_select(cursor):
-    cursor.execute("""SELECT * FROM tag
-    """)
-    tags = cursor.fetchall()
-    return tags
-
-
-@connection.connection_handler
-def add_to_tag_table(cursor, new_data):
-    cursor.execute("""INSERT INTO tag (name)
-                    VALUES (%(name)s)"""
-                   , {'submission_time': new_data['submission_time']})
-
-
-@connection.connection_handler
-def write_to_question_tag(cursor, question_id, tag_id):
-    cursor.execute("""
-                    INSERT INTO question_tag (question_id, tag_id) 
-                    VALUES (%(question_id)s,%(tag_id)s)"""
-                   , {'question_id': question_id, 'tag_id': tag_id})
-
-
-@connection.connection_handler
-def delete_question_tag(cursor, id):
-    cursor.execute("""
-                    DELETE FROM question_tag
-                    WHERE question_id = %(id)s
-                    """, {'question_id': id})
-
+#
 # @connection.connection_handler
-# def delete_comments_by_answer(cursor, id):
+# def get_tag_id_from_question_id(cursor, id):
+#     cursor.execute("""SELECT tag_id FROM question_tag
+#                     WHERE question_id = %(id)s"""
+#                    , {'question_id': id})
+#     tag_id = cursor.fetchall()
+#     return tag_id
+#
+#
+# @connection.connection_handler
+# def get_tag_from_tag_id(cursor, id):
+#     tag_id = get_tag_id_from_question_id(id)
+#     cursor.execute("""SELECT name FROM tag
+#                         WHERE id = %(tag_id)s""",
+#                    {'id': tag_id})
+#     name = cursor.fethcall()
+#     return name
+#
+#
+# @connection.connection_handler
+# def get_tags_for_select(cursor):
+#     cursor.execute("""SELECT * FROM tag
+#     """)
+#     tags = cursor.fetchall()
+#     return tags
+#
+#
+# @connection.connection_handler
+# def add_to_tag_table(cursor, new_data):
+#     cursor.execute("""INSERT INTO tag (name)
+#                     VALUES (%(name)s)"""
+#                    , {'submission_time': new_data['submission_time']})
+#
+#
+# @connection.connection_handler
+# def write_to_question_tag(cursor, question_id, tag_id):
 #     cursor.execute("""
-#                     DELETE FROM comment
-#                     WHERE  answer_id = %(id)s""",
-#                    {'answer_id': id})
+#                     INSERT INTO question_tag (question_id, tag_id)
+#                     VALUES (%(question_id)s,%(tag_id)s)"""
+#                    , {'question_id': question_id, 'tag_id': tag_id})
+#
+#
+# @connection.connection_handler
+# def delete_question_tag(cursor, id):
+#     cursor.execute("""
+#                     DELETE FROM question_tag
+#                     WHERE question_id = %(id)s
+#                     """, {'question_id': id})
