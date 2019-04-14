@@ -5,9 +5,9 @@ app = Flask(__name__)
 
 
 @app.route('/', methods=['POST', 'GET'])
-def first_five_question_by_date():
+def list_of_questions():
     questions = data_handler.get_all_details()
-    last_questions = data_handler.get_questions()
+    last_questions = data_handler.get_latest_five_questions()
     if request.method == 'POST':
         if 'show_all' == request.form.get('show'):
             return render_template('list.html', questions=questions)
@@ -15,12 +15,6 @@ def first_five_question_by_date():
             return render_template('list.html', questions=last_questions)
     elif request.method == 'GET':
         return render_template("list.html", questions=last_questions)
-
-
-@app.route('/list', methods=['POST', 'GET'])
-def list():
-    questions = data_handler.get_all_details()
-    return render_template('list.html', questions=questions)
 
 
 @app.route('/add-question', methods=['GET', 'POST'])
@@ -90,7 +84,8 @@ def list_answers(id=None):
         return redirect(url_for('list_answers', id=id))
     data_handler.question_view_number_counter(id)
     return render_template('question.html', id=id, question_row=question_row, answer_row=answer_row,
-                           question_comments=question_comments, answer_comments=answer_comments, time=time, q_c_time=q_c_time)
+                           question_comments=question_comments, answer_comments=answer_comments, time=time,
+                           q_c_time=q_c_time)
 
 
 @app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])
@@ -136,53 +131,40 @@ def delete_answer(answer_id):
 
 @app.route('/question/<question_id>/vote-up', methods=['POST', 'GET'])
 def question_vote_up(question_id):
-    data_handler.question_vote_up(question_id)
+    data_handler.vote_up(question_id, 'question')
     return redirect(url_for('list_answers', id=question_id))
 
 
 @app.route('/question/<question_id>/vote-down', methods=['POST', 'GET'])
 def question_vote_down(question_id):
-    data_handler.question_vote_down(question_id)
+    data_handler.vote_down(question_id, 'question')
     return redirect(url_for('list_answers', id=question_id))
 
 
 @app.route('/answer/<answer_id>/vote-up', methods=['POST', 'GET'])
 def question_answer_up(answer_id):
     question_id = data_handler.get_question_id_for_answer_id(answer_id)
-    data_handler.answer_vote_up(answer_id)
+    data_handler.vote_up(answer_id, 'answer')
     return redirect(url_for('list_answers', id=question_id))
 
 
 @app.route('/answer/<answer_id>/vote-down', methods=['POST', 'GET'])
 def question_answer_down(answer_id):
     question_id = data_handler.get_question_id_for_answer_id(answer_id)
-    data_handler.answer_vote_down(answer_id)
+    data_handler.vote_down(answer_id, 'answer')
     return redirect(url_for('list_answers', id=question_id))
 
 
 @app.route('/list/', methods=['POST', 'GET'])
 def sort_questions():
     if request.method == 'POST':
-        if 'sub_asc' == request.form.get('sort'):
-            sorted_data = data_handler.sort_time_ascending()
+        choices = request.form.get('sort')
+        if 'asc' in choices:
+            sorted_data = data_handler.ascending_order(choices)
             return render_template('list.html', questions=sorted_data)
-        if 'sub_desc' == request.form.get('sort'):
-            sorted_data = data_handler.sort_time_descending()
+        if 'desc' in choices:
+            sorted_data = data_handler.descending_order(choices)
             return render_template('list.html', questions=sorted_data)
-        if 'view_asc' == request.form.get('sort'):
-            sorted_data = data_handler.view_ascending()
-            return render_template('list.html', questions=sorted_data)
-        if 'view_desc' == request.form.get('sort'):
-            sorted_data = data_handler.view_descending()
-            return render_template('list.html', questions=sorted_data)
-        if 'vote_asc' == request.form.get('sort'):
-            sorted_data = data_handler.vote_ascending()
-            return render_template('list.html', questions=sorted_data)
-        if 'vote_desc' == request.form.get('sort'):
-            sorted_data = data_handler.vote_descending()
-            return render_template('list.html', questions=sorted_data)
-        else:
-            redirect('/')
 
 
 @app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])
@@ -197,7 +179,8 @@ def add_question_comment(question_id=None):
                    }
         data_handler.add_new_comment(comment)
         return redirect(url_for('list_answers', id=question_id))
-    return render_template('add-question-comment.html', comment=comment, edit_comment=None, button_title="Post New Comment")
+    return render_template('add-question-comment.html', comment=comment, edit_comment=None,
+                           button_title="Post New Comment")
 
 
 @app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
@@ -213,7 +196,8 @@ def add_answer_comment(answer_id=None):
                    }
         data_handler.add_new_comment(comment)
         return redirect(url_for('list_answers', id=question_id))
-    return render_template('add-answer-comment.html', comment=comment, edit_comment=None, button_title="Post New Comment")
+    return render_template('add-answer-comment.html', comment=comment, edit_comment=None,
+                           button_title="Post New Comment")
 
 
 @app.route('/question-comment/<comment_id>/edit', methods=['GET', 'POST'])
@@ -275,7 +259,6 @@ def search():
     result = data_handler.do_search(search_phrase)
     return render_template('list.html', questions=result)
 
-
     # print(search_phrase)
 
     search_result_from_question = data_handler.get_search_results_from_questions(search_phrase)
@@ -284,8 +267,9 @@ def search():
     search_result_from_answer = data_handler.get_search_results_from_answers(search_phrase)
     # search result = ffj+ lfihsr
     return render_template('list.html', questions=search_result_from_question)
-9
 
+
+9
 
 if __name__ == '__main__':
     app.run(

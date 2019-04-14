@@ -30,7 +30,7 @@
     </div>
 </form>
 
-<form action="{{ url_for('sort_questions',sort=sort) }}" method="post" id="sort">
+<form action="{{ url_for('sort_questions') }}" method="post" id="sort" >
     <SELECT class="form-control" id="sort" name="sort">
         <OPTION id="sub_asc" name="sub_asc" Value="sub_asc">Date Ascending-Order</OPTION>
         <OPTION id="sub_desc" name='sub_desc' Value="sub_desc">Date Descending-Order</OPTION>
@@ -42,14 +42,14 @@
     <button name=submit type="submit" value="submit">Sort</button>
 </form>
 <br>
-<form action="{{ url_for('first_five_question_by_date') }}" method="post" id="show">
+<form action="{{ url_for('list_of_questions') }}" method="post" id="show">
     <select class="form-control" name="show" id="show">
         <OPTION id="show_all" name="show_all" value="show_all">Show All Questions</OPTION>
         <OPTION name="show_latest" value="show_latest">Show 5 latest</OPTION>
     </select>
     <button name="submit" type="submit" value="submit">Submit</button>
 </form>
-
+<br>
 <table align="center">
     <tr>
         <th id="head_Columns">Id</th>
