@@ -55,6 +55,21 @@
                     class="vote_question" border="0" alt="down"
                     src="/static/photos/vote_down.png"></a>
         </td>
+        <td>
+            <a href="/question/{{ question_row.id }}/new-tag">
+                 <button type="submit">Add tag</button>
+            </a>
+        </td>
+    </tr>
+    <tr>
+            {% for tag in tags %}
+            <td id="tags" >#{{ tag.name }}
+            <a href="/question/{{question_row.id}}/tag/{{tag.id}}/delete">
+                <button id="delete"> X </button>
+                </a>
+            </td>
+
+            {% endfor %}
     </tr>
 </table>
 <table class="question_comments">
