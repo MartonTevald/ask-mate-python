@@ -306,10 +306,10 @@ def user_login():
     if request.method == 'POST':
         username = request.form.get('user_name')
         password = request.form.get('password')
-        hashed_password = data_manager.verify_pwd(username)
-        if verify_password(password, hashed_password) is True:
-            return redirect(url_for('/', mode=1))
-        return redirect(url_for('/', mode=2))
+        hashed_password = data_handler.verify_pwd(username)
+        if data_handler.verify_password(password, hashed_password) is True:
+            return redirect(url_for('/', mode=1))  # incomplete, this means login is successful
+        return redirect(url_for('/', mode=2))  # incomplete, this means that login is unsuccessful
 
     return render_template('login.html')
 

@@ -452,3 +452,10 @@ def hash_password(plain_text_password):
 def verify_password(plain_text_password, hashed_password):
     hashed_bytes_password = hashed_password.encode('utf-8')
     return bcrypt.checkpw(plain_text_password.encode('utf-8'), hashed_bytes_password)
+
+
+@connection.connection_handler
+def verify_pwd(cursor, username):
+    cursor.execute("""SELECT * FROM user_info WHERE username = %(username)s""", {'username': username})
+    result = cursor.fetchall()
+    return result[0].get('hash')
