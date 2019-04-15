@@ -456,6 +456,7 @@ def verify_password(plain_text_password, hashed_password):
 
 @connection.connection_handler
 def verify_pwd(cursor, username):
-    cursor.execute("""SELECT * FROM user_info WHERE username = %(username)s""", {'username': username})
+    cursor.execute("""SELECT hash FROM user_info 
+                    WHERE username = %(username)s""", {'username': username})
     result = cursor.fetchall()
     return result[0].get('hash')
