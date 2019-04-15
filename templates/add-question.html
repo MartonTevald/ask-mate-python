@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>| Ask new question |</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
-</head>
-<body bgcolor="#f0ffff">
+{% extends 'layout.html' %}
+
+{% block title %}
+    Welcome!
+{% endblock %}
+
+{% block content %}
 <h1>{{ page_title }}</h1>
 
 <form action="{{ form_url }}"
@@ -43,7 +42,4 @@
         </a>
     </p>
 </form>
-
-
-</body>
-</html>
+{% endblock %}

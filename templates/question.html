@@ -93,67 +93,9 @@
     {% endfor %}
     </tr>
 </table>
-<button id="show_answers">Show/Hide Answers</button>
-{% for answer in answer_row %}
-    <table class="answer_table">
-        <tr>
-            <th id="head_Columns">ID</th>
-            <th id="head_Columns">Time</th>
-            <th id="head_Columns">Vote</th>
-            <th id="head_Columns">Message</th>
-            <th id="head_Columns">Image</th>
-        </tr>
-        <tr align="center">
-            <td>{{ answer.id }}</td>
-            <td>{{ answer.submission_time }}</td>
-            <td>{{ answer.vote_number }}</td>
-            <td id="answer_message">{{ answer.message }}</td>
-            <td><img src="{{ answer.image }}" alt="Image" width="150" height="150">
-            <td>
-        <tr>
-            <td><a href="/answer/{{ answer.id }}/new-comment">
-                <button type="submit">Add Comment</button>
-            </a>
-            <td><a href='/answer/{{ answer.id }}/delete' method="post"
-                   onclick="return confirm('Are you sure you want to Remove?');">
-                <button type="submit">Delete Answer</button>
-            </a></td>
-            <td><input type="button" onclick="window.location='/answer/{{ answer.id }}/edit'"  id="button"value="Edit Answer"></td>
-            <td>
-                <label for="vote-up"></label>
-                <a type="button" onclick="window.location='/answer/{{ answer.id }}/vote-up'"><img
-                        class="vote" border="0" alt="up"
-                        src="/static/photos/vote_up.png"></a>
-                <label for="vote-down"></label>
-                <a type="button" onclick="window.location='/answer/{{ answer.id }}/vote-down'"><img
-                        class="vote" border="0" alt="down"
-                        src="/static/photos/vote_down.png"></a>
-            </td>
-        </tr>
-        {% for comment in answer_comments %}
-            {% if comment.answer_id == answer.id %}
-                <td id="comment">{{ comment.message }}</td>
-                <tr>
-                <td id="comment_info">{{ comment.submission_time }}
-                <td>
-                <td><input type="button" onclick="window.location='/answer-comment/{{ comment.id }}/edit'"
-                           value="Edit A Comment" id="button">
-                    <input type="button" name="delete" value="Delete A Comment" id="button"
-                           onClick="confirmDelete('/answer-comment/{{ comment.id }}/delete')"
-                    >
-                </td>
-                {% if comment.edited_count %}
-                    <td id="comment_info">Edited: {{ comment.edited_count }} time(s). Last edit was
-                        at: {{ time }}</td>
-                    <br>
-                {% endif %}
-            {% endif %}
-        </tr>
-        {% endfor %}
-    </table>
-{% endfor %}
-<br>
-<button id="show_hide" >Show/Hide Add Answer</button>
+{% include "answers.html" %}
+
+    <button id="show_hide" >Show/Hide Add Answer</button>
 
 <table class="add_answer">
     <tr>
