@@ -258,9 +258,6 @@ def search():
     search_phrase = request.args.get('search_phrase')
     result = data_handler.do_search(search_phrase)
     return render_template('list.html', questions=result)
-    search_result_from_question = data_handler.get_search_results_from_questions(search_phrase)
-    search_result_from_answer = data_handler.get_search_results_from_answers(search_phrase)
-    return render_template('list.html', questions=search_result_from_question)
 
 
 @app.route('/question/<question_id>/new-tag', methods=['GET', 'POST'])
@@ -302,6 +299,19 @@ def add_user():
         return redirect('/')
 
     return render_template('registration.html')
+
+
+@app.route('/login', methods=['POST', 'GET'])
+def user_login():
+    if request.method == 'POST':
+        username = request.form.get('user_name')
+        password = request.form.get('password')
+        hashed_password = data_manager.verify_pwd(username)
+        if verify_password(password, hashed_password) is True:
+            return redirect(url_for('/', mode=1))
+        return redirect(url_for('/', mode=2))
+
+    return render_template('login.html')
 
 
 if __name__ == '__main__':
