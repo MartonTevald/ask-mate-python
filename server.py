@@ -258,9 +258,6 @@ def search():
     search_phrase = request.args.get('search_phrase')
     result = data_handler.do_search(search_phrase)
     return render_template('list.html', questions=result)
-    search_result_from_question = data_handler.get_search_results_from_questions(search_phrase)
-    search_result_from_answer = data_handler.get_search_results_from_answers(search_phrase)
-    return render_template('list.html', questions=search_result_from_question)
 
 
 @app.route('/question/<question_id>/new-tag', methods=['GET', 'POST'])
@@ -285,6 +282,36 @@ def adding_tag_to_question(question_id):
 def delete_tag(question_id, tag_id):
     data_handler.delete_question_tag(question_id, tag_id)
     return redirect(url_for('list_answers', id=question_id))
+
+
+@app.route('/registration', methods=['POST', 'GET'])
+def add_user():
+    if request.method == 'POST':
+        password = request.form.get('hash')
+        hashed = data_handler.hash_password(password)
+        user_info = {'username': request.form.get('username'),
+                     'hash': hashed,
+                     'email': request.form.get('email'),
+                     'creation_date': data_handler.date_time(),
+                     'status': request.form.get('status'),
+                     }
+        data_handler.add_user_details_to_database(user_info)
+        return redirect('/')
+
+    return render_template('registration.html')
+
+
+@app.route('/login', methods=['POST', 'GET'])
+def user_login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        hashed_password = data_handler.verify_pwd(username)
+        if data_handler.verify_password(password, hashed_password) is True:
+            return redirect(url_for('/', mode=1))  # incomplete, this means login is successful
+        return redirect(url_for('/', mode=2))  # incomplete, this means that login is unsuccessful
+
+    return render_template('login.html')
 
 
 if __name__ == '__main__':

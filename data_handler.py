@@ -1,3 +1,4 @@
+import bcrypt as bcrypt
 from psycopg2 import sql
 import connection
 from datetime import datetime
@@ -429,3 +430,33 @@ def delete_question_tag(cursor, question_id, tag_id):
                     DELETE FROM question_tag
                     WHERE question_id = %(id)s AND tag_id = %(tag)s 
                     """, {'id': question_id, 'tag': tag_id})
+
+
+@connection.connection_handler
+def add_user_details_to_database(cursor, user_information):
+    cursor.execute("""
+                    INSERT INTO user_info(username, hash, email, creation_date, status)
+                    VALUES ( %(username)s,%(hash)s,%(email)s,%(creation_date)s,%(status)s)""",
+                   {'username': user_information['username'], 'hash': user_information['hash'],
+                    'email': user_information['email'], 'creation_date': user_information['creation_date'],
+                    'status': user_information['status']
+                    })
+
+
+def hash_password(plain_text_password):
+    # By using bcrypt, the salt is saved into the hash itself
+    hashed_bytes = bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())
+    return hashed_bytes.decode('utf-8')
+
+
+def verify_password(plain_text_password, hashed_password):
+    hashed_bytes_password = hashed_password.encode('utf-8')
+    return bcrypt.checkpw(plain_text_password.encode('utf-8'), hashed_bytes_password)
+
+
+@connection.connection_handler
+def verify_pwd(cursor, username):
+    cursor.execute("""SELECT hash FROM user_info 
+                    WHERE username = %(username)s""", {'username': username})
+    result = cursor.fetchall()
+    return result[0].get('hash')
