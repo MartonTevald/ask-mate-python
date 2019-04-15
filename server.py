@@ -294,8 +294,8 @@ def user_login():
         password = request.form.get('password')
         hashed_password = data_manager.verify_pwd(username)
         if verify_password(password, hashed_password) is True:
-            return redirect(url_for('index', verified_password=hashed_password, mode=1))
-        return redirect(url_for('index', verified_password=hashed_password, mode=2))
+            return redirect(url_for('/', mode=1))
+        return redirect(url_for('/', mode=2))
 
     return render_template('login.html')
 
