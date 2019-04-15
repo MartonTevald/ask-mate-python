@@ -287,6 +287,20 @@ def delete_tag(question_id, tag_id):
     return redirect(url_for('list_answers', id=question_id))
 
 
+@app.route('/login', methods=['POST', 'GET'])
+def user_login():
+    if request.method == 'POST':
+        username = request.form.get('user_name')
+        password = request.form.get('password')
+        hashed_password = data_manager.verify_pwd(username)
+        if verify_password(password, hashed_password) is True:
+            return redirect(url_for('index', verified_password=hashed_password, mode=1))
+        return redirect(url_for('index', verified_password=hashed_password, mode=2))
+
+    return render_template('login.html')
+
+
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
