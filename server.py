@@ -13,8 +13,8 @@ def list_of_questions():
             return render_template('list.html', questions=questions)
         elif 'show_latest' == request.form.get('show'):
             return render_template('list.html', questions=last_questions)
-    elif request.method == 'GET':
-        return render_template("list.html", questions=last_questions)
+    user = request.args.get('user')
+    return render_template("list.html", questions=last_questions)
 
 
 @app.route('/add-question', methods=['GET', 'POST'])
@@ -104,16 +104,14 @@ def edit_answer(answer_id):
         return redirect(url_for('list_answers', id=id))
         # return redirect('/')
 
-    if request.method == 'GET':
-        answer = data_handler.get_answers_id_for_edit(answer_id)
-
-        return render_template('edit-answer.html',
-                               answer=answer,
-                               form_url=url_for('edit_answer', answer_id=answer_id),
-                               page_title='Update Answer',
-                               button_title='Update',
-                               button_page='Return '
-                               )
+    answer = data_handler.get_answers_id_for_edit(answer_id)
+    return render_template('edit-answer.html',
+                           answer=answer,
+                           form_url=url_for('edit_answer', answer_id=answer_id),
+                           page_title='Update Answer',
+                           button_title='Update',
+                           button_page='Return '
+                           )
 
 
 @app.route('/question/<question_id>/delete', methods=['GET', 'POST'])
@@ -308,7 +306,7 @@ def user_login():
         password = request.form.get('password')
         hashed_password = data_handler.verify_pwd(username)
         if data_handler.verify_password(password, hashed_password) is True:
-            return redirect(url_for('/', mode=1))  # incomplete, this means login is successful
+            return redirect(url_for('list_of_questions', user=username))  # incomplete, this means login is successful
         return redirect(url_for('/', mode=2))  # incomplete, this means that login is unsuccessful
 
     return render_template('login.html')
