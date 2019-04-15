@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>| Add tag |</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
+</head>
+<body bgcolor="#f0ffff">
+<h1>{{ page_title }}</h1>
+
+<form action="{{ form_url }}"
+      method="post">
+
+    <p>
+        <label for="add_new_tag">Add a new tag</label><br>
+        <input name="new_tag" id="add_new_tag" cols="80" rows="8">
+    </p>
+    <p>
+        <label for="tag_selector">Select :</label>
+        <select id="tag_selector" name="option" width="300px">
+            {% for option in option_list %}
+                <option name="{{ option.name }}" value="{{ option.name }}" SELECTED>{{ option.name }}
+                </option>
+            {% endfor %}
+
+        </select>
+    </p>
+    <input class="button1" type="submit" value="Select">
+    <p>
+        <a href="{{ url_for('adding_tag_to_question',question_id=question_id) }}">
+            <h3 align="left">
+                <button type="submit">{{ button_title }}</button>
+            </h3>
+        </a>
+        <br>
+    </p>
+</form>
+
+
+</body>
+</html>
