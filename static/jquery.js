@@ -1,6 +1,6 @@
 $(document).ready(function () {
-$("#hide_question_comments").click(function () {
-    $(".question_comments").toggle(1000)
+    $("#hide_question_comments").click(function () {
+        $(".question_comments").toggle(1000)
     });
 });
 
@@ -24,3 +24,9 @@ $(document).ready(function () {
         $(".answer_table").toggle(1000)
     });
 });
+
+$(document).ready(function () {
+    $(".btn").click(function () {
+        $(".input").toggleClass("active");
+    })
+})
