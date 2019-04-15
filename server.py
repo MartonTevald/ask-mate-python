@@ -305,7 +305,6 @@ def add_user():
 def user_login():
     if request.method == 'POST':
         username = request.form.get('username')
-        print(username)
         password = request.form.get('password')
         hashed_password = data_handler.verify_pwd(username)
         if data_handler.verify_password(password, hashed_password) is True:
