@@ -5,8 +5,9 @@ body {
 
 
 table {
-    border-collapse: collapse;
-    border: 9px solid #ddd;
+    /*border-collapse: collapse;*/
+    border: 20px solid #ddd;
+    border-radius: 20px;
     text-align: center;
     width: 70%;
     align-items: center;
@@ -35,7 +36,7 @@ button {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     width: auto;
-    padding: 2px;
+    padding: 5px;
     border: 2px double;
     border-color: #dddddd;
     -webkit-border-radius: 68px;
@@ -60,6 +61,10 @@ button {
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
     -webkit-transform: rotateX(4.583662361046586deg) rotateY(-3.437746770784939deg);
     transform: rotateX(4.583662361046586deg) rotateY(-3.437746770784939deg);
+}
+
+button:hover {
+    background-color: yellow;
 }
 
 tr:hover {
@@ -167,4 +172,25 @@ textarea {
 .btn.animate {
     transform: rotate(-360deg);
     right: 100px;
+}
+
+.grid_container {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.main_header {
+
+    margin: 0px;
+    background-image: linear-gradient(rgb(100%, 70%, 70%), rgb(60%, 40%, 40%));
+    padding-bottom: 30px;
+}
+
+.background {
+    background-image: linear-gradient(rgb(70%, 70%, 100%), rgb(40%, 40%, 60%));
+    height: 100%;
+}
+
+body, html {
+    height: 100%;
 }

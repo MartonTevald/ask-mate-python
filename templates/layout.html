@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %} | T i d d e r</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+</head>
+<body class="background">
+   <div class="main_header">
+
+
+        <a href="/">
+            <img border="0" alt="teddir" src="/static/on_off_logo.png" width="80 " height="50">
+        </a>
+        <a href="/">T i d d e R</a>
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+
+        <a class="nav-link" href="#">Register</a>
+
+        <a class="nav-link" href="#">Login</a>
+
+        <a class="nav-link " href="#">User Page</a>
+
+        <a href="/add-question">
+            <button type="submit">New Question</button>
+        </a>
+        <form action='/search' method="GET">
+
+
+            <input type="text" placeholder="Search" class="input" name="search_phrase">
+            <div class="btn">
+                <i class="fa fa-search" aria-hidden="true"></i>
+            </div>
+
+
+        </form>
+    </div>
+{% block content %}{% endblock %} </body>
+</html>

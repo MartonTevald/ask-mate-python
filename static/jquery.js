@@ -28,5 +28,5 @@ $(document).ready(function () {
 $(document).ready(function () {
     $(".btn").click(function () {
         $(".input").toggleClass("active");
-    })
-})
+    });
+});
