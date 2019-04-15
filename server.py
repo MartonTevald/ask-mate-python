@@ -287,6 +287,23 @@ def delete_tag(question_id, tag_id):
     return redirect(url_for('list_answers', id=question_id))
 
 
+@app.route('/registration', methods=['POST', 'GET'])
+def add_user():
+    if request.method == 'POST':
+        password = request.form.get('hash')
+        hashed = data_handler.hash_password(password)
+        user_info = {'username': request.form.get('username'),
+                     'hash': hashed,
+                     'email': request.form.get('email'),
+                     'creation_date': data_handler.date_time(),
+                     'status': request.form.get('status'),
+                     }
+        data_handler.add_user_details_to_database(user_info)
+        return redirect('/')
+
+    return render_template('registration.html')
+
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>| Registration |</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
+</head>
+<body bgcolor="#f0ffff">
+<h1>Registration</h1>
+
+<form action="{{ form_url }}"
+      method="post">
+    <div class="registration">
+        <input type="hidden" name="creation_date" >
+        <input type="hidden" name="status" value="user">
+        <p>
+            <label for="username">Username : </label><br>
+            <input type="text" name="username" id="username">
+        </p>
+        <p>
+            <label for="hash">Password : </label><br>
+            <input name="hash" id="hash" cols="80" rows="8">
+        </p>
+        <p>
+            <label for="email">email : </label><br>
+            <input type="text" name="email" id="email">
+        </p>
+    </div>
+    <p>
+        <a href="{{ url_for('add_user') }}">
+            <h3>
+                <button type="submit">Register</button>
+            </h3>
+        </a>
+</form>
+
+
+</body>
+</html>
