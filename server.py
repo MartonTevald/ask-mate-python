@@ -73,6 +73,7 @@ def list_answers(id=None):
     answer_row = data_handler.get_answers_for_id(id)
     question_comments = data_handler.get_question_comments(id)
     answer_comments = data_handler.get_answer_comments()
+    tags = data_handler.get_all_tag_name_for_question(id)
     if request.method == 'POST':
         answers = {'submission_time': data_handler.date_time(),
                    'vote_number': 0,
@@ -85,7 +86,7 @@ def list_answers(id=None):
     data_handler.question_view_number_counter(id)
     return render_template('question.html', id=id, question_row=question_row, answer_row=answer_row,
                            question_comments=question_comments, answer_comments=answer_comments, time=time,
-                           q_c_time=q_c_time)
+                           q_c_time=q_c_time, tags=tags)
 
 
 @app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])
@@ -255,21 +256,36 @@ def delete_answer_comment(comment_id):
 @app.route('/search/', methods=['GET'])
 def search():
     search_phrase = request.args.get('search_phrase')
-
     result = data_handler.do_search(search_phrase)
     return render_template('list.html', questions=result)
-
-    # print(search_phrase)
-
     search_result_from_question = data_handler.get_search_results_from_questions(search_phrase)
-    # print(search_result_from_question)
-
     search_result_from_answer = data_handler.get_search_results_from_answers(search_phrase)
-    # search result = ffj+ lfihsr
     return render_template('list.html', questions=search_result_from_question)
 
 
-9
+@app.route('/question/<question_id>/new-tag', methods=['GET', 'POST'])
+def adding_tag_to_question(question_id):
+    available_tags = data_handler.get_tags_for_select()
+    if request.method == 'POST':
+        new_tag = request.form.get('new_tag')
+        add_tag = request.form.get('option')
+        if not new_tag:
+            tag_id = data_handler.get_tag_id_from_tag_name(add_tag)
+            data_handler.write_to_question_tag(question_id, tag_id)
+        else:
+            data_handler.add_to_tag_table(new_tag)
+            tag_id = data_handler.get_tag_id_from_tag_name(new_tag)
+            data_handler.write_to_question_tag(question_id, tag_id)
+        return redirect(url_for('list_answers', id=question_id))
+
+    return render_template('add-tag.html', option_list=available_tags, button_title='Submit', question_id=question_id)
+
+
+@app.route('/question/<question_id>/tag/<tag_id>/delete', methods=['POST', 'GET'])
+def delete_tag(question_id, tag_id):
+    data_handler.delete_question_tag(question_id, tag_id)
+    return redirect(url_for('list_answers', id=question_id))
+
 
 if __name__ == '__main__':
     app.run(

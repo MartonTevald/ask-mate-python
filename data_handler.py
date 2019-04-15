@@ -154,6 +154,8 @@ def get_all_answer_id_to_delete_comments(cursor, question_id):
 @connection.connection_handler
 def del_question_row(cursor, id):
     cursor.execute("""
+                DELETE FROM question_tag
+                WHERE question_id = %(id)s;
                 DELETE FROM comment
                 WHERE question_id = %(id)s;
                 DELETE FROM answer
@@ -298,7 +300,7 @@ def descending_order(cursor, sorted):
                         SELECT *
                         FROM question
                         ORDER BY {sort} DESC """)
-                        .format(sort=sql.Identifier(sort)))
+                   .format(sort=sql.Identifier(sort)))
 
     sort_desc = cursor.fetchall()
     return sort_desc
@@ -319,7 +321,6 @@ def do_search(search_phrase):
         ids_ = question_ids_from_questions
         print('fromquestions is valid only')
 
-    print(ids_)
     result = make_the_result(ids_)
     return result
 
@@ -336,7 +337,6 @@ def get_search_question_ids(cursor, search_phrase):
     ids = []
     for id in ids_dictsinlist:
         ids.append(id['id'])
-    print(ids)
     return ids
 
 
@@ -347,8 +347,6 @@ def get_search_answers_ids(cursor, search_phrase):
     SELECT question_id FROM answer
     WHERE lower (message ) LIKE '%%' || %(phrase)s || '%%'""", {'phrase': phrase})
     question_id = cursor.fetchall()
-
-    print(question_id)
     if len(question_id) > 0:
         # print(question_id)   #this is a list with dictionaries
         cursor.execute(""" SELECT * FROM question
@@ -357,7 +355,6 @@ def get_search_answers_ids(cursor, search_phrase):
         ids = []
         for id in ids_dictsinlist:
             ids.append(id['id'])
-        print(ids)
         return ids
     else:
         return []
@@ -382,52 +379,53 @@ def get_search_results(cursor, search_phrase):
     search_result = cursor.fetchall()
     return search_result
 
-#
-# @connection.connection_handler
-# def get_tag_id_from_question_id(cursor, id):
-#     cursor.execute("""SELECT tag_id FROM question_tag
-#                     WHERE question_id = %(id)s"""
-#                    , {'question_id': id})
-#     tag_id = cursor.fetchall()
-#     return tag_id
-#
-#
-# @connection.connection_handler
-# def get_tag_from_tag_id(cursor, id):
-#     tag_id = get_tag_id_from_question_id(id)
-#     cursor.execute("""SELECT name FROM tag
-#                         WHERE id = %(tag_id)s""",
-#                    {'id': tag_id})
-#     name = cursor.fethcall()
-#     return name
-#
-#
-# @connection.connection_handler
-# def get_tags_for_select(cursor):
-#     cursor.execute("""SELECT * FROM tag
-#     """)
-#     tags = cursor.fetchall()
-#     return tags
-#
-#
-# @connection.connection_handler
-# def add_to_tag_table(cursor, new_data):
-#     cursor.execute("""INSERT INTO tag (name)
-#                     VALUES (%(name)s)"""
-#                    , {'submission_time': new_data['submission_time']})
-#
-#
-# @connection.connection_handler
-# def write_to_question_tag(cursor, question_id, tag_id):
-#     cursor.execute("""
-#                     INSERT INTO question_tag (question_id, tag_id)
-#                     VALUES (%(question_id)s,%(tag_id)s)"""
-#                    , {'question_id': question_id, 'tag_id': tag_id})
-#
-#
-# @connection.connection_handler
-# def delete_question_tag(cursor, id):
-#     cursor.execute("""
-#                     DELETE FROM question_tag
-#                     WHERE question_id = %(id)s
-#                     """, {'question_id': id})
+
+@connection.connection_handler
+def get_all_tag_name_for_question(cursor, question_id):
+    cursor.execute("""
+                    SELECT tag.name,tag.id FROM question_tag
+                    INNER JOIN tag  on question_tag.tag_id = tag.id
+                    WHERE question_id = %(question_id)s
+                    """, {'question_id': question_id})
+    tag_names = cursor.fetchall()
+    return tag_names
+
+
+@connection.connection_handler
+def get_tag_id_from_tag_name(cursor, name):
+    cursor.execute(""" SELECT id  FROM tag
+                    WHERE name = %(name)s
+    """, {'name': name})
+    tag_id = cursor.fetchone()
+    return tag_id['id']
+
+
+@connection.connection_handler
+def get_tags_for_select(cursor):
+    cursor.execute("""SELECT * FROM tag
+    """)
+    tags = cursor.fetchall()
+    return tags
+
+
+@connection.connection_handler
+def add_to_tag_table(cursor, new_data):
+    cursor.execute("""INSERT INTO tag (name)
+                    VALUES (%(name)s)"""
+                   , {'name': new_data})
+
+
+@connection.connection_handler
+def write_to_question_tag(cursor, question_id, tag_id):
+    cursor.execute("""
+                    INSERT INTO question_tag (question_id, tag_id)
+                    VALUES (%(question_id)s,%(tag_id)s)"""
+                   , {'question_id': question_id, 'tag_id': tag_id})
+
+
+@connection.connection_handler
+def delete_question_tag(cursor, question_id, tag_id):
+    cursor.execute("""
+                    DELETE FROM question_tag
+                    WHERE question_id = %(id)s AND tag_id = %(tag)s 
+                    """, {'id': question_id, 'tag': tag_id})
