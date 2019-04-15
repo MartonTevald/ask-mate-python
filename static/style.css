@@ -35,7 +35,7 @@ button {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     width: auto;
-    padding: 2px;
+    padding: 5px;
     border: 2px double;
     border-color: #dddddd;
     -webkit-border-radius: 68px;
@@ -60,6 +60,10 @@ button {
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
     -webkit-transform: rotateX(4.583662361046586deg) rotateY(-3.437746770784939deg);
     transform: rotateX(4.583662361046586deg) rotateY(-3.437746770784939deg);
+}
+
+button:hover{
+    background-color: yellow;
 }
 
 tr:hover {
@@ -167,4 +171,13 @@ textarea {
 .btn.animate {
     transform: rotate(-360deg);
     right: 100px;
+}
+
+.grid_container{
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.main_header{
+    background-color: red;
 }

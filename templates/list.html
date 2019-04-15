@@ -15,93 +15,83 @@
     </script>
 </head>
 <body bgcolor="#f0ffff">
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">T i d d e r </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Register</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Login</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link " href="#">User Page</a>
-      </li>
-    </ul>
-  </div>
-</nav>
-<p align="left"><a href="/">
-    <img border="0" alt="teddir" src="/static/on_off_logo.png" width="150" height="80">
-</a></p>
-<a href="/"><h1 align="left">T i d d e R</h1></a>
-<form action='/search' method="GET">
-    <div class="wrapper">
-        <div class="search-box">
-            <input type="text" placeholder="Search" class="input" name="search_phrase">
-            <div class="btn">
-                <i class="fa fa-search" aria-hidden="true"></i>
-            </div>
+<div class="main_header">
+
+
+    <a href="/">
+        <img border="0" alt="teddir" src="/static/on_off_logo.png" width="80 " height="50">
+    </a>
+    <a href="/">T i d d e R</a>
+    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+
+    <a class="nav-link" href="#">Register</a>
+
+    <a class="nav-link" href="#">Login</a>
+
+    <a class="nav-link " href="#">User Page</a>
+
+    <a  href="/add-question">
+        <button type="submit">New Question</button>
+    </a>
+    <form action='/search' method="GET">
+
+
+        <input type="text" placeholder="Search" class="input" name="search_phrase">
+        <div class="btn">
+            <i class="fa fa-search" aria-hidden="true"></i>
         </div>
-    </div>
-</form>
 
-<form action="{{ url_for('sort_questions') }}" method="post" id="sort">
-    <SELECT class="form-control" id="sort" name="sort">
-        <OPTION id="sub_asc" name="sub_asc" Value="sub_asc">Date Ascending-Order</OPTION>
-        <OPTION id="sub_desc" name='sub_desc' Value="sub_desc">Date Descending-Order</OPTION>
-        <OPTION id="view_asc" name="view_asc" Value="view_asc">View Ascending-Order</OPTION>
-        <OPTION id="view_desc" name="view_desc" Value="view_desc">View Descending-Order</OPTION>
-        <OPTION id="vote_asc" name="vote_asc" Value="vote_asc">Vote Ascending-Order</OPTION>
-        <OPTION id="vote_desc" name="vote_desc" Value="vote_desc">Vote Descending-Order</OPTION>
-    </SELECT>
-    <button name=submit type="submit" value="submit">Sort</button>
-</form>
-<br>
-<form action="{{ url_for('list_of_questions') }}" method="post" id="show">
-    <select class="form-control" name="show" id="show">
-        <OPTION id="show_all" name="show_all" value="show_all">Show All Questions</OPTION>
-        <OPTION name="show_latest" value="show_latest">Show 5 latest</OPTION>
-    </select>
-    <button name="submit" type="submit" value="submit">Submit</button>
-</form>
-<br>
-<table align="center">
-    <tr>
-        <th id="head_Columns">Id</th>
-        <th id="head_Columns">Submission time</th>
-        <th id="head_Columns">View number</th>
-        <th id="head_Columns">Vote number</th>
-        <th id="head_Columns">Title</th>
-        <th id="head_Columns">Message</th>
-        <th id="head_Columns">Image</th>
 
-    </tr>
-    {% for question in questions %}
+    </form>
+</div>
+<div class="grid_container">
+    <form action="{{ url_for('sort_questions') }}" method="post" id="sort">
+        <SELECT class="form-control" id="sort" name="sort">
+            <OPTION id="sub_asc" name="sub_asc" Value="sub_asc">Date Ascending-Order</OPTION>
+            <OPTION id="sub_desc" name='sub_desc' Value="sub_desc">Date Descending-Order</OPTION>
+            <OPTION id="view_asc" name="view_asc" Value="view_asc">View Ascending-Order</OPTION>
+            <OPTION id="view_desc" name="view_desc" Value="view_desc">View Descending-Order</OPTION>
+            <OPTION id="vote_asc" name="vote_asc" Value="vote_asc">Vote Ascending-Order</OPTION>
+            <OPTION id="vote_desc" name="vote_desc" Value="vote_desc">Vote Descending-Order</OPTION>
+        </SELECT>
+        <button name=submit type="submit" value="submit">Sort</button>
+    </form>
+    <br>
+    <form action="{{ url_for('list_of_questions') }}" method="post" id="show">
+        <select class="form-control" name="show" id="show">
+            <OPTION id="show_all" name="show_all" value="show_all">Show All Questions</OPTION>
+            <OPTION name="show_latest" value="show_latest">Show 5 latest</OPTION>
+        </select>
+        <button name="submit" type="submit" value="submit">Submit</button>
+    </form>
+    <table align="center">
         <tr>
-            <td>{{ question.id }}</td>
-            <td>{{ question.submission_time }}</td>
-            <td>{{ question.view_number }}</td>
-            <td>{{ question.vote_number }}</td>
-            <td id="question_title"><a href="/question/{{ question['id'] }} " methods="get">{{ question.title }}</a>
-            </td>
-            <td>{{ question.message }}</td>
-            <td><img src="{{ question.image }}" alt="no file" width="150" height="150"></td>
+            <th id="head_Columns">Id</th>
+            <th id="head_Columns">Submission time</th>
+            <th id="head_Columns">View number</th>
+            <th id="head_Columns">Vote number</th>
+            <th id="head_Columns">Title</th>
+            <th id="head_Columns">Message</th>
+            <th id="head_Columns">Image</th>
 
         </tr>
-    {% endfor %}
+        {% for question in questions %}
+            <tr>
+                <td>{{ question.id }}</td>
+                <td>{{ question.submission_time }}</td>
+                <td>{{ question.view_number }}</td>
+                <td>{{ question.vote_number }}</td>
+                <td id="question_title"><a href="/question/{{ question['id'] }} " methods="get">{{ question.title }}</a>
+                </td>
+                <td>{{ question.message }}</td>
+                <td><img src="{{ question.image }}" alt="no file" width="150" height="150"></td>
 
-</table>
+            </tr>
+        {% endfor %}
+
+    </table>
+</div>
 <br>
-<a href="/add-question">
-    <button type="submit">New Question</button>
-</a>
 <h4 align="right">Pairing programming since 2019</h4>
 </body>
 </html>
