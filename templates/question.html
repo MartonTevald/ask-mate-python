@@ -1,13 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>This was really hard to make</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='format_question_html.css') }}">
-    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="/static/jquery.js"></script>
-</head>
-<body bgcolor="#f0ffff">
+{% extends 'layout.html' %}
+
+{% block title %}
+    Welcome!
+{% endblock %}
+
+{% block content %}
 
 <a href="/"><img id="logo" border="0" alt="T i d d e r" src="/static/on_off_logo.png" width="150" height="80"></a>
 
@@ -174,5 +171,4 @@
     </tr>
 
 </table>
-</body>
-</html>
+{% endblock %}

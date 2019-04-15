@@ -7,6 +7,7 @@ body {
 table {
     border-collapse: collapse;
     border: 9px solid #ddd;
+    border-radius: 20px;
     text-align: center;
     width: 70%;
     align-items: center;
@@ -179,5 +180,15 @@ textarea {
 }
 
 .main_header{
-    background-color: red;
+    margin: 0px;
+    background-image: linear-gradient(rgb(100%, 70%, 70%) , rgb(60%,40%,40%));
+    padding-bottom: 30px;
+}
+
+.background {
+    background-image: linear-gradient(rgb(70%, 70%, 100%) , rgb(40%,40%,60%));
+      height: 100%;
+}
+body, html {
+  height: 100%;
 }
