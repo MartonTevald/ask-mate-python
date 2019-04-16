@@ -52,27 +52,31 @@ def add_question():
 @app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
 def update_question(question_id):
     username = session['username']
-    if request.method == 'POST':
-        question = {'id': question_id,
-                    'submission_time': data_handler.date_time(),
-                    'view_number': request.form.get('view_number'),
-                    'vote_number': request.form.get('vote_number'),
-                    'title': request.form.get('title'),
-                    'message': request.form.get('message'),
-                    'image': request.form.get('image'),
-                    }
-        data_handler.edit_question_row(question, question_id)
-        return redirect(url_for('list_answers', id=question_id, username=username))
+    check_for_validation = data_handler.check_user_id_authentication_for_question(username, question_id)
+    if check_for_validation:
+        if request.method == 'POST':
+            question = {'id': question_id,
+                        'submission_time': data_handler.date_time(),
+                        'view_number': request.form.get('view_number'),
+                        'vote_number': request.form.get('vote_number'),
+                        'title': request.form.get('title'),
+                        'message': request.form.get('message'),
+                        'image': request.form.get('image'),
+                        }
+            data_handler.edit_question_row(question, question_id)
+            return redirect(url_for('list_answers', id=question_id, username=username))
 
-    question = data_handler.get_question_for_id(question_id)
-    return render_template('add-question.html',
-                           question=question,
-                           form_url=url_for('update_question', question_id=question_id),
-                           page_title='Update Question',
-                           button_title='Update',
-                           button_page='Return ',
-                           username=username
-                           )
+        question = data_handler.get_question_for_id(question_id)
+        return render_template('add-question.html',
+                               question=question,
+                               form_url=url_for('update_question', question_id=question_id),
+                               page_title='Update Question',
+                               button_title='Update',
+                               button_page='Return ',
+                               username=username
+                               )
+    else:
+        return redirect(url_for('list_answers', id=question_id, username=username))
 
 
 @app.route('/question/<id>', methods=['GET', 'POST'])
@@ -109,41 +113,52 @@ def list_answers(id=None):
 @app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])
 def edit_answer(answer_id):
     username = session['username']
+    check_for_validation = data_handler.check_user_id_authentication_for_answer(username, answer_id)
     id = data_handler.get_question_id_for_answer_id(answer_id)
-    if request.method == 'POST':
-        answer = {'id': answer_id,
-                  'submission_time': data_handler.date_time(),
-                  'vote_number': request.form.get('vote_number'),
-                  'question_id': request.form.get('question_id'),
-                  'message': request.form.get('message'),
-                  'image': request.form.get('image'),
-                  }
-        data_handler.edit_answer_row(answer, answer_id)
-        return redirect(url_for('list_answers', id=id, username=username))
+    if check_for_validation:
+        if request.method == 'POST':
+            answer = {'id': answer_id,
+                      'submission_time': data_handler.date_time(),
+                      'vote_number': request.form.get('vote_number'),
+                      'question_id': request.form.get('question_id'),
+                      'message': request.form.get('message'),
+                      'image': request.form.get('image'),
+                      }
+            data_handler.edit_answer_row(answer, answer_id)
+            return redirect(url_for('list_answers', id=id, username=username))
 
-    answer = data_handler.get_answers_id_for_edit(answer_id)
-    return render_template('edit-answer.html',
-                           answer=answer,
-                           form_url=url_for('edit_answer', answer_id=answer_id),
-                           page_title='Update Answer',
-                           button_title='Update',
-                           button_page='Return ',
-                           username=username
-                           )
+        answer = data_handler.get_answers_id_for_edit(answer_id)
+        return render_template('edit-answer.html',
+                               answer=answer,
+                               form_url=url_for('edit_answer', answer_id=answer_id),
+                               page_title='Update Answer',
+                               button_title='Update',
+                               button_page='Return ',
+                               username=username
+                               )
+    else:
+        return redirect(url_for('list_answers', id=id, username=username))
 
 
 @app.route('/question/<question_id>/delete', methods=['GET', 'POST'])
 def delete_rows(question_id):
     username = session['username']
-    data_handler.get_all_comments_for_answer(question_id)
-    data_handler.del_question_row(question_id)
-    return redirect('/')
+    check_for_validation = data_handler.check_user_id_authentication_for_question(username, question_id)
+    if check_for_validation:
+        data_handler.get_all_comments_for_answer(question_id)
+        data_handler.del_question_row(question_id)
+        return redirect('/')
+    else:
+        return redirect(url_for('list_answers', id=question_id))
 
 
 @app.route('/answer/<answer_id>/delete', methods=['GET', 'POST'])
 def delete_answer(answer_id):
+    username = session['username']
+    check_for_validation = data_handler.check_user_id_authentication_for_answer(username, answer_id)
     question_id = data_handler.get_question_id_for_answer_id(answer_id)
-    data_handler.answer_delete_by_id(answer_id)
+    if check_for_validation:
+        data_handler.answer_delete_by_id(answer_id)
     return redirect(url_for('list_answers', id=question_id))
 
 
@@ -227,6 +242,7 @@ def add_answer_comment(answer_id=None):
 def edit_question_comment(comment_id):
     username = session['username']
     question_id = data_handler.get_question_id_by_comment_id(comment_id)
+    check_for_validation = data_handler.check_user_id_authentication_for_comment(username, comment_id)
     if request.method == 'POST':
         comment = {'id': comment_id,
                    'submission_time': request.form.get('submission_time'),
@@ -248,34 +264,45 @@ def edit_answer_comment(comment_id):
     username = session['username']
     answer_id = data_handler.get_answer_id_by_comment_id(comment_id)
     question_id = data_handler.get_question_id_by_answer_id(answer_id)
-    if request.method == 'POST':
-        comment = {'id': comment_id,
-                   'submission_time': request.form.get('submission_time'),
-                   'question_id': request.form.get('question_id'),
-                   'answer_id': request.form.get('answer_id'),
-                   'message': request.form.get('message'),
-                   'edited_count': request.form.get('edited_count'),
-                   }
-        data_handler.update_comment(comment)
-        time = data_handler.date_time()
-        return redirect(url_for('list_answers', id=question_id, time=time, username=username))
-    comment = data_handler.get_answer_comment_by_comment_id(comment_id)
-    return render_template('add-answer-comment.html', edit_comment=comment, comment=None, button_title="Edit Comment",
-                           username=username)
+    check_for_validation = data_handler.check_user_id_authentication_for_comment(username, comment_id)
+    if check_for_validation:
+        if request.method == 'POST':
+            comment = {'id': comment_id,
+                       'submission_time': request.form.get('submission_time'),
+                       'question_id': request.form.get('question_id'),
+                       'answer_id': request.form.get('answer_id'),
+                       'message': request.form.get('message'),
+                       'edited_count': request.form.get('edited_count'),
+                       }
+            data_handler.update_comment(comment)
+            time = data_handler.date_time()
+            return redirect(url_for('list_answers', id=question_id, time=time, username=username))
+        comment = data_handler.get_answer_comment_by_comment_id(comment_id)
+        return render_template('add-answer-comment.html', edit_comment=comment, comment=None,
+                               button_title="Edit Comment",
+                               username=username)
+    else:
+        return redirect(url_for('list_answers', id=question_id))
 
 
 @app.route('/question-comment/<comment_id>/delete')
 def delete_question_comment(comment_id):
+    username = session['username']
     question_id = data_handler.get_question_id_by_comment_id(comment_id)
-    data_handler.delete_comment_by_comment_id(comment_id)
+    check_for_validation = data_handler.check_user_id_authentication_for_comment(username, comment_id)
+    if check_for_validation:
+        data_handler.delete_comment_by_comment_id(comment_id)
     return redirect(url_for('list_answers', id=question_id))
 
 
 @app.route('/answer-comment/<comment_id>/delete')
 def delete_answer_comment(comment_id):
+    username = session['username']
     answer_id = data_handler.get_answer_id_by_comment_id(comment_id)
     question_id = data_handler.get_question_id_by_answer_id(answer_id)
-    data_handler.delete_comment_by_comment_id(comment_id)
+    check_for_validation = data_handler.check_user_id_authentication_for_comment(username, comment_id)
+    if check_for_validation:
+        data_handler.delete_comment_by_comment_id(comment_id)
     return redirect(url_for('list_answers', id=question_id))
 
 

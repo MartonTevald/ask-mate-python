@@ -516,3 +516,44 @@ def list_of_users(cursor):
     cursor.execute("""SELECT username,email,creation_date FROM user_info ;""")
     users = cursor.fetchall()
     return users
+
+
+@connection.connection_handler
+def check_user_id_authentication_for_question(cursor, username, question_id):
+    cursor.execute("""SELECT  user_id FROM user_info WHERE username = %(username)s
+                    UNION ALL
+                    SELECT user_info.user_id FROM user_info
+                    INNER JOIN question  on user_info.user_id = question.userid
+                    WHERE question.id = %(question_id)s""",
+                   {'username': username,'question_id':question_id})
+                
+    check = list(cursor)
+    return check[0] == check[1]
+
+
+@connection.connection_handler
+def check_user_id_authentication_for_answer(cursor, username, answer_id):
+    cursor.execute("""SELECT  user_id FROM user_info WHERE username = %(username)s
+                    UNION ALL
+                    SELECT user_info.user_id FROM user_info
+                    INNER JOIN answer  on user_info.user_id = answer.userid
+                    WHERE answer.id = %(answer_id)s""",
+                   {'username': username, 'answer_id': answer_id})
+
+    check = list(cursor)
+    return check[0] == check[1]
+
+
+@connection.connection_handler
+def check_user_id_authentication_for_comment(cursor, username, comment_id):
+    cursor.execute("""SELECT  user_id FROM user_info WHERE username = %(username)s
+                    UNION ALL
+                    SELECT user_info.user_id FROM user_info
+                    INNER JOIN comment  on user_info.user_id = comment.userid
+                    WHERE comment.id = %(comment_id)s""",
+                   {'username': username, 'comment_id': comment_id})
+
+    check = list(cursor)
+    return check[0] == check[1]
+
+
