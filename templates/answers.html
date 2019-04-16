@@ -41,10 +41,12 @@
                 <p><input type="button" onclick="window.location='/answer/{{ answer.id }}/edit'" id="button"
                           value="Edit Answer"></p>
             </td>
+                <td>
+                    <button id="show_answer_comments" xmlns="http://www.w3.org/1999/html">Show/Hide ,A' Comment</button>
 
+                </td>
         </tr>
     </table>
-<button id="show_answer_comments" xmlns="http://www.w3.org/1999/html">Show/Hide ,A' Comment</button>
     <table class = "answer_comments">
         {% for comment in answer_comments %}
             <tr>
