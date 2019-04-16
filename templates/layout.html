@@ -32,10 +32,8 @@
     <a href="/add-question">
         <button type="submit">New Question</button>
     </a>
+
     <form action='/search' method="GET">
-
-
-
     <div class="{{ "session" if username }} {{ "no_session" if username is sameas false }}"
          id="session">
         {% if username %}
@@ -54,9 +52,10 @@
 
 
     </form>
-
+</div>
 <div class="content">
     {% block content %}{% endblock %}
 </div>
+
 </body>
 </html>

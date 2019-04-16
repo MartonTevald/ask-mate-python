@@ -1,4 +1,4 @@
-# import bcrypt as bcrypt
+import bcrypt as bcrypt
 from psycopg2 import sql
 import connection
 from datetime import datetime
