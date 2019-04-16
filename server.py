@@ -11,13 +11,14 @@ def list_of_questions():
     last_questions = data_handler.get_latest_five_questions()
     if 'username' in session:
         username = session['username']
+        user = data_handler.get_user_id_by_username(username)
 
         if request.method == 'POST':
             if 'show_all' == request.form.get('show'):
                 return render_template('list.html', questions=questions)
             elif 'show_latest' == request.form.get('show'):
                 return render_template('list.html', questions=last_questions)
-        return render_template("list.html", questions=last_questions, username=username)
+        return render_template("list.html", questions=last_questions, username=username,user=user)
     else:
         return render_template("list.html", questions=last_questions, username="")
 
@@ -346,6 +347,18 @@ def user_login():
 def logout():
     session.pop('username', None)
     return redirect(url_for('list_of_questions'))
+
+
+@app.route('/user/<user_id>', methods=['GET', 'POST'])
+def user_page(user_id=None):
+    username = session['username']
+    user = data_handler.get_user_id_by_username(username)
+    questions = data_handler.user_questions(user_id)
+    answers = data_handler.user_answers(user_id)
+    comments = data_handler.user_comments(user_id)
+    return render_template('user-page.html', questions=questions,
+                           answers=answers, comments=comments,
+                           username=username,user=user)
 
 
 if __name__ == '__main__':

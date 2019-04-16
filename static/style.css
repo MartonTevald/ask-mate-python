@@ -234,6 +234,7 @@ textarea {
     higth: 50px;
 }
 
+
 .fa-search{
     position: fixed;
     z-index: 12;
@@ -250,4 +251,8 @@ textarea {
 }
 vote_question:hover {
     background-color: yellow;
+
+footer {
+    text-align: center;
+
 }
