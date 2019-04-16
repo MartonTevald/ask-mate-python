@@ -18,7 +18,38 @@ table {
     box-shadow: 10px 10px 5px rgb(20%, 20%,20%);
 }
 
+table.add_answer {
+    border: 10px solid ;
+    border-radius: 20px;
 
+    text-align: center;
+    width: 70%;
+    align-items: center;
+    box-shadow: 10px 10px 5px rgb(20%, 20%,20%)
+    border-color: blue;
+}
+
+table.question_comments{
+        border: 3px solid ;
+    border-radius: 20px;
+
+    text-align: center;
+    width: 70%;
+    align-items: center;
+    box-shadow: 10px 10px 5px rgb(20%, 20%,20%)
+    border-color: green;
+}
+
+table.answer_table {
+    border: 10px solid ;
+    border-radius: 20px;
+
+    text-align: center;
+    width: 70%;
+    align-items: center;
+    box-shadow: 10px 10px 5px rgb(20%, 20%,20%)
+    border-color: blue;
+}
 
 
 th, td {

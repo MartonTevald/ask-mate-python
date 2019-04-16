@@ -28,7 +28,7 @@
             <td id="question_message">{{ question_row.title }}</td>
             <td id="question_message">{{ question_row.message }}</td>
             <td><img src="{{ question_row.image }}" alt="no picture" width="150" height="150"></td>
-                        <td><p>
+            <td><p>
                 <a type="button" onclick="window.location='/question/{{ question_row.id }}/vote-up'"><img
                         class="vote_question" border="0" alt="up"
                         src="/static/photos/vote_up.png"></a>
@@ -76,7 +76,7 @@
             {% endfor %}
         </tr>
     </table>
-    <table class="question_comments">
+    <table  class="question_comments">
         <td>Comments:
         </td>
         {% for comment in question_comments %}
