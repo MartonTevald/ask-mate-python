@@ -1,6 +1,6 @@
 <button id="show_answers" xmlns="http://www.w3.org/1999/html">Show/Hide Answers</button>
 {% for answer in answer_row %}
-    <table id = answers class="answer_table">
+    <table id=answers class="answer_table">
         <tr>
             <th id="head_Columns">ID</th>
             <th id="head_Columns">Time</th>
@@ -18,16 +18,16 @@
             <td><img src="{{ answer.image }}" alt="Image" width="150" height="150"></td>
             <td>
                 <p>
-                <label for="vote-up"></label>
+                    <label for="vote-up"></label>
 
-                <a type="button" onclick="window.location='/answer/{{ answer.id }}/vote-up'"><img
-                        class="vote" border="0" alt="up"
-                        src="/static/photos/vote_up.png"></a></p>
+                    <a type="button" onclick="window.location='/answer/{{ answer.id }}/vote-up'"><img
+                            class="vote" border="0" alt="up"
+                            src="/static/photos/vote_up.png"></a></p>
                 <p>
-                <label for="vote-down"></label>
-                <a type="button" onclick="window.location='/answer/{{ answer.id }}/vote-down'"><img
-                        class="vote" border="0" alt="down"
-                        src="/static/photos/vote_down.png"></a></p>
+                    <label for="vote-down"></label>
+                    <a type="button" onclick="window.location='/answer/{{ answer.id }}/vote-down'"><img
+                            class="vote" border="0" alt="down"
+                            src="/static/photos/vote_down.png"></a></p>
             </td>
             <td>
                 <p>
@@ -45,27 +45,27 @@
         </tr>
     </table>
 
-
-    {% for comment in answer_comments %}
-        {% if comment.answer_id == answer.id %}
-            <td id="comment">{{ comment.message }}</td>
+    <table class = "answer_comments">
+        {% for comment in answer_comments %}
             <tr>
-            <td id="comment_info">{{ comment.submission_time }}
-            <td>
-            <td><input type="button" onclick="window.location='/answer-comment/{{ comment.id }}/edit'"
-                       value="Edit A Comment" id="button">
-                <input type="button" name="delete" value="Delete A Comment" id="button"
-                       onClick="confirmDelete('/answer-comment/{{ comment.id }}/delete')"
-                >
-            </td>
-            {% if comment.edited_count %}
-                <td id="comment_info">Edited: {{ comment.edited_count }} time(s). Last edit was
-                    at: {{ time }}</td>
-                <br>
-            {% endif %}
-        {% endif %}
-    </tr>
-    {% endfor %}
+                {% if comment.answer_id == answer.id %}
+                    <td id="comment">{{ comment.message }}</td>
+                    <p>
+                    <td id="comment_info">{{ comment.submission_time }}
+                    </td>
+                    <p><input type="button" onclick="window.location='/answer-comment/{{ comment.id }}/edit'"
+                              value="Edit A Comment" id="button"></p>
+                    <p><input type="button" name="delete" value="Delete A Comment" id="button"
+                              onClick="confirmDelete('/answer-comment/{{ comment.id }}/delete')"></p>
+                    </td>
+                    {% if comment.edited_count %}
+                        <td id="comment_info">Edited: {{ comment.edited_count }} time(s). Last edit was
+                            at: {{ time }}</td>
+                        <br>
+                    {% endif %}
+                {% endif %}
+            </tr>
+        {% endfor %}
     </table>
 {% endfor %}
 <br>
