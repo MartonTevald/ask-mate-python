@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, make_response, flash, g
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 import data_handler
 
 app = Flask(__name__)
@@ -17,7 +17,6 @@ def list_of_questions():
                 return render_template('list.html', questions=questions)
             elif 'show_latest' == request.form.get('show'):
                 return render_template('list.html', questions=last_questions)
-        # user = request.args.get('user')
         return render_template("list.html", questions=last_questions, username=username)
     else:
         return render_template("list.html", questions=last_questions, username="")
