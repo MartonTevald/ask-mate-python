@@ -24,10 +24,11 @@
 
     {% if username %}
         <a class="nav-link" href="/logout">Logout</a>
+        <a class="nav-link "  href="/user/{{ user }}">User Page</a>
+
     {% else %}
         <a class="nav-link" href="/login">Login</a>
     {% endif %}
-    <a class="nav-link " href="#">User Page</a>
 
     <a href="/add-question">
         <button type="submit">New Question</button>

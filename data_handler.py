@@ -476,3 +476,36 @@ def get_user_id_by_username(cursor, username):
     cursor.execute("""SELECT user_id FROM user_info WHERE username = %(username)s""", {'username': username})
     result = cursor.fetchone()
     return result.get('user_id')
+
+
+@connection.connection_handler
+def user_questions(cursor, user_id):
+    cursor.execute("""
+                    SELECT  * FROM question
+                    INNER JOIN user_info on question.userid = user_info.user_id
+                    WHERE question.userid = %(user_id)s AND user_info.user_id = %(user_id)s
+    """, {'user_id': user_id})
+    questions = cursor.fetchall()
+    return questions
+
+
+@connection.connection_handler
+def user_answers(cursor, user_id):
+    cursor.execute("""
+                    SELECT  * FROM answer
+                    INNER JOIN user_info on answer.userid = user_info.user_id
+                    WHERE answer.userid = %(user_id)s AND user_info.user_id = %(user_id)s
+    """, {'user_id': user_id})
+    answers = cursor.fetchall()
+    return answers
+
+
+@connection.connection_handler
+def user_comments(cursor, user_id):
+    cursor.execute("""
+                    SELECT  * FROM comment
+                    INNER JOIN user_info on comment.userid = user_info.user_id
+                    WHERE comment.userid = %(user_id)s AND user_info.user_id = %(user_id)s
+    """, {'user_id': user_id})
+    answers = cursor.fetchall()
+    return answers
