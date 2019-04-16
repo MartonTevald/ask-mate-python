@@ -335,12 +335,14 @@ def user_login():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
-        hashed_password = data_handler.verify_pwd(username)
+        try:
+            hashed_password = data_handler.verify_pwd(username)
+        except (ValueError, IndexError):
+            return render_template('login.html', hashed=True)
+
         if data_handler.verify_password(password, hashed_password) is True:
             session['username'] = request.form['username']
-            return redirect(url_for('list_of_questions'))
-        else:
-            flash('User password incorrect, or no user does not exist', 'error')
+            return redirect(url_for('list_of_questions', hashed=hashed_password))
 
     return render_template('login.html')
 
