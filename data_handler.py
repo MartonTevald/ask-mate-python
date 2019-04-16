@@ -509,3 +509,10 @@ def user_comments(cursor, user_id):
     """, {'user_id': user_id})
     answers = cursor.fetchall()
     return answers
+
+
+@connection.connection_handler
+def list_of_users(cursor):
+    cursor.execute("""SELECT username,email,creation_date FROM user_info ;""")
+    users = cursor.fetchall()
+    return users

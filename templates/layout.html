@@ -17,17 +17,14 @@
         <img border="0" alt="teddir" src="/static/on_off_logo.png" width="80 " height="50">
     </a>
     <a href="/">T i d d e R</a>
-
-    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-
-    <a class="nav-link" href="/registration">Register</a>
-
     {% if username %}
         <a class="nav-link" href="/logout">Logout</a>
         <a class="nav-link "  href="/user/{{ user }}">User Page</a>
-
+        <a class="nav-link" href="/list-users">User List</a>
     {% else %}
         <a class="nav-link" href="/login">Login</a>
+        <a class="nav-link" href="/registration">Register</a>
+
     {% endif %}
 
     <a href="/add-question">

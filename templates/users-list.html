@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+{% block title %}
+    Welcome!
+{% endblock %}
+{% block content %}
+<h1>List of users</h1>
+<table class="user_list">
+        <tr>
+            <th id="head_Columns">username</th>
+            <th id="head_Columns">e-mail</th>
+            <th id="head_Columns">Registered</th>
+        </tr>
+        {% for user in list_of_users %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.creation_date }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+
+
+
+
+
+{% endblock %}

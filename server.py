@@ -18,7 +18,7 @@ def list_of_questions():
                 return render_template('list.html', questions=questions)
             elif 'show_latest' == request.form.get('show'):
                 return render_template('list.html', questions=last_questions)
-        return render_template("list.html", questions=last_questions, username=username,user=user)
+        return render_template("list.html", questions=last_questions, username=username, user=user)
     else:
         return render_template("list.html", questions=last_questions, username="")
 
@@ -79,6 +79,7 @@ def update_question(question_id):
 def list_answers(id=None):
     if 'username' in session:
         username = session['username']
+        user = data_handler.get_user_id_by_username(username)
         time = request.args.get('time')  # answer comment edit time stamp
         q_c_time = request.args.get('q_c_time')
         question_row = data_handler.get_question_for_id(id)
@@ -100,7 +101,7 @@ def list_answers(id=None):
         data_handler.question_view_number_counter(id)
         return render_template('question.html', id=id, question_row=question_row, answer_row=answer_row,
                                question_comments=question_comments, answer_comments=answer_comments, time=time,
-                               q_c_time=q_c_time, tags=tags, username=username)
+                               q_c_time=q_c_time, tags=tags, username=username, user=user)
     else:
         return redirect(url_for('user_login'))
 
@@ -358,7 +359,15 @@ def user_page(user_id=None):
     comments = data_handler.user_comments(user_id)
     return render_template('user-page.html', questions=questions,
                            answers=answers, comments=comments,
-                           username=username,user=user)
+                           username=username, user=user)
+
+
+@app.route('/list-users', methods=['GET', 'POST'])
+def list_of_users():
+    username = session['username']
+    user = data_handler.get_user_id_by_username(username)
+    users_list = data_handler.list_of_users()
+    return render_template('users-list.html', username=username, list_of_users=users_list, user=user)
 
 
 if __name__ == '__main__':
