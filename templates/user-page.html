@@ -4,14 +4,77 @@
 {% endblock %}
 {% block content %}
 
-<h1>You made it bro</h1>
+    <h1>User Page</h1>
+
+    <table class="question_table">
+        <tr>
+            <th id="head_Columns">ID</th>
+            <th id="head_Columns">Time</th>
+            <th id="head_Columns">Vote</th>
+            <th id="head_Columns">View Number</th>
+            <th id="head_Columns">Title</th>
+            <th id="head_Columns">Message</th>
+            <th id="head_Columns">Image</th>
+        </tr>
+        {% for question in questions %}
+
+            <tr>
+                <td>{{ question.id }}</td>
+                <td>{{ question.submission_time }}</td>
+                <td>{{ question.vote_number }}</td>
+                <td>{{ question.view_number }}</td>
+                <td id="question_title"><a href="/question/{{ question['id'] }} "
+                                           methods="get">{{ question.title }}</a>
+                <td id="question_message">{{ question.message }}</td>
+                <td><img src="{{ question.image }}" alt="no picture" width="150" height="150"></td>
+            </tr>
+        {% endfor %}
+    </table>
+
+
+    <table class="answer_table">
+        <tr>
+            <th id="head_Columns">Question ID</th>
+            <th id="head_Columns">Time</th>
+            <th id="head_Columns">Vote</th>
+            <th id="head_Columns">Message</th>
+            <th id="head_Columns">Image</th>
+        </tr>
+        {% for answer in answers %}
+
+            <tr>
+                <td>{{ answer.question_id }}</td>
+                <td>{{ answer.submission_time }}</td>
+                <td>{{ answer.vote_number }}</td>
+                <td id="question_message">{{ answer.message }}</td>
+                <td><img src="{{ answer.image }}" alt="no picture" width="150" height="150"></td>
+            </tr>
+        {% endfor %}
+    </table>
 
 
 
+    <table class="comment_table">
+        <tr>
 
+            <th id="head_Columns">Question ID</th>
+            <th id="head_Columns">Answer ID</th>
+            <th id="head_Columns">Time</th>
+            <th id="head_Columns">Message</th>
+            <th id="head_Columns">Edited count</th>
+            <th id="head_Columns">Go to</th>
+        </tr>
+        {% for comment in comments %}
 
-
-
-
+            <tr>
+                <td>{{ comment.question_id }}</td>
+                <td>{{ comment.answer_id }}</td>
+                <td>{{ comment.submission_time }}</td>
+                <td id="question_message">{{ comment.message }}</td>
+                <td>{{ comment.edited_count }}</td>
+                <td><a>Checkout</a></td>
+                        </tr>
+        {% endfor %}
+    </table>
 
 {% endblock %}
