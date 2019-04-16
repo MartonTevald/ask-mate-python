@@ -126,3 +126,7 @@ INSERT INTO question_tag VALUES (0, 1);
 INSERT INTO question_tag VALUES (1, 3);
 INSERT INTO question_tag VALUES (2, 3);
 
+ALTER TABLE answer ADD userID int, ADD CONSTRAINT fk_userID FOREIGN KEY (userID) REFERENCES user_info(user_id);
+ALTER TABLE question ADD userID int, ADD CONSTRAINT fk_userID FOREIGN KEY (userID) REFERENCES user_info(user_id);
+ALTER TABLE comment ADD userID int, ADD CONSTRAINT fk_userID FOREIGN KEY (userID) REFERENCES user_info(user_id);
+

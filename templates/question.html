@@ -6,111 +6,119 @@
 
 {% block content %}
 
-<a href="/"><img id="logo" border="0" alt="T i d d e r" src="/static/on_off_logo.png" width="150" height="80"></a>
+    <a href="/"><img id="logo" border="0" alt="T i d d e r" src="/static/on_off_logo.png" width="150" height="80"></a>
 
-<table class="question_table">
-    <tr>
-        <th id="head_Columns">ID</th>
-        <th id="head_Columns">Time</th>
-        <th id="head_Columns">Vote</th>
-        <th id="head_Columns">View Number</th>
-        <th id="head_Columns">Title</th>
-        <th id="head_Columns">Message</th>
-        <th id="head_Columns">Image</th>
-    </tr>
-    <tr>
-        <td>{{ question_row.id }}</td>
-        <td>{{ question_row.submission_time }}</td>
-        <td>{{ question_row.vote_number }}</td>
-        <td>{{ question_row.view_number }}</td>
-        <td id="question_message">{{ question_row.title }}</td>
-        <td id="question_message">{{ question_row.message }}</td>
-        <td><img src="{{ question_row.image }}" alt="no picture" width="150" height="150"></td>
-
-    </tr>
-    <tr>
-        <td><a href="/question/{{ question_row.id }}/new-comment">
-            <button type="submit">Add Comment</button>
-        </a></td>
-        <td><a href="/question/{{ question_row.id }}/edit">
-            <button type="submit">Edit Question</button>
-        </a></td>
-        <td><a href="/question/{{ question_row.id }}/delete"
-               onclick="return confirm('Are you sure you want to Remove?');">
-            <button type="submit">Delete Question</button>
-        </a></td>
-        <td>
-            <button id="hide_question_comments">Show/Hide Comments(Q)</button>
-        </td>
-        <td>
-        </td>
-        <td>
-            <a type="button" onclick="window.location='/question/{{ question_row.id }}/vote-up'"><img
-                    class="vote_question" border="0" alt="up"
-                    src="/static/photos/vote_up.png"></a>
-            <a type="button" onclick="window.location='/question/{{ question_row.id }}/vote-down'"><img
-                    class="vote_question" border="0" alt="down"
-                    src="/static/photos/vote_down.png"></a>
-        </td>
-        <td>
-            <a href="/question/{{ question_row.id }}/new-tag">
-                 <button type="submit">Add tag</button>
-            </a>
-        </td>
-    </tr>
-    <tr>
-            {% for tag in tags %}
-            <td id="tags" >#{{ tag.name }}
-            <a href="/question/{{question_row.id}}/tag/{{tag.id}}/delete">
-                <button id="delete"> X </button>
-                </a>
-            </td>
-
-            {% endfor %}
-    </tr>
-</table>
-<table class="question_comments">
-    <td>Comments:
-    </td>
-    {% for comment in question_comments %}
+    <table class="question_table">
         <tr>
-            <td id="comment">
-                {{ comment.message }}
-            </td>
+            <th id="head_Columns">ID</th>
+            <th id="head_Columns">Time</th>
+            <th id="head_Columns">Vote</th>
+            <th id="head_Columns">View Number</th>
+            <th id="head_Columns">Title</th>
+            <th id="head_Columns">Message</th>
+            <th id="head_Columns">Image</th>
+            <th id="head_Columns"></th>
+            <th id="head_Columns"></th>
         </tr>
         <tr>
-        <td id="comment_info">{{ comment.submission_time }}
-            <input type="button" id="button" onclick="window.location='/question-comment/{{ comment.id }}/edit'"
-                   value="Edit Q Comment">
-            <input type="button" id="button" name="delete" value="Delete Q Comment"
-                   onClick="confirmDelete('/question-comment/{{ comment.id }}/delete')"
-            >
-        </td>
-        {% if comment.edited_count %}
-            <td id="comment_info">Edited: {{ comment.edited_count }} time(s). Last edit was
-                at: {{ q_c_time }}</td>
-        {% endif %}
-    {% endfor %}
-    </tr>
-</table>
-{% include "answers.html" %}
-
-    <button id="show_hide" >Show/Hide Add Answer</button>
-
-<table class="add_answer">
-    <tr>
-        <td>
-            <form action="/question/{{ question_row.id }}" method="post">
-                <p><label for="answer_message">Your Answer::</label><br>
-                    <textarea id="answer_message" name="answer_message" rows="8" cols="50" minlength="10"></textarea>
+            <td>{{ question_row.id }}</td>
+            <td>{{ question_row.submission_time }}</td>
+            <td>{{ question_row.vote_number }}</td>
+            <td>{{ question_row.view_number }}</td>
+            <td id="question_message">{{ question_row.title }}</td>
+            <td id="question_message">{{ question_row.message }}</td>
+            <td><img src="{{ question_row.image }}" alt="no picture" width="150" height="150"></td>
+                        <td><p>
+                <a type="button" onclick="window.location='/question/{{ question_row.id }}/vote-up'"><img
+                        class="vote_question" border="0" alt="up"
+                        src="/static/photos/vote_up.png"></a>
+            </p>
+                <p>
+                    <a type="button" onclick="window.location='/question/{{ question_row.id }}/vote-down'"><img
+                            class="vote_question" border="0" alt="down"
+                            src="/static/photos/vote_down.png"></a>
                 </p>
-                <p><label for="upload_pic">Upload a picture:</label><br>
-                    <input type="url" name="image" id="upload_pic">
+            </td>
+            <td><a href="/question/{{ question_row.id }}/new-comment">
+                <button type="submit">Add Comment</button>
+            </a>
+                <p>
+                    <a href="/question/{{ question_row.id }}/edit">
+                        <button type="submit">Edit Question</button>
+                    </a>
                 </p>
-                <button type="submit" id="button">Add Answer</button>
-            </form>
-        </td>
-    </tr>
 
-</table>
+                <p>
+                    <a href="/question/{{ question_row.id }}/delete"
+                       onclick="return confirm('Are you sure you want to Remove?');">
+                        <button type="submit">Delete Question</button>
+                    </a>
+                </p>
+                <button id="hide_question_comments">Show/Hide Comments(Q)</button>
+
+
+                <p>
+
+                    <a href="/question/{{ question_row.id }}/new-tag">
+                        <button type="submit">Add tag</button>
+                    </a>
+                </p>
+
+        </tr>
+        <tr>
+            {% for tag in tags %}
+                <td id="tags">#{{ tag.name }}
+                    <a href="/question/{{ question_row.id }}/tag/{{ tag.id }}/delete">
+                        <button id="delete"> X</button>
+                    </a>
+                </td>
+
+            {% endfor %}
+        </tr>
+    </table>
+    <table class="question_comments">
+        <td>Comments:
+        </td>
+        {% for comment in question_comments %}
+            <tr>
+                <td id="comment">
+                    {{ comment.message }}
+                </td>
+            </tr>
+            <tr>
+            <td id="comment_info">{{ comment.submission_time }}
+                <input type="button" id="button" onclick="window.location='/question-comment/{{ comment.id }}/edit'"
+                       value="Edit Q Comment">
+                <input type="button" id="button" name="delete" value="Delete Q Comment"
+                       onClick="confirmDelete('/question-comment/{{ comment.id }}/delete')"
+                >
+            </td>
+            {% if comment.edited_count %}
+                <td id="comment_info">Edited: {{ comment.edited_count }} time(s). Last edit was
+                    at: {{ q_c_time }}</td>
+            {% endif %}
+        {% endfor %}
+        </tr>
+    </table>
+    {% include "answers.html" %}
+
+    <button id="show_hide">Show/Hide Add Answer</button>
+
+    <table class="add_answer">
+        <tr>
+            <td>
+                <form action="/question/{{ question_row.id }}" method="post">
+                    <p><label for="answer_message">Your Answer::</label><br>
+                        <textarea id="answer_message" name="answer_message" rows="8" cols="50"
+                                  minlength="10"></textarea>
+                    </p>
+                    <p><label for="upload_pic">Upload a picture:</label><br>
+                        <input type="url" name="image" id="upload_pic">
+                    </p>
+                    <button type="submit" id="button">Add Answer</button>
+                </form>
+            </td>
+        </tr>
+
+    </table>
 {% endblock %}
