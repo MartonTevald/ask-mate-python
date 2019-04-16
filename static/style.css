@@ -69,15 +69,21 @@ button {
     /*text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);*/
     /*-webkit-transform: rotateX(4.583662361046586deg) rotateY(-3.437746770784939deg);*/
     /*transform: rotateX(4.583662361046586deg) rotateY(-3.437746770784939deg);*/
+
+    border: 3px;
+    border-radius: 15px;
+    margin: 3px;
+
 }
+
 
 button:hover {
     background-color: yellow;
 }
 
-tr:hover {
-    background-color: #f5f5f5;
-}
+/*tr:hover {*/
+    /*background-color: #f5f5f5;*/
+/*}*/
 
 #question_title {
     background-color: #dddddd;
@@ -117,7 +123,7 @@ textarea {
 .search-box {
     width: 450px;
     height: 100px;
-    position: relative;
+    position: fixed;
     z-index: 11;
 }
 
@@ -181,6 +187,8 @@ textarea {
 .btn.animate {
     transform: rotate(-360deg);
     right: 100px;
+    position: fixed;
+    z-index: 12;
 }
 
 .grid_container {
@@ -224,4 +232,22 @@ textarea {
 .vote, .vote_question{
     width: 50px;
     higth: 50px;
+}
+
+.fa-search{
+    position: fixed;
+    z-index: 12;
+}
+
+.fa fa-search{
+    position: fixed;
+    z-index: 12;
+}
+
+#session{
+    position: fixed;
+    z-index: 12;
+}
+vote_question:hover {
+    background-color: yellow;
 }
