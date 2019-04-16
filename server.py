@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, make_response, flash, g
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 import data_handler
 
 app = Flask(__name__)
@@ -17,7 +17,6 @@ def list_of_questions():
                 return render_template('list.html', questions=questions)
             elif 'show_latest' == request.form.get('show'):
                 return render_template('list.html', questions=last_questions)
-        # user = request.args.get('user')
         return render_template("list.html", questions=last_questions, username=username)
     else:
         return render_template("list.html", questions=last_questions, username="")
@@ -43,6 +42,7 @@ def add_question():
                     'title': request.form.get('title'),
                     'message': request.form.get('message'),
                     'image': request.form.get('image'),
+                    'userid': data_handler.get_user_id_by_username(username),
                     }
         data_handler.add_new_question(question)
         return redirect(url_for('list_of_questions', username=username))
@@ -92,6 +92,7 @@ def list_answers(id=None):
                        'question_id': id,
                        'message': request.form.get('answer_message'),
                        'image': request.form.get('image'),
+                       'userid': data_handler.get_user_id_by_username(username),
                        }
             data_handler.add_new_answer(answers)
             return redirect(url_for('list_answers', id=id, username=username))
@@ -117,7 +118,6 @@ def edit_answer(answer_id):
                   }
         data_handler.edit_answer_row(answer, answer_id)
         return redirect(url_for('list_answers', id=id, username=username))
-        # return redirect('/')
 
     answer = data_handler.get_answers_id_for_edit(answer_id)
     return render_template('edit-answer.html',
@@ -193,6 +193,7 @@ def add_question_comment(question_id=None):
                    'answer_id': request.form.get('answer_id'),
                    'message': request.form.get('message'),
                    'edited_count': request.form.get('edited_count'),
+                   'userid': data_handler.get_user_id_by_username(username),
                    }
         data_handler.add_new_comment(comment)
         return redirect(url_for('list_answers', id=question_id, username=username))
@@ -211,6 +212,7 @@ def add_answer_comment(answer_id=None):
                    'answer_id': request.form.get('answer_id'),
                    'message': request.form.get('message'),
                    'edited_count': request.form.get('edited_count'),
+                   'userid': data_handler.get_user_id_by_username(username),
                    }
         data_handler.add_new_comment(comment)
         return redirect(url_for('list_answers', id=question_id, username=username))
@@ -336,7 +338,6 @@ def user_login():
             return redirect(url_for('list_of_questions'))
         else:
             flash('User password incorrect, or no user does not exist', 'error')
-        # return redirect(url_for('/', mode=2))  # incomplete, this means that login is unsuccessful
 
     return render_template('login.html')
 
