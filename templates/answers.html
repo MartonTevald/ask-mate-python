@@ -44,7 +44,7 @@
 
         </tr>
     </table>
-
+<button id="show_answer_comments" xmlns="http://www.w3.org/1999/html">Show/Hide ,A' Comment</button>
     <table class = "answer_comments">
         {% for comment in answer_comments %}
             <tr>
@@ -53,6 +53,7 @@
                     <p>
                     <td id="comment_info">by: {{ comment.username }} on: {{ comment.submission_time }}
                     </td>
+                    <td>
                     <p><input type="button" onclick="window.location='/answer-comment/{{ comment.id }}/edit'"
                               value="Edit A Comment" id="button"></p>
                     <p><input type="button" name="delete" value="Delete A Comment" id="button"
