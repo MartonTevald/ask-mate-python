@@ -204,7 +204,7 @@ textarea {
     position: fixed; /* Set the main_header to fixed position */
     top: 0; /* Position the main_header at the top of the page */
     width: 100%; /* Full width */
-    z-index: 10;gi
+    z-index: 10;
 }
 
 /* Links inside the main_header */
@@ -251,6 +251,7 @@ textarea {
 }
 vote_question:hover {
     background-color: yellow;
+}
 
 footer {
     text-align: center;
