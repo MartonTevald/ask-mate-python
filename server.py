@@ -87,6 +87,7 @@ def list_answers(id=None):
         question_comments = data_handler.get_question_comments(id)
         answer_comments = data_handler.get_answer_comments()
         tags = data_handler.get_all_tag_name_for_question(id)
+        q_author = data_handler.get_username_by_question_id(id)
 
         if request.method == 'POST':
             answers = {'submission_time': data_handler.date_time(),
@@ -101,7 +102,7 @@ def list_answers(id=None):
         data_handler.question_view_number_counter(id)
         return render_template('question.html', id=id, question_row=question_row, answer_row=answer_row,
                                question_comments=question_comments, answer_comments=answer_comments, time=time,
-                               q_c_time=q_c_time, tags=tags, username=username, user=user)
+                               q_c_time=q_c_time, tags=tags, username=username, user=user, q_author=q_author)
     else:
         return redirect(url_for('user_login'))
 

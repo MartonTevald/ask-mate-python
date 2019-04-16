@@ -7,8 +7,8 @@
             <th id="head_Columns">Vote</th>
             <th id="head_Columns">Message</th>
             <th id="head_Columns">Image</th>
-            <th id="head_Columns"></th>
-            <th id="head_Columns"></th>
+            <th id="head_Columns">Author:</th>
+            <th id="head_Columns">{{ answer.username }}</th>
         </tr>
         <tr align="center">
             <td>{{ answer.id }}</td>
@@ -51,7 +51,7 @@
                 {% if comment.answer_id == answer.id %}
                     <td id="comment">{{ comment.message }}</td>
                     <p>
-                    <td id="comment_info">{{ comment.submission_time }}
+                    <td id="comment_info">by: {{ comment.username }} on: {{ comment.submission_time }}
                     </td>
                     <p><input type="button" onclick="window.location='/answer-comment/{{ comment.id }}/edit'"
                               value="Edit A Comment" id="button"></p>

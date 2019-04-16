@@ -104,8 +104,9 @@ def get_answers_id_for_edit(cursor, id):
 @connection.connection_handler
 def get_answers_for_id(cursor, id):
     cursor.execute("""
-                    SELECT * FROM answer
-                    WHERE question_id = %(id)s
+                    SELECT * FROM answer 
+                    JOIN user_info on answer.userid = user_info.user_id 
+                    WHERE answer.question_id = %(id)s
                      ORDER BY submission_time""",
                    {'id': id})
     answers = cursor.fetchall()
@@ -235,14 +236,18 @@ def update_comment(cursor, comment):
 
 @connection.connection_handler
 def get_question_comments(cursor, id):
-    cursor.execute("""SELECT * FROM comment WHERE question_id = %(id)s""", {'id': id})
+    cursor.execute("""SELECT * FROM comment 
+                    JOIN user_info on comment.userid = user_info.user_id 
+                    WHERE comment.question_id = %(id)s""", {'id': id})
     comments = cursor.fetchall()
     return comments
 
 
 @connection.connection_handler
 def get_answer_comments(cursor):
-    cursor.execute("""SELECT * FROM comment WHERE answer_id=answer_id""", {'id': id})
+    cursor.execute("""SELECT * FROM comment 
+                    JOIN user_info on comment.userid = user_info.user_id
+                    WHERE answer_id=answer_id""", {'id': id})
     comments = cursor.fetchall()
     return comments
 
@@ -516,3 +521,12 @@ def list_of_users(cursor):
     cursor.execute("""SELECT username,email,creation_date FROM user_info ;""")
     users = cursor.fetchall()
     return users
+
+
+@connection.connection_handler
+def get_username_by_question_id(cursor, question_id):
+    cursor.execute("""SELECT username FROM user_info 
+                    INNER JOIN question on question.userid = user_info.user_id 
+                    WHERE question.id = %(id)s""", {'id': question_id})
+    user = cursor.fetchone()
+    return user['username']

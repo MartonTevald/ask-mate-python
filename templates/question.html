@@ -17,8 +17,8 @@
             <th id="head_Columns">Title</th>
             <th id="head_Columns">Message</th>
             <th id="head_Columns">Image</th>
-            <th id="head_Columns"></th>
-            <th id="head_Columns"></th>
+            <th id="head_Columns">Author:</th>
+            <th id="head_Columns">{{ q_author }}</th>
         </tr>
         <tr>
             <td>{{ question_row.id }}</td>
@@ -86,7 +86,7 @@
                 </td>
             </tr>
             <tr>
-            <td id="comment_info">{{ comment.submission_time }}
+            <td id="comment_info">by: {{ comment.username }} on: {{ comment.submission_time }}
                 <input type="button" id="button" onclick="window.location='/question-comment/{{ comment.id }}/edit'"
                        value="Edit Q Comment">
                 <input type="button" id="button" name="delete" value="Delete Q Comment"
