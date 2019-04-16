@@ -134,6 +134,7 @@ def edit_answer(answer_id):
 
 @app.route('/question/<question_id>/delete', methods=['GET', 'POST'])
 def delete_rows(question_id):
+    username = session['username']
     data_handler.get_all_comments_for_answer(question_id)
     data_handler.del_question_row(question_id)
     return redirect('/')
