@@ -4144,7 +4144,7 @@ input[type="button"].btn-block {
   display: block;
 }
 
-.navbar {
+.main_header {
   position: relative;
   display: -ms-flexbox;
   display: flex;
@@ -4157,8 +4157,8 @@ input[type="button"].btn-block {
   padding: 0.5rem 1rem;
 }
 
-.navbar > .container,
-.navbar > .container-fluid {
+.main_header > .container,
+.main_header > .container-fluid {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
@@ -10004,7 +10004,7 @@ a.text-dark:hover, a.text-dark:focus {
   .container {
     min-width: 992px !important;
   }
-  .navbar {
+  .main_header {
     display: none;
   }
   .badge {
