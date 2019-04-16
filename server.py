@@ -385,12 +385,13 @@ def logout():
 def user_page(user_id=None):
     username = session['username']
     user = data_handler.get_user_id_by_username(username)
+    user_page_name = data_handler.get_username_by_user_id(user_id)
     questions = data_handler.user_questions(user_id)
     answers = data_handler.user_answers(user_id)
     comments = data_handler.user_comments(user_id)
     return render_template('user-page.html', questions=questions,
                            answers=answers, comments=comments,
-                           username=username, user=user)
+                           username=username, user=user, title=user_page_name)
 
 
 @app.route('/list-users', methods=['GET', 'POST'])

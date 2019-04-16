@@ -484,6 +484,15 @@ def get_user_id_by_username(cursor, username):
 
 
 @connection.connection_handler
+def get_username_by_user_id(cursor, user_id):
+    cursor.execute(""" SELECT username FROM user_info
+                        WHERE  user_id = %(user_id)s
+                        """, {'user_id': user_id})
+    name = cursor.fetchone()
+    return name
+
+
+@connection.connection_handler
 def user_questions(cursor, user_id):
     cursor.execute("""
                     SELECT  * FROM question
@@ -518,7 +527,7 @@ def user_comments(cursor, user_id):
 
 @connection.connection_handler
 def list_of_users(cursor):
-    cursor.execute("""SELECT username,email,creation_date FROM user_info ;""")
+    cursor.execute("""SELECT user_id,username,email,creation_date FROM user_info ;""")
     users = cursor.fetchall()
     return users
 
@@ -538,8 +547,8 @@ def check_user_id_authentication_for_question(cursor, username, question_id):
                     SELECT user_info.user_id FROM user_info
                     INNER JOIN question  on user_info.user_id = question.userid
                     WHERE question.id = %(question_id)s""",
-                   {'username': username,'question_id':question_id})
-                
+                   {'username': username, 'question_id': question_id})
+
     check = list(cursor)
     return check[0] == check[1]
 
