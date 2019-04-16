@@ -1,6 +1,9 @@
 body {
-    background: -webkit-repeating-linear-gradient(-8.130102354155966deg, rgba(239, 239, 237, 1) 0, rgba(239, 239, 237, 1) -106%, rgba(255, 255, 255, 1) 100%);
 
+    background-image: linear-gradient(rgb(80%, 80%, 80%), rgb(40%, 40%, 40%));
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
 }
 
 
@@ -8,10 +11,15 @@ table {
     /*border-collapse: collapse;*/
     border: 20px solid #ddd;
     border-radius: 20px;
+
     text-align: center;
     width: 70%;
     align-items: center;
+    box-shadow: 10px 10px 5px rgb(20%, 20%,20%);
 }
+
+
+
 
 th, td {
     padding: 1px;
@@ -179,18 +187,33 @@ textarea {
     grid-template-columns: auto auto;
 }
 
+
 .main_header {
-
-    margin: 0px;
-    background-image: linear-gradient(rgb(100%, 70%, 70%), rgb(60%, 40%, 40%));
-    padding-bottom: 30px;
+    overflow: hidden;
+    background-color: #333;
+    position: fixed; /* Set the main_header to fixed position */
+    top: 0; /* Position the main_header at the top of the page */
+    width: 100%; /* Full width */
 }
 
-.background {
-    background-image: linear-gradient(rgb(70%, 70%, 100%), rgb(40%, 40%, 60%));
-    height: 100%;
+/* Links inside the main_header */
+.main_header a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
 }
 
-body, html {
+/* Change background on mouse-over */
+.main_header a:hover {
+    background: #ddd;
+    color: black;
+}
+
+
+.content {
+    padding-top: 100px;
     height: 100%;
 }
