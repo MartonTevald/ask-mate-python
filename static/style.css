@@ -269,9 +269,11 @@ textarea {
 
 #session.session{
     color: white;
+    pointer-events: none
 }
 #session.no_session{
     color: red;
+    pointer-events: none;
 }
 /* Links inside the main_header */
 .main_header a {
@@ -281,6 +283,7 @@ textarea {
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
+    width: auto;
 }
 
 /* Change background on mouse-over */

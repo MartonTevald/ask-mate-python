@@ -42,23 +42,23 @@
             <td><a href="/question/{{ question_row.id }}/new-comment">
                 <button type="submit">Add Comment</button>
             </a>
+                {% if check_edit_question %}
+                    <p>
+                        <a href="/question/{{ question_row.id }}/edit">
+                            <button type="submit">Edit Question</button>
+                        </a>
+                    </p
+                    <p>
+                        <a href="/question/{{ question_row.id }}/delete"
+                           onclick="return confirm('Are you sure you want to Remove?');">
+                            <button type="submit">Delete Question</button>
+                        </a>
+                    </p>
+                {% endif %}
                 <p>
-                    <a href="/question/{{ question_row.id }}/edit">
-                        <button type="submit">Edit Question</button>
-                    </a>
+                    <button id="hide_question_comments">Show/Hide Comments(Q)</button>
                 </p>
-
                 <p>
-                    <a href="/question/{{ question_row.id }}/delete"
-                       onclick="return confirm('Are you sure you want to Remove?');">
-                        <button type="submit">Delete Question</button>
-                    </a>
-                </p>
-                <button id="hide_question_comments">Show/Hide Comments(Q)</button>
-
-
-                <p>
-
                     <a href="/question/{{ question_row.id }}/new-tag">
                         <button type="submit">Add tag</button>
                     </a>
@@ -76,7 +76,7 @@
             {% endfor %}
         </tr>
     </table>
-    <table  class="question_comments">
+    <table class="question_comments">
         <td>Comments:
         </td>
         {% for comment in question_comments %}
