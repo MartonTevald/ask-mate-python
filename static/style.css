@@ -272,10 +272,15 @@ textarea {
 }
 
 .grid_container {
+
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto 1600px;
 }
 
+.answer_status{
+    width: 100px;
+    height: 100px;
+}
 
 .main_header {
     overflow: hidden;

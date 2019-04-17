@@ -36,26 +36,32 @@
                     </a>
                 </p>
                 {% if answer.userid == user %}
-                <p><a href='/answer/{{ answer.id }}/delete' method="post"
-                      onclick="return confirm('Are you sure you want to Remove?');">
-                    <button type="submit">Delete Answer</button>
-                </a></p>
-                <p><input type="button" onclick="window.location='/answer/{{ answer.id }}/edit'" id="button"
-                          value="Edit Answer"></p>
+                    <p><a href='/answer/{{ answer.id }}/delete' method="post"
+                          onclick="return confirm('Are you sure you want to Remove?');">
+                        <button type="submit">Delete Answer</button>
+                    </a></p>
+                    <p><input type="button" onclick="window.location='/answer/{{ answer.id }}/edit'" id="button"
+                              value="Edit Answer"></p>
 
                 {% endif %}
             </td>
-                <td>
-                    <p><button class="show_answer_comments">Show/Hide ,A' Comment</button></p>
-                    {% if answer.answer_status == true %}
-                    <p><button id="answer_status">Accepted</button></p>
-                    {% else %}
-                        <p><button >Unaccepted</button></p>
-                    {% endif %}
-                </td>
+            <td>
+                <p>
+                    <button class="show_answer_comments">Show/Hide ,A' Comment</button>
+                </p>
+                {% if answer.answer_status == true %}
+                    <label for="answer_status"></label>
+                    <img class="answer_status" alt="accepted" src="/static/photos/spider_appr.png">
+                    {#                    <p><button id="answer_status">Accepted</button></p>#}
+                {% else %}
+                    <p>
+                        <button>Unaccepted</button>
+                    </p>
+                {% endif %}
+            </td>
         </tr>
     </table>
-    <table class = "answer_comments">
+    <table class="answer_comments">
         {% for comment in answer_comments %}
             <tr>
                 {% if comment.answer_id == answer.id %}
@@ -64,13 +70,13 @@
                     <td id="comment_info">by: {{ comment.username }} on: {{ comment.submission_time }}
                     </td>
                     <td>
-                    {%  if comment.userid == user %}
-                    <p><input type="button" onclick="window.location='/answer-comment/{{ comment.id }}/edit'"
-                              value="Edit A Comment" id="button"></p>
-                    <p><input type="button" name="delete" value="Delete A Comment" id="button"
-                              onClick="confirmDelete('/answer-comment/{{ comment.id }}/delete')"></p>
-                    </td>
-                    {% endif %}
+                        {% if comment.userid == user %}
+                            <p><input type="button" onclick="window.location='/answer-comment/{{ comment.id }}/edit'"
+                                      value="Edit A Comment" id="button"></p>
+                            <p><input type="button" name="delete" value="Delete A Comment" id="button"
+                                      onClick="confirmDelete('/answer-comment/{{ comment.id }}/delete')"></p>
+                            </td>
+                        {% endif %}
                     {% if comment.edited_count %}
                         <td id="comment_info">Edited: {{ comment.edited_count }} time(s). Last edit was
                             at: {{ time }}</td>
