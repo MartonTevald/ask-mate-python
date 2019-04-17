@@ -40,7 +40,7 @@ table.question_comments {
     align-items: center;
     box-shadow: 0px 0px 0px;
     display: none;
-    margin:5px
+    margin: 5px
 
 }
 
@@ -206,10 +206,21 @@ textarea {
     border: 3px solid #000000;
     transition: all 0.8s ease;
 }
-.table.img{
+
+.table_image {
     /*width: max-content;*/
-    width: 50px;
-    height: 50px;
+    width: 90px;
+    height: 90px;
+}
+
+.img {
+    width: 90px;
+    height: 90px;
+}
+
+.table.table_image {
+    width: 90px;
+    height: 90px;
 }
 
 ::-webkit-input-placeholder {
@@ -276,14 +287,16 @@ textarea {
 
 }
 
-#session.session{
+#session.session {
     color: white;
     pointer-events: none
 }
-#session.no_session{
+
+#session.no_session {
     color: red;
     pointer-events: none;
 }
+
 /* Links inside the main_header */
 .main_header a {
     float: left;
@@ -342,7 +355,7 @@ th, td {
 
 }
 
-button.add_question{
+button.add_question {
     postion: fixed;
     font-size: 20px;
 }
@@ -359,7 +372,7 @@ sort {
 
 }
 
-list{
+list {
     border: 20px solid #ddd;
     border-radius: 20px;
     margin: 20px;

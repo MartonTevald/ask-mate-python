@@ -26,7 +26,7 @@
             <td>{{ question_row.view_number }}</td>
             <td id="question_message">{{ question_row.title }}</td>
             <td id="question_message">{{ question_row.message }}</td>
-            <td><img src="{{ question_row.image }}" alt="no picture" width="150" height="150"></td>
+            <td><img src="{{ question_row.image }}" alt="no picture" class="table_image"></td>
             <td><p>
                 <a type="button" onclick="window.location='/question/{{ question_row.id }}/vote-up'"><img
                         class="vote_question" border="0" alt="up"

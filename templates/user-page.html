@@ -98,7 +98,7 @@
                     <td>{{ answer.submission_time }}</td>
                     <td>{{ answer.vote_number }}</td>
                     <td id="question_message">{{ answer.message }}</td>
-                    <td><img src="{{ answer.image }}" alt="no picture" width="150" height="150"></td>
+                    <td><img class="table_image" src="{{ answer.image }}" alt="no picture" ></td>
                     <td><button><a href="/accept-answer/{{ answer.id }}">Accept</a></button></td>
                 </tr>
             {% endfor %}
