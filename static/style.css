@@ -272,8 +272,9 @@ textarea {
 }
 
 .grid_container {
-    display: grid ;
-    grid-template-columns: auto auto;
+
+    display: grid;
+    grid-template-columns: auto 1600px;
 }
 
 .answer_status{
