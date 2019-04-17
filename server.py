@@ -15,9 +15,9 @@ def list_of_questions():
 
         if request.method == 'POST':
             if 'show_all' == request.form.get('show'):
-                return render_template('list.html', questions=questions)
+                return render_template('list.html', questions=questions,username=username)
             elif 'show_latest' == request.form.get('show'):
-                return render_template('list.html', questions=last_questions)
+                return render_template('list.html', questions=last_questions,username=username)
         return render_template("list.html", questions=last_questions, username=username, user=user)
     else:
         return render_template("list.html", questions=last_questions, username="")
