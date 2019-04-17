@@ -199,7 +199,7 @@ textarea {
     outline: none;
     font-size: 18px;
     border-radius: 50px;
-    color: #dddddd;
+    color: #000000;
     border: 3px solid #000000;
     transition: all 0.8s ease;
 }
@@ -295,10 +295,10 @@ textarea {
 }
 
 
-.fa-search {
-    position: fixed;
-    z-index: 12;
-}
+/*.fa-search {*/
+/*    position: fixed;*/
+/*    z-index: 12;*/
+/*}*/
 
 .fa fa-search {
     position: fixed;
