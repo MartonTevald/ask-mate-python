@@ -20,7 +20,7 @@
     <a href="/">T i d d e R</a>
     {% if username %}
         <a class="nav-link" href="/logout">Logout</a>
-        <a class="nav-link "  href="/user/{{ user }}">User Page</a>
+        <a class="nav-link " href="/user/{{ user }}">User Page</a>
         <a class="nav-link" href="/list-users">User List</a>
     {% else %}
         <a class="nav-link" href="/login">Login</a>
@@ -31,17 +31,16 @@
     <a href="/add-question">
         <button type="submit">New Question</button>
     </a>
-
-    <form action='/search' method="GET">
-    <div class="{{ "session" if username }} {{ "no_session" if username is sameas false }}"
-         id="session">
-        {% if username %}
-            <p>"You're logged in as {{ username }} ."</p>
-        {% else %}
-            <p>"You're not logged in. "</p>
-        {% endif %}
-    </div>
-    </form>
+    <a href="#">
+        <div class="{{ "session" if username }} {{ "no_session" if username is sameas false }}"
+             id="session">
+            {% if username %}
+                <p>"You're logged in as {{ username }} ."</p>
+            {% else %}
+                <p>"You're not logged in. "</p>
+            {% endif %}
+        </div>
+    </a>
     <form action='/search' method="GET">
 
         <input type="text" placeholder="Search" class="input" name="search_phrase">
