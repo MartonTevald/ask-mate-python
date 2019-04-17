@@ -26,7 +26,7 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    $("#show_answer_comments").click(function () {
+    $(".show_answer_comments").click(function () {
         $(".answer_comments").toggle(1000)
     });
 });
