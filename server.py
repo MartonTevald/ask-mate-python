@@ -15,9 +15,9 @@ def list_of_questions():
 
         if request.method == 'POST':
             if 'show_all' == request.form.get('show'):
-                return render_template('list.html', questions=questions, username=username)
+                return render_template('list.html', questions=questions, username=username, user=user)
             elif 'show_latest' == request.form.get('show'):
-                return render_template('list.html', questions=last_questions, username=username)
+                return render_template('list.html', questions=last_questions, username=username, user=user)
         return render_template("list.html", questions=last_questions, username=username, user=user)
     else:
         return render_template("list.html", questions=last_questions, username="")
@@ -197,13 +197,14 @@ def question_answer_down(answer_id):
 def sort_questions():
     username = session['username']
     if request.method == 'POST':
+        user = data_handler.get_user_id_by_username(username)
         choices = request.form.get('sort')
         if 'asc' in choices:
             sorted_data = data_handler.ascending_order(choices)
-            return render_template('list.html', questions=sorted_data, username=username)
+            return render_template('list.html', questions=sorted_data, username=username, user=user)
         if 'desc' in choices:
             sorted_data = data_handler.descending_order(choices)
-            return render_template('list.html', questions=sorted_data, username=username)
+            return render_template('list.html', questions=sorted_data, username=username, user=user)
 
 
 @app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])
@@ -394,25 +395,31 @@ def user_page(user_id=None):
     answers = data_handler.user_answers(user_id)
     comments = data_handler.user_comments(user_id)
     unaccepted_answers = data_handler.unaccepted_answers(user_id)
+    print(unaccepted_answers)
+    question_ids = data_handler.question_id_by_comment_ids_for_user_page(user_id)
+    print(question_ids)
     return render_template('user-page.html', questions=questions,
                            answers=answers, comments=comments,
-                           username=username, user=user, title=user_page_name, unaccepted=unaccepted_answers)
+                           username=username, user=user, title=user_page_name,
+                           unaccepted=unaccepted_answers, question_ids_to_comments=question_ids)
 
 
 @app.route('/accept-answer/<answer_id>', methods=['GET', 'POST'])
 def accept_answer(answer_id):
     username = session['username']
+    question_id = data_handler.get_question_id_by_answer_id(answer_id)
     user = data_handler.get_user_id_by_username(username)
     data_handler.accept_answer(answer_id)
-    return redirect(url_for('user_page', user_id=user))
+    return redirect(url_for('list_answers', id=question_id, user=user, username=username))
 
 
 @app.route('/deny-answer/<answer_id>', methods=['GET', 'POST'])
 def deny_answer(answer_id):
     username = session['username']
+    question_id = data_handler.get_question_id_by_answer_id(answer_id)
     user = data_handler.get_user_id_by_username(username)
     data_handler.deny_answer(answer_id)
-    return redirect(url_for('user_page', user_id=user))
+    return redirect(url_for('list_answers', id=question_id, user=user, username=username))
 
 
 @app.route('/list-users', methods=['GET', 'POST'])

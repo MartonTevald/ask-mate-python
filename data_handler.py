@@ -605,9 +605,21 @@ def unaccepted_answers(cursor, user_id):
                     FROM answer
                     LEFT JOIN question
                     ON answer.question_id = question.id
-                    WHERE answer.answer_status = FALSE AND answer.userid = %(user_id)s
+                    WHERE answer.answer_status = FALSE AND question.userid = %(user_id)s
                                         
                     """,
                    {'user_id': user_id})
     answers = cursor.fetchall()
     return answers
+
+
+@connection.connection_handler
+def question_id_by_comment_ids_for_user_page(cursor, user_id):
+    cursor.execute("""
+            SELECT question.id FROM question
+            LEFT JOIN comment
+            ON question.id = comment.question_id
+            WHERE comment.userid = %(user_id)s
+    """, {'user_id': user_id})
+    question_ids = cursor.fetchall()
+    return question_ids

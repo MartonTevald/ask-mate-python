@@ -15,7 +15,7 @@
             <td>{{ answer.submission_time }}</td>
             <td>{{ answer.vote_number }}</td>
             <td id="answer_message">{{ answer.message }}</td>
-            <td><img src="{{ answer.image }}" alt="Image" width="150" height="150"></td>
+            <td class="zoom"><img src="{{ answer.image }}" alt="image" width="280px" height="200px"></td>
             <td>
                 <p>
                     <label for="vote-up"></label>
@@ -49,18 +49,23 @@
                 <p>
                     <button class="show_answer_comments">Show/Hide ,A' Comment</button>
                 </p>
+
                 {% if answer.answer_status == true %}
                     <label for="answer_status"></label>
-                    <a href="/deny-answer/{{ answer.id }}">
-                    <img class="answer_status" alt="accepted" src="/static/photos/spider_appr.png">
-                    </a>
+                    {% if question_row.userid == user %}
+                        <a href="/deny-answer/{{ answer.id }}">
+                    {% endif %}
+                <img class="answer_status" alt="accepted" src="/static/photos/spider_appr.png">
+                </a>
                 {% else %}
-                    <p>
-{#                    <label for="answer_status"></label>#}
-{#                    <a href="/accept-answer/{{ answer.id }}">#}
-{#                        <img id="answer_status" alt="accepted" src="/static/photos/notapproved.png">#}
-{#                    </a>#}
-                    </p>
+                    {% if question_row.userid == user %}
+                        <a href="/accept-answer/{{ answer.id }}">
+                    {% endif %}
+                <p>
+                    <button>Approve ! Now !</button>
+                </p>
+                {#                <img id="answer_status" alt="accepted" src="/static/photos/notapproved.png">#}
+                </a>
                 {% endif %}
             </td>
         </tr>
