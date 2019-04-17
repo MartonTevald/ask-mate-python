@@ -17,23 +17,23 @@
     <a href="/">
         <img border="0" alt="teddir" src="/static/on_off_logo.png" width="80 " height="50">
     </a>
-    <a href="/">T i d d e R</a>
+    <a href="/"><h3>T i d d e R</h3></a>
     {% if username %}
-        <a " href="/logout">Logout</a>
-        <a  href="/user/{{ user }}">User Page</a>
-        <a  href="/list-users">User List</a>
+        <a href="/logout"><h3>Logout</h3></a>
+        <a  href="/user/{{ user }}"><h3>User Page</h3></a>
+        <a  href="/list-users"><h3>User List</h3></a>
     {% else %}
-        <a  href="/login">Login</a>
-        <a  href="/registration">Register</a>
+        <a  href="/login"><h3>Login</h3></a>
+        <a  href="/registration"><h3>Register</h3></a>
 
     {% endif %}
     <a>
         <div class="{{ "session" if username }} {{ "no_session" if not username }}"
              id="session">
             {% if username %}
-                <p>You're logged in as {{ username }} .</p>
+                <h4>You're logged in as {{ username }} .</h4>
             {% else %}
-                <p>You're not logged in. </p>
+                <h4>You're not logged in. </h4>
             {% endif %}
         </div>
     </a>
