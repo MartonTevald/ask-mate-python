@@ -32,7 +32,7 @@
         <button type="submit">New Question</button>
     </a>
     <a href="#">
-        <div class="{{ "session" if username }} {{ "no_session" if username is sameas false }}"
+        <div class="{{ "session" if username }} {{ "no_session" }}"
              id="session">
             {% if username %}
                 <p>"You're logged in as {{ username }} ."</p>
