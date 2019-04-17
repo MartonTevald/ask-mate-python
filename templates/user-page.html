@@ -4,7 +4,7 @@
 {% endblock %}
 {% block content %}
 
-    <h1>{{ title.username}} Site</h1>
+    <h1>{{ title.username }} Site</h1>
 
     <h2>Questions</h2>
     <table class="question_table">
@@ -33,7 +33,7 @@
     </table>
 
     <h2>Answers</h2>
-    <table class="answer_table">
+    <table >
         <tr>
             <th id="head_Columns">Question ID</th>
             <th id="head_Columns">Time</th>
@@ -74,8 +74,30 @@
                 <td id="question_message">{{ comment.message }}</td>
                 <td>{{ comment.edited_count }}</td>
                 <td><a>Checkout</a></td>
-                        </tr>
+            </tr>
         {% endfor %}
     </table>
 
+        <h2>UnacceptedAnswers</h2>
+    <table>
+        <tr>
+            <th id="head_Columns">Question ID</th>
+            <th id="head_Columns">Time</th>
+            <th id="head_Columns">Vote</th>
+            <th id="head_Columns">Message</th>
+            <th id="head_Columns">Image</th>
+            <th id="head_Columns">Accept</th>
+        </tr>
+        {% for answer in unaccepted %}
+
+            <tr>
+                <td>{{ answer.question_id }}</td>
+                <td>{{ answer.submission_time }}</td>
+                <td>{{ answer.vote_number }}</td>
+                <td id="question_message">{{ answer.message }}</td>
+                <td><img src="{{ answer.image }}" alt="no picture" width="150" height="150"></td>
+                <td><button><a href="/accept-answer/{{ answer.id }}">Accept</a></button></td>
+            </tr>
+        {% endfor %}
+    </table>
 {% endblock %}

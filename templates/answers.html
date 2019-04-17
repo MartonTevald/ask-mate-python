@@ -33,7 +33,8 @@
                 <p>
                     <a href="/answer/{{ answer.id }}/new-comment">
                         <button type="submit">Add Comment</button>
-                    </a></p>
+                    </a>
+                </p>
                 <p><a href='/answer/{{ answer.id }}/delete' method="post"
                       onclick="return confirm('Are you sure you want to Remove?');">
                     <button type="submit">Delete Answer</button>
@@ -42,8 +43,12 @@
                           value="Edit Answer"></p>
             </td>
                 <td>
-                    <button id="show_answer_comments" xmlns="http://www.w3.org/1999/html">Show/Hide ,A' Comment</button>
-
+                    <p><button id="show_answer_comments" xmlns="http://www.w3.org/1999/html">Show/Hide ,A' Comment</button></p>
+                    {% if answer.answer_status == true %}
+                    <p><button id="answer_status">Accepted</button></p>
+                    {% else %}
+                        <p><button >Unaccepted</button></p>
+                    {% endif %}
                 </td>
         </tr>
     </table>

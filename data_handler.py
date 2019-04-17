@@ -507,7 +507,7 @@ def user_questions(cursor, user_id):
 def user_answers(cursor, user_id):
     cursor.execute("""
                     SELECT  * FROM answer
-                    INNER JOIN user_info on answer.userid = user_info.user_id
+                    LEFT JOIN user_info on answer.userid = user_info.user_id
                     WHERE answer.userid = %(user_id)s AND user_info.user_id = %(user_id)s
     """, {'user_id': user_id})
     answers = cursor.fetchall()
@@ -541,6 +541,7 @@ def get_username_by_question_id(cursor, question_id):
     return user['username']
 
 
+@connection.connection_handler
 def check_user_id_authentication_for_question(cursor, username, question_id):
     cursor.execute("""SELECT  user_id FROM user_info WHERE username = %(username)s
                     UNION ALL
@@ -577,3 +578,27 @@ def check_user_id_authentication_for_comment(cursor, username, comment_id):
 
     check = list(cursor)
     return check[0] == check[1]
+
+
+@connection.connection_handler
+def accept_answer(cursor, answer_id):
+    cursor.execute("""
+                    UPDATE answer
+                    SET answer_status= TRUE
+                    WHERE id = %(answer_id)s""",
+                   {'answer_id': answer_id})
+
+
+@connection.connection_handler
+def unaccepted_answers(cursor, user_id):
+    cursor.execute("""
+                    SELECT answer.id,answer.submission_time,answer.vote_number,answer.question_id,answer.message
+                    FROM answer
+                    LEFT JOIN question
+                    ON answer.question_id = question.id
+                    WHERE answer.answer_status = FALSE 
+                                        
+                    """,
+                   {'user_id': user_id})
+    answers = cursor.fetchall()
+    return answers

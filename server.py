@@ -389,9 +389,18 @@ def user_page(user_id=None):
     questions = data_handler.user_questions(user_id)
     answers = data_handler.user_answers(user_id)
     comments = data_handler.user_comments(user_id)
+    unaccepted_answers = data_handler.unaccepted_answers(user_id)
     return render_template('user-page.html', questions=questions,
                            answers=answers, comments=comments,
-                           username=username, user=user, title=user_page_name)
+                           username=username, user=user, title=user_page_name, unaccepted=unaccepted_answers)
+
+
+@app.route('/accept-answer/<answer_id>', methods=['GET', 'POST'])
+def accept_answer(answer_id):
+    username = session['username']
+    user = data_handler.get_user_id_by_username(username)
+    data_handler.accept_answer(answer_id)
+    return redirect(url_for('user_page', user_id=user))
 
 
 @app.route('/list-users', methods=['GET', 'POST'])
