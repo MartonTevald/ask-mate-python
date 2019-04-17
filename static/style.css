@@ -206,6 +206,9 @@ textarea {
     border: 3px solid #000000;
     transition: all 0.8s ease;
 }
+.img{
+    width: max-content;
+}
 
 ::-webkit-input-placeholder {
     /* Chrome/Opera/Safari */
