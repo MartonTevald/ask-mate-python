@@ -15,9 +15,9 @@ def list_of_questions():
 
         if request.method == 'POST':
             if 'show_all' == request.form.get('show'):
-                return render_template('list.html', questions=questions,username=username)
+                return render_template('list.html', questions=questions, username=username)
             elif 'show_latest' == request.form.get('show'):
-                return render_template('list.html', questions=last_questions,username=username)
+                return render_template('list.html', questions=last_questions, username=username)
         return render_template("list.html", questions=last_questions, username=username, user=user)
     else:
         return render_template("list.html", questions=last_questions, username="")
@@ -25,28 +25,31 @@ def list_of_questions():
 
 @app.route('/add-question', methods=['GET', 'POST'])
 def add_question():
-    username = session['username']
-    if request.method == 'GET':
-        empty_questions = {}
-        return render_template('add-question.html',
-                               question=empty_questions,
-                               form_url=url_for('add_question'),
-                               page_title='Add New Question',
-                               button_title='Submit',
-                               button_page='Return',
-                               username=username)
+    if 'username' in session:
+        username = session['username']
+        if request.method == 'GET':
+            empty_questions = {}
+            return render_template('add-question.html',
+                                   question=empty_questions,
+                                   form_url=url_for('add_question'),
+                                   page_title='Add New Question',
+                                   button_title='Submit',
+                                   button_page='Return',
+                                   username=username)
 
-    if request.method == 'POST':
-        question = {'submission_time': data_handler.date_time(),
-                    'view_number': request.form.get('view_number'),
-                    'vote_number': request.form.get('vote_number'),
-                    'title': request.form.get('title'),
-                    'message': request.form.get('message'),
-                    'image': request.form.get('image'),
-                    'userid': data_handler.get_user_id_by_username(username),
-                    }
-        data_handler.add_new_question(question)
-        return redirect(url_for('list_of_questions', username=username))
+        if request.method == 'POST':
+            question = {'submission_time': data_handler.date_time(),
+                        'view_number': request.form.get('view_number'),
+                        'vote_number': request.form.get('vote_number'),
+                        'title': request.form.get('title'),
+                        'message': request.form.get('message'),
+                        'image': request.form.get('image'),
+                        'userid': data_handler.get_user_id_by_username(username),
+                        }
+            data_handler.add_new_question(question)
+            return redirect(url_for('list_of_questions', username=username))
+    else:
+        return redirect(url_for('user_login'))
 
 
 @app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
@@ -401,6 +404,14 @@ def accept_answer(answer_id):
     username = session['username']
     user = data_handler.get_user_id_by_username(username)
     data_handler.accept_answer(answer_id)
+    return redirect(url_for('user_page', user_id=user))
+
+
+@app.route('/deny-answer/<answer_id>', methods=['GET', 'POST'])
+def deny_answer(answer_id):
+    username = session['username']
+    user = data_handler.get_user_id_by_username(username)
+    data_handler.deny_answer(answer_id)
     return redirect(url_for('user_page', user_id=user))
 
 

@@ -4,8 +4,6 @@ import connection
 from datetime import datetime
 
 
-
-
 @connection.connection_handler
 def get_latest_five_questions(cursor):
     cursor.execute("""
@@ -587,6 +585,15 @@ def accept_answer(cursor, answer_id):
     cursor.execute("""
                     UPDATE answer
                     SET answer_status= TRUE
+                    WHERE id = %(answer_id)s""",
+                   {'answer_id': answer_id})
+
+
+@connection.connection_handler
+def deny_answer(cursor, answer_id):
+    cursor.execute("""
+                    UPDATE answer
+                    SET answer_status= FALSE
                     WHERE id = %(answer_id)s""",
                    {'answer_id': answer_id})
 

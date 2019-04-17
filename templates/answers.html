@@ -51,11 +51,15 @@
                 </p>
                 {% if answer.answer_status == true %}
                     <label for="answer_status"></label>
+                    <a href="/deny-answer/{{ answer.id }}">
                     <img class="answer_status" alt="accepted" src="/static/photos/spider_appr.png">
-                    {#                    <p><button id="answer_status">Accepted</button></p>#}
+                    </a>
                 {% else %}
                     <p>
-                        <button>Unaccepted</button>
+{#                    <label for="answer_status"></label>#}
+{#                    <a href="/accept-answer/{{ answer.id }}">#}
+{#                        <img id="answer_status" alt="accepted" src="/static/photos/notapproved.png">#}
+{#                    </a>#}
                     </p>
                 {% endif %}
             </td>

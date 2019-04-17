@@ -277,7 +277,7 @@ textarea {
     grid-template-columns: auto 1600px;
 }
 
-.answer_status{
+.answer_status {
     width: 100px;
     height: 100px;
 }
@@ -290,6 +290,11 @@ textarea {
     width: 100%; /* Full width */
     z-index: 10;
 
+}
+
+#answer_status {
+    width: 170px;
+    height: 100px;
 }
 
 #session.session {
