@@ -4,6 +4,8 @@ import connection
 from datetime import datetime
 
 
+
+
 @connection.connection_handler
 def get_latest_five_questions(cursor):
     cursor.execute("""

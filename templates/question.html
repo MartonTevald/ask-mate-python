@@ -6,7 +6,7 @@
 
 {% block content %}
 
-    <a href="/"><img id="logo" border="0" alt="T i d d e r" src="/static/on_off_logo.png" width="150" height="80"></a>
+
 
     <table class="question_table">
         <tr>
@@ -39,9 +39,8 @@
                             src="/static/photos/vote_down.png"></a>
                 </p>
             </td>
-            <td><a href="/question/{{ question_row.id }}/new-comment">
-                <button type="submit">Add Comment</button>
-            </a>
+            <td>
+
                 <p>
                     <a href="/question/{{ question_row.id }}/edit">
                         <button type="submit">Edit Question</button>
@@ -55,7 +54,10 @@
                     </a>
                 </p>
                 <button id="hide_question_comments">Show/Hide Comments(Q)</button>
-
+                <p><a href="/question/{{ question_row.id }}/new-comment">
+                    <button type="submit">Add Comment</button>
+                </a>
+                </p>
 
                 <p>
 
@@ -76,7 +78,7 @@
             {% endfor %}
         </tr>
     </table>
-    <table  class="question_comments">
+    <table class="question_comments">
         <td>Comments:
         </td>
         {% for comment in question_comments %}
