@@ -605,7 +605,7 @@ def unaccepted_answers(cursor, user_id):
                     FROM answer
                     LEFT JOIN question
                     ON answer.question_id = question.id
-                    WHERE answer.answer_status = FALSE 
+                    WHERE answer.answer_status = FALSE AND answer.userid = %(user_id)s
                                         
                     """,
                    {'user_id': user_id})
