@@ -19,6 +19,32 @@ table.main {
     box-shadow: 10px 10px 5px rgb(20%, 20%, 20%);
 }
 
+table.user_list{
+        /*border-collapse: collapse;*/
+    border: 20px solid #ddd;
+    border-radius: 20px;
+    margin: 20px;
+
+    text-align: center;
+    width: 70%;
+    align-items: center;
+    box-shadow: 10px 10px 5px rgb(20%, 20%, 20%);
+}
+
+table.comment_table{
+        /*border-collapse: collapse;*/
+    border: 20px solid #ddd;
+    border-radius: 20px;
+    margin: 20px;
+
+    text-align: center;
+    width: 70%;
+    align-items: center;
+    box-shadow: 10px 10px 5px rgb(20%, 20%, 20%);
+}
+
+
+
 table.add_answer {
     border: 10px solid;
     border-radius: 20px;
@@ -32,7 +58,7 @@ table.add_answer {
 
 table.question_comments {
     border-collapse: collapse;
-    border: 3px solid black;
+    border: 10px solid black;
     margin: 20px;
     border-radius: 0px;
     text-align: center;
@@ -189,12 +215,13 @@ textarea {
     height: 100px;
     position: fixed;
     z-index: 11;
+    padding: 10px;
 }
 
 .input {
-    position: absolute;
-    top: 20px;
-    right: 50px;
+    position: fixed;
+    top: 8px;
+    right: 45px;
     box-sizing: border-box;
     width: 0px;
     height: 63px;
@@ -245,15 +272,15 @@ textarea {
 
 .btn {
     position: absolute;
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     background: #dddddd;
     border-radius: 50%;
     right: 45px;
-    top: 10px;
+    top: 5px;
     cursor: pointer;
     text-align: center;
-    line-height: 80px;
+    line-height: 60px;
     font-size: 20px;
     color: #000000;
     transition: all 0.8s ease;
@@ -282,7 +309,13 @@ textarea {
     height: 100px;
 }
 
+.session{
+
+
+}
+
 .main_header {
+    left: 0;
     overflow: hidden;
     background-color: #333;
     position: fixed; /* Set the main_header to fixed position */
@@ -342,7 +375,7 @@ textarea {
 /*}*/
 
 .fa fa-search {
-    position: fixed;
+    position: marker;
     z-index: 12;
 }
 
@@ -366,8 +399,12 @@ th, td {
 }
 
 button.add_question {
+    background-color: white;
     postion: fixed;
-    font-size: 20px;
+    font-size: 16px;
+    padding: 5px;
+    border: 6px black;
+    box-shadow: 2px 2px 2px;
 }
 
 sort {

@@ -4,7 +4,7 @@
 {% endblock %}
 {% block content %}
 
-    <h1>{{ title.username }} Site</h1>
+    <h1>User: {{ title.username }}</h1>
 
     <h2>Questions</h2>
     <table class="question_table">
@@ -33,7 +33,7 @@
     </table>
 
     <h2>Answers</h2>
-    <table >
+    <table class = "main" >
         <tr>
             <th id="head_Columns">Question ID</th>
             <th id="head_Columns">Time</th>
@@ -80,7 +80,7 @@
     {% if username == title['username'] %}
         </table>
             <h2>UnacceptedAnswers</h2>
-        <table>
+        <table class = "main">
 
             <tr>
                 <th id="head_Columns">Question ID</th>
