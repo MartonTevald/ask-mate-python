@@ -29,16 +29,17 @@
     {% endif %}
 
 
-    <a href="#">
+
+    <a class="nav-link" href="#">
         <div class="{{ "session" if username }} {{ "no_session" if not username }}"
              id="session">
             {% if username %}
-                <p>"You're logged in as {{ username }} ."</p>
+                <p>You're logged in as {{ username }} .</p>
             {% else %}
-                <p>"You're not logged in. "</p>
+                <p>You're not logged in. </p>
             {% endif %}
         </div>
-    </a>
+    </a >
     <form action='/search' method="GET">
 
         <input type="text" placeholder="Search" class="input" name="search_phrase">

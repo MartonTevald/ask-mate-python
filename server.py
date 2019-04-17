@@ -92,7 +92,7 @@ def list_answers(id=None):
         answer_comments = data_handler.get_answer_comments()
         tags = data_handler.get_all_tag_name_for_question(id)
         q_author = data_handler.get_username_by_question_id(id)
-
+        check_for_valid_question = data_handler.check_user_id_authentication_for_question(username, id)
         if request.method == 'POST':
             answers = {'submission_time': data_handler.date_time(),
                        'vote_number': 0,
@@ -106,7 +106,8 @@ def list_answers(id=None):
         data_handler.question_view_number_counter(id)
         return render_template('question.html', id=id, question_row=question_row, answer_row=answer_row,
                                question_comments=question_comments, answer_comments=answer_comments, time=time,
-                               q_c_time=q_c_time, tags=tags, username=username, user=user, q_author=q_author)
+                               q_c_time=q_c_time, tags=tags, username=username, user=user, q_author=q_author,
+                               check_edit_question=check_for_valid_question)
     else:
         return redirect(url_for('user_login'))
 
@@ -135,7 +136,7 @@ def edit_answer(answer_id):
                                page_title='Update Answer',
                                button_title='Update',
                                button_page='Return ',
-                               username=username
+                               username=username,
                                )
     else:
         return redirect(url_for('list_answers', id=id, username=username))
