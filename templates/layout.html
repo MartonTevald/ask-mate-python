@@ -19,15 +19,15 @@
     </a>
     <a href="/">T i d d e R</a>
     {% if username %}
-        <a class="nav-link" href="/logout">Logout</a>
-        <a class="nav-link " href="/user/{{ user }}">User Page</a>
-        <a class="nav-link" href="/list-users">User List</a>
+        <a " href="/logout">Logout</a>
+        <a  href="/user/{{ user }}">User Page</a>
+        <a  href="/list-users">User List</a>
     {% else %}
-        <a class="nav-link" href="/login">Login</a>
-        <a class="nav-link" href="/registration">Register</a>
+        <a  href="/login">Login</a>
+        <a  href="/registration">Register</a>
 
     {% endif %}
-    <a class="nav-link" >
+    <a>
         <div class="{{ "session" if username }} {{ "no_session" if not username }}"
              id="session">
             {% if username %}
@@ -36,7 +36,7 @@
                 <p>You're not logged in. </p>
             {% endif %}
         </div>
-    </a >
+    </a>
     <form action='/search' method="GET">
 
         <input type="text" placeholder="Search" class="input" name="search_phrase">

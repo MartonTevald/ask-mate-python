@@ -309,7 +309,13 @@ textarea {
     height: 100px;
 }
 
+.session{
+
+
+}
+
 .main_header {
+    left: 0;
     overflow: hidden;
     background-color: #333;
     position: fixed; /* Set the main_header to fixed position */
