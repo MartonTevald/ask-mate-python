@@ -5,55 +5,69 @@
 {% endblock %}
 
 {% block content %}
-<div class="grid_container">
-    <form action="{{ url_for('sort_questions') }}" method="post" id="sort">
-        <SELECT class="form-control" id="sort" name="sort">
-            <OPTION id="sub_asc" name="sub_asc" Value="sub_asc">Date Ascending-Order</OPTION>
-            <OPTION id="sub_desc" name='sub_desc' Value="sub_desc">Date Descending-Order</OPTION>
-            <OPTION id="view_asc" name="view_asc" Value="view_asc">View Ascending-Order</OPTION>
-            <OPTION id="view_desc" name="view_desc" Value="view_desc">View Descending-Order</OPTION>
-            <OPTION id="vote_asc" name="vote_asc" Value="vote_asc">Vote Ascending-Order</OPTION>
-            <OPTION id="vote_desc" name="vote_desc" Value="vote_desc">Vote Descending-Order</OPTION>
-        </SELECT>
-        <button name=submit type="submit" value="submit">Sort</button>
-    </form>
-    <br>
-    <form action="{{ url_for('list_of_questions') }}" method="post" id="show">
-        <select class="form-control" name="show" id="show">
-            <OPTION id="show_all" name="show_all" value="show_all">Show All Questions</OPTION>
-            <OPTION name="show_latest" value="show_latest">Show 5 latest</OPTION>
-        </select>
-        <button name="submit" type="submit" value="submit">Submit</button>
-    </form>
-    <table class="main" align="center">
-        <tr>
-            <th id="head_Columns">Id</th>
-            <th id="head_Columns">Submission time</th>
-            <th id="head_Columns">View number</th>
-            <th id="head_Columns">Vote number</th>
-            <th id="head_Columns">Title</th>
-            <th id="head_Columns">Message</th>
-            <th id="head_Columns">Image</th>
-
-        </tr>
-        {% for question in questions %}
+    <p>
+        <a class="add_question" href="/add-question">
+            <button type="submit">New Question</button>
+        </a>
+    </p>
+    <div class="grid_container">
+        <table class="main">
             <tr>
-                <td>{{ question.id }}</td>
-                <td>{{ question.submission_time }}</td>
-                <td>{{ question.view_number }}</td>
-                <td>{{ question.vote_number }}</td>
-                <td id="question_title"><a href="/question/{{ question['id'] }} "
-                                           methods="get">{{ question.title }}</a>
+                <td>
+                    <form action="{{ url_for('sort_questions') }}" method="post" id="sort">
+                        <SELECT class="form-control" id="sort" name="sort">
+                            <OPTION id="sub_asc" name="sub_asc" Value="sub_asc">Date Ascending-Order</OPTION>
+                            <OPTION id="sub_desc" name='sub_desc' Value="sub_desc">Date Descending-Order</OPTION>
+                            <OPTION id="view_asc" name="view_asc" Value="view_asc">View Ascending-Order</OPTION>
+                            <OPTION id="view_desc" name="view_desc" Value="view_desc">View Descending-Order</OPTION>
+                            <OPTION id="vote_asc" name="vote_asc" Value="vote_asc">Vote Ascending-Order</OPTION>
+                            <OPTION id="vote_desc" name="vote_desc" Value="vote_desc">Vote Descending-Order</OPTION>
+                        </SELECT>
+                        <button name=submit type="submit" value="submit">Sort</button>
+                    </form>
                 </td>
-                <td>{{ question.message }}</td>
-                <td><img src="{{ question.image }}" alt="no file" width="150" height="150"></td>
+            </tr>
+            <tr>
+                <td>
+                    <form action="{{ url_for('list_of_questions') }}" method="post" id="show">
+                        <select class="form-control" name="show" id="show">
+                            <OPTION id="show_all" name="show_all" value="show_all">Show All Questions</OPTION>
+                            <OPTION name="show_latest" value="show_latest">Show 5 latest</OPTION>
+                        </select>
+                        <button name="submit" type="submit" value="submit">Submit</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+        <table class="main" align="center">
+            <tr>
+                <th id="head_Columns">Id</th>
+                <th id="head_Columns">Submission time</th>
+                <th id="head_Columns">View number</th>
+                <th id="head_Columns">Vote number</th>
+                <th id="head_Columns">Title</th>
+                <th id="head_Columns">Message</th>
+                <th id="head_Columns">Image</th>
 
             </tr>
-        {% endfor %}
+            {% for question in questions %}
+                <tr>
+                    <td>{{ question.id }}</td>
+                    <td>{{ question.submission_time }}</td>
+                    <td>{{ question.view_number }}</td>
+                    <td>{{ question.vote_number }}</td>
+                    <td id="question_title"><a href="/question/{{ question['id'] }} "
+                                               methods="get">{{ question.title }}</a>
+                    </td>
+                    <td>{{ question.message }}</td>
+                    <td><img src="{{ question.image }}" alt="no file" width="150" height="150"></td>
 
-    </table>
-</div>
-<br>
-<h4 align="right">Pairing programming since 2019</h4>
-{% include 'footer.html' %}
+                </tr>
+            {% endfor %}
+
+        </table>
+    </div>
+    <br>
+    <h4 align="right">Pairing programming since 2019</h4>
+    {% include 'footer.html' %}
 {% endblock %}

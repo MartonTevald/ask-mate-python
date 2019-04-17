@@ -6,6 +6,7 @@
 
 {% block content %}
 
+
     <table class="question_table">
         <tr>
             <th id="head_Columns">ID</th>
@@ -37,6 +38,7 @@
                             src="/static/photos/vote_down.png"></a>
                 </p>
             </td>
+
             <td><a href="/question/{{ question_row.id }}/new-comment">
                 <button type="submit">Add Comment</button>
             </a>
@@ -56,6 +58,8 @@
                 <p>
                     <button id="hide_question_comments">Show/Hide Comments(Q)</button>
                 </p>
+
+
                 <p>
                     <a href="/question/{{ question_row.id }}/new-tag">
                         <button type="submit">Add tag</button>
